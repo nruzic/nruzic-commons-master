@@ -1,0 +1,1113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>hr.nruzic.commons.master</groupId>
+    <artifactId>nruzic-commons-master</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>nruzic commons master</name>
+    <description>Common POM definitions for java projects</description>
+
+    <url>${project-web}</url>
+
+    <scm>
+        <url>https://github.com/nruzic/nruzic-commons-master</url>
+        <connection>scm:git:https://github.com/nruzic/nruzic-commons-master</connection>
+        <developerConnection>scm:git:https://github.com/nruzic/nruzic-commons-master</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
+    <build>
+
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+            </testResource>
+            <testResource>
+                <directory>src/it/resources</directory>
+            </testResource>
+            <testResource>
+                <directory>src/main/config</directory>
+            </testResource>
+            <testResource>
+                <directory>src/main/scripts</directory>
+            </testResource>
+        </testResources>
+
+        <extensions>
+            <!-- Enabling the use of FTP -->
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ssh</artifactId>
+                <version>${dependency-version-maven-wagon-ssh}</version>
+            </extension>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-http</artifactId>
+                <version>${dependency-version-maven-wagon-ssh}</version>
+            </extension>
+        </extensions>
+
+        <pluginManagement>
+            <plugins>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${plugin-version-maven-compiler-plugin}</version>
+                    <configuration>
+                        <source>${property-java-compiler-source-level}</source>
+                        <target>${property-java-compiler-compliance-level}</target>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${plugin-version-maven-resources-plugin}</version>
+                    <configuration>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                    </configuration>
+                </plugin>
+                
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>${plugin-version-maven-source-plugin}</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                            <phase>prepare-package</phase>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>${plugin-version-maven-javadoc-plugin}</version>
+                    <configuration>
+                        <!-- Default configuration for all executions -->
+                        <outputDirectory>${project.build.directory}/javadocs</outputDirectory>
+                        <reportOutputDirectory>${project.reporting.outputDirectory}/javadocs</reportOutputDirectory>
+                        <!-- Workaround for http://stackoverflow.com/questions/15886209/maven-is-not-working-in-java-8-when-javadoc-tags-are-incomplete -->
+                        <additionalparam>${javadoc.opts}</additionalparam>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>attach-javadocs</id>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                            <phase>prepare-package</phase>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>${plugin-version-maven-assembly-plugin}</version>
+                    <configuration>
+                        <descriptorSourceDirectory>${project.basedir}/src/main/assemblies</descriptorSourceDirectory>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>assemble-default-binary-distribution</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>single</goal>
+                            </goals>
+                            <configuration>
+                                <descriptorRefs>
+                                    <descriptorRef>bin-default</descriptorRef>
+                                </descriptorRefs>
+                                <filters>
+                                    <filter>${project.basedir}/src/main/filters/target-default.properties</filter>
+                                    <filter>${project.basedir}/src/main/filters/target-production.properties</filter>
+                                    <filter>${project.basedir}/src/main/filters/target-bin.properties</filter>
+                                </filters>
+                                <!-- <finalName>${project.build.finalName}-bin</finalName>
+                                <appendAssemblyId>false</appendAssemblyId> -->
+                                <tarLongFileMode>gnu</tarLongFileMode>
+                                <siteDirectory>${project-site-stage-dir}</siteDirectory>
+                            </configuration>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>hr.nruzic.commons.assemblies</groupId>
+                            <artifactId>nruzic-commons-assemblies</artifactId>
+                            <version>${dependency-version-nruzic-commons-assemblies}</version>
+                        </dependency>
+                        <!-- ignoring missing filter file
+                        <dependency>
+                            <groupId>org.apache.maven.shared</groupId>
+                            <artifactId>maven-filtering</artifactId>
+                            <version>${dependency-version-maven-filtering}</version>
+                            <classifier>nruzic</classifier>
+                        </dependency>
+                        -->
+                    </dependencies>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>${plugin-version-maven-site-plugin}</version>
+                    <configuration>
+                        <stagingDirectory>${project-site-stage-dir}</stagingDirectory>
+                        <asciidoc>
+                            <sourceDirectory>${project.basedir}/src/site/asciidoc</sourceDirectory>
+                            <!-- <sourceDocumentName>refdoc.adoc</sourceDocumentName> -->
+                            <!-- <baseDir>${project.basedir}/src/site/asciidoc/users/refdoc</baseDir> -->
+                            <relativeBaseDir>true</relativeBaseDir>
+                            <preserveDirectories>true</preserveDirectories>
+                            <headerFooter>true</headerFooter>
+                            <backend>html</backend>
+                            <doctype>book</doctype>
+                            <attributes>
+                                <project-version>${project.version}</project-version>
+                                <maven-build-timestamp>${maven.build.timestamp}</maven-build-timestamp>
+                            </attributes>
+                        </asciidoc>
+                        <moduleExcludes>
+                            <asciidoc>**/_*.adoc</asciidoc>
+                        </moduleExcludes>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <!-- add support for ssh/scp -->
+                            <groupId>org.apache.maven.wagon</groupId>
+                            <artifactId>wagon-ssh</artifactId>
+                            <version>${dependency-version-maven-wagon-ssh}</version>
+                            <exclusions>
+                                <!-- ecxluding jsch, v.0.1.50 does not work with recent ssh servers (key exchange issue) -->
+                                <exclusion>
+                                    <groupId>com.jcraft</groupId>
+                                    <artifactId>jsch</artifactId>
+                                </exclusion>
+                            </exclusions>
+                        </dependency>
+                        <!-- adding jsch implementation to replace older version from wagon-ssh -->
+                        <dependency>
+                            <groupId>com.jcraft</groupId>
+                            <artifactId>jsch</artifactId>
+                            <version>${dependency-version-jsch}</version>
+                        </dependency>
+                        <!-- adoc support -->
+                        <dependency>
+                            <groupId>org.asciidoctor</groupId>
+                            <artifactId>asciidoctor-maven-plugin</artifactId>
+                            <version>${plugin-version-asciidoctor-maven-plugin}</version>
+                        </dependency>
+                        <!-- add support for markdown syntax -->
+                        <dependency>
+                            <groupId>org.apache.maven.doxia</groupId>
+                            <artifactId>doxia-module-markdown</artifactId>
+                            <version>1.7</version>
+                        </dependency>
+                        <!-- Fixing java.lang.NoClassDefFoundError: org/apache/maven/doxia/sink/impl/XhtmlBaseSink error due to the introduction 
+                            of asciidoctor maven plugin. For more info take a look at http://maven.40175.n5.nabble.com/maven-site-plugin-3-5-ClassNotFoundException-td5862952.html -->
+                        <dependency>
+                            <groupId>org.apache.maven.doxia</groupId>
+                            <artifactId>doxia-core</artifactId>
+                            <version>1.7</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>${plugin-version-maven-checkstyle-plugin}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>hr.nruzic.commons.conventions</groupId>
+                            <artifactId>nruzic-commons-conventions</artifactId>
+                            <version>${dependency-version-nruzic-commons-conventions}</version>
+                        </dependency>
+                    </dependencies>
+                    <configuration>
+                        <configLocation>${nruzic-commons-conventions-checkstyle-config}</configLocation>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>validate-checks</id>
+                            <phase>verify</phase>
+                            <configuration>
+                                <failOnViolation>true</failOnViolation>
+                                <logViolationsToConsole>true</logViolationsToConsole>
+                            </configuration>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>${plugin-version-build-helper-maven-plugin}</version>
+                    <executions>
+                        <execution>
+                            <id>add-timestamp-property</id>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>timestamp-property</goal>
+                            </goals>
+                            <configuration>
+                                <name>maven-build-timestamp</name>
+                                <pattern>yyyy-MM-dd HH:mm</pattern>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>add-timestamp-date-property</id>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>timestamp-property</goal>
+                            </goals>
+                            <configuration>
+                                <name>maven-build-timestamp-date</name>
+                                <pattern>yyyy-MM-dd</pattern>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>add-aspect-source</id>
+                            <phase>generate-sources</phase>
+                            <goals>
+                                <goal>add-source</goal>
+                            </goals>
+                            <configuration>
+                                <sources>
+                                    <source>src/main/aspect</source>
+                                </sources>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>add-test-source</id>
+                            <phase>generate-sources</phase>
+                            <goals>
+                                <goal>add-test-source</goal>
+                            </goals>
+                            <configuration>
+                                <sources>
+                                    <source>src/it/java</source>
+                                </sources>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>add-test-resource</id>
+                            <phase>generate-test-resources</phase>
+                            <goals>
+                                <goal>add-test-resource</goal>
+                            </goals>
+                            <configuration>
+                                <resources>
+                                    <resource>
+                                        <directory>src/it/resources</directory>
+                                    </resource>
+                                </resources>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>${plugin-version-maven-antrun-plugin}</version>
+                    <executions>
+                        <execution>
+                            <id>sources-fix-eol</id>
+                            <phase>process-test-resources</phase>
+                            <goals>
+                                <goal>run</goal>
+                            </goals>
+                            <configuration>
+                                <target>
+                                    <fixcrlf srcdir="${project.basedir}" includes="README README.txt LICENCE LICENCE.txt" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" />
+                                    <fixcrlf srcdir="${project.basedir}" includes="src/**/*.java" javafiles="yes" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" />
+                                    <fixcrlf srcdir="${project.basedir}" includes="src/**/*.ad src/**/*.adoc src/**/*.cfg src/**/*.json src/**/*.properties src/**/*.sql src/**/*.cql src/**/*.template src/**/*.txt src/**/*.TXT src/**/*.xml src/**/*.xsd" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" />
+                                    <fixcrlf srcdir="${project.basedir}" includes="src/**/*.bsh src/**/*.sh" eol="lf" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" />
+                                    <fixcrlf srcdir="${project.basedir}" includes="src/**/*.bat" eol="crlf" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" />
+                                </target>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>sources-trim-spaces</id>
+                            <phase>process-test-resources</phase>
+                            <goals>
+                                <goal>run</goal>
+                            </goals>
+                            <configuration>
+                                <target>
+                                    <replaceregexp match="\s+$" replace="" byline="true" encoding="UTF-8">
+                                        <fileset dir="${project.basedir}">
+                                            <include name="src/**/*.java" />
+                                        </fileset>
+                                    </replaceregexp>
+                                </target>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>${plugin-version-maven-failsafe-plugin}</version>
+                    <configuration>
+                        <forkMode>once</forkMode>
+                        <argLine>-Xmx512M -XX:MaxPermSize=256M -XX:+CMSClassUnloadingEnabled</argLine>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>integration-test</goal>
+                                <goal>verify</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>${plugin-version-maven-dependency-plugin}</version>
+                    <configuration>
+                        <reResolve>false</reResolve>
+                        <resolutionFuzziness>version</resolutionFuzziness>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>purge-local-repository</id>
+                            <phase>clean</phase>
+                            <goals>
+                                <goal>purge-local-repository</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>cobertura-maven-plugin</artifactId>
+                    <version>${plugin-version-cobertura-maven-plugin}</version>
+                    <configuration>
+                        <aggregate>true</aggregate>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>${plugin-version-maven-release-plugin}</version>
+                    <configuration>
+                        <autoVersionSubmodules>true</autoVersionSubmodules>
+                        <preparationGoals>clean install site</preparationGoals>
+                        <useReleaseProfile>false</useReleaseProfile>
+                        <releaseProfiles>release</releaseProfiles>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>1.4.1</version>
+                    <executions>
+                        <execution>
+                            <id>enforce-property</id>
+                            <goals>
+                                <goal>enforce</goal>
+                            </goals>
+                            <configuration>
+                                <rules>
+                                    <requireProperty>
+                                        <property>project-home</property>
+                                        <message>You must have a project-home property defined!</message>
+                                    </requireProperty>
+                                    <requireProperty>
+                                        <property>project-branch</property>
+                                        <message>You must have a project-branch property defined!</message>
+                                    </requireProperty>
+                                    <requireProperty>
+                                        <property>project.name</property>
+                                        <message>Project name must be specified!</message>
+                                        <regex>[\w\s\.\,\:\;\!\?\$\%\*\+\~\|\@\(\)\[\]]+</regex>
+                                        <regexMessage>Project name must be space delimited lower case words.</regexMessage>
+                                    </requireProperty>
+                                    <requireProperty>
+                                        <property>project.description</property>
+                                        <message>Project description must be specified!</message>
+                                    </requireProperty>
+                                </rules>
+                                <fail>true</fail>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>com.webcohesion.enunciate</groupId>
+                    <artifactId>enunciate-maven-plugin</artifactId>
+                    <version>${plugin-version-enunciate-maven-plugin}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>docs</goal>
+                            </goals>
+                            <phase>process-sources</phase>
+                            <configuration>
+                                <configFile>enunciate.xml</configFile>
+                                <buildDir>${project.build.directory}/enunciate</buildDir>
+                                <docsDir>${project.build.directory}/enunciate-docs</docsDir>
+                            </configuration>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <!-- Ignoring missing filter files
+                        <dependency>
+                            <groupId>org.apache.maven.shared</groupId>
+                            <artifactId>maven-filtering</artifactId>
+                            <version>${dependency-version-maven-filtering}</version>
+                            <classifier>nruzic</classifier>
+                        </dependency>
+                        -->
+                        <dependency>
+                            <groupId>org.codehaus.plexus</groupId>
+                            <artifactId>plexus-utils</artifactId>
+                            <version>${dependency-version-plexus-utils}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>io.github.swagger2markup</groupId>
+                    <artifactId>swagger2markup-maven-plugin</artifactId>
+                    <version>1.2.0</version>
+                    <executions>
+                        <execution>
+                            <id>create-swagger-adoc</id>
+                            <goals>
+                                <goal>convertSwagger2markup</goal>
+                            </goals>
+                            <phase>generate-resources</phase>
+                            <configuration>
+                                <swaggerInput>${project.build.directory}/enunciate-docs/apidocs/ui/swagger.json</swaggerInput>
+                                <outputFile>${project.build.directory}/doc/adoc/${project.build.finalName}-swagger</outputFile>
+                                <config>
+                                    <swagger2markup.swaggerMarkupLanguage>HTML</swagger2markup.swaggerMarkupLanguage>
+                                    <swagger2markup.markupLanguage>ASCIIDOC</swagger2markup.markupLanguage>
+                                </config>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.asciidoctor</groupId>
+                    <artifactId>asciidoctor-maven-plugin</artifactId>
+                    <version>${plugin-version-asciidoctor-maven-plugin}</version>
+                    <configuration>
+                        <sourceDirectory>${project.basedir}/src/main/doc/adoc</sourceDirectory>
+                        <relativeBaseDir>true</relativeBaseDir>
+                        <preserveDirectories>true</preserveDirectories>
+                        <doctype>book</doctype>
+                        <headerFooter>true</headerFooter>
+                        <sourceHighlighter>rouge</sourceHighlighter>
+                        <attributes>
+                            <!-- display table of content -->
+                            <toc />
+                            <!-- maximum section level to display -->
+                            <toclevels>3</toclevels>
+                            <!-- prefix used for auto-generated section IDs -->
+                            <idprefix>_section_</idprefix>
+                            <!-- word separator used in auto-generated section IDs -->
+                            <idseparator>-</idseparator>
+                            <!-- numbers sections to depth specified by sectnumlevels -->
+                            <sectnums>true</sectnums>
+                            <!-- adds an anchor in front of the section title -->
+                            <sectanchors />
+                            <!-- chooses icons instead of text for admonitions -->
+                            <icons>font</icons>
+                            <!-- prefix added to chapter titles -->
+                            <chapter-label />
+                            <!-- media type of the output -->
+                            <media>prepress</media>
+                            <!-- version number of the document -->
+                            <revnumber>${project-version}</revnumber>
+                            <!-- date of document version -->
+                            <revdate>${project-builddate}</revdate>
+                            <!-- organization owning document -->
+                            <organization>${project.organization.name}</organization>
+                            <!-- ################# -->
+                            <!-- custom attributes -->
+                            <!-- ################# -->
+                            <_project-version>${project-version}</_project-version>
+                            <_project-buildtime>${project-buildtime}</_project-buildtime>
+                            <_project-builddate>${project-builddate}</_project-builddate>
+                        </attributes>
+                        <requires>
+                            <require>asciidoctor-diagram</require>
+                        </requires>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>src-adoc-to-html</id>
+                            <goals>
+                                <goal>process-asciidoc</goal>
+                            </goals>
+                            <phase>process-resources</phase>
+                            <configuration>
+                                <backend>html</backend>
+                                <outputDirectory>${project.build.directory}/doc/html</outputDirectory>
+                                <attributes>
+                                    <!-- display table of content -->
+                                    <toc>left</toc>
+                                </attributes>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>src-adoc-to-pdf</id>
+                            <goals>
+                                <goal>process-asciidoc</goal>
+                            </goals>
+                            <phase>process-resources</phase>
+                            <configuration>
+                                <backend>pdf</backend>
+                                <outputDirectory>${project.build.directory}/doc/pdf</outputDirectory>
+                                <attributes>
+                                    <pdf-stylesdir>${project.basedir}/src/main/doc/resources/themes</pdf-stylesdir>
+                                    <pdf-style>nruzic</pdf-style>
+                                </attributes>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>generated-adoc-to-html</id>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>process-asciidoc</goal>
+                            </goals>
+                            <configuration>
+                                <backend>html</backend>
+                                <sourceDirectory>${project.build.directory}/doc/adoc</sourceDirectory>
+                                <outputDirectory>${project.build.directory}/doc/html</outputDirectory>
+                                <attributes>
+                                    <!-- display table of content -->
+                                    <toc>left</toc>
+                                </attributes>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>generated-adoc-to-pdf</id>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>process-asciidoc</goal>
+                            </goals>
+                            <configuration>
+                                <backend>pdf</backend>
+                                <sourceDirectory>${project.build.directory}/doc/adoc</sourceDirectory>
+                                <outputDirectory>${project.build.directory}/doc/pdf</outputDirectory>
+                                <attributes>
+                                    <pdf-stylesdir>${project.basedir}/src/main/doc/resources/themes</pdf-stylesdir>
+                                    <pdf-style>nruzic</pdf-style>
+                                </attributes>
+                            </configuration>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <!-- Override the default jruby artifact provided by the plugin -->
+                        <dependency>
+                            <groupId>org.jruby</groupId>
+                            <artifactId>jruby-complete</artifactId>
+                            <version>1.7.26</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.asciidoctor</groupId>
+                            <artifactId>asciidoctorj-pdf</artifactId>
+                            <version>1.5.0-alpha.16</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.asciidoctor</groupId>
+                            <artifactId>asciidoctorj-diagram</artifactId>
+                            <version>1.5.4</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>${plugin-version-maven-project-info-reports-plugin}</version>
+                <configuration>
+                    <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
+                    <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>${plugin-version-maven-surefire-report-plugin}</version>
+                <configuration>
+                    <aggregate>true</aggregate>
+                </configuration>
+                <reportSets>
+                    <reportSet>
+                        <id>unit-tests</id>
+                        <reports>
+                            <report>report-only</report>
+                        </reports>
+                    </reportSet>
+                    <reportSet>
+                        <id>integration-tests</id>
+                        <reports>
+                            <report>failsafe-report-only</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${plugin-version-maven-javadoc-plugin}</version>
+                <configuration>
+                    <!-- Default configuration for all reports -->
+                    <outputDirectory>${project.build.directory}/javadocs</outputDirectory>
+                    <reportOutputDirectory>${project.reporting.outputDirectory}/javadocs</reportOutputDirectory>
+                </configuration>
+                <reportSets>
+                    <reportSet>
+                        <id>default</id>
+                        <configuration>
+                            <!-- Specific configuration for the given reports -->
+                        </configuration>
+                        <reports>
+                            <report>javadoc</report>
+                        </reports>
+                    </reportSet>
+                    <reportSet>
+                        <id>aggregate</id>
+                        <configuration>
+                            <!-- Specific configuration for the given reports -->
+                        </configuration>
+                        <reports>
+                            <report>aggregate</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jxr-plugin</artifactId>
+                <version>${plugin-version-maven-jxr-plugin}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${plugin-version-maven-checkstyle-plugin}</version>
+                <configuration>
+                    <configLocation>${nruzic-commons-conventions-checkstyle-config}</configLocation>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>taglist-maven-plugin</artifactId>
+                <version>${plugin-version-taglist-maven-plugin}</version>
+                <configuration>
+                    <aggregate>true</aggregate>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>${plugin-version-cobertura-maven-plugin}</version>
+                <configuration>
+                    <aggregate>true</aggregate>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.webcohesion.enunciate</groupId>
+                <artifactId>enunciate-maven-plugin</artifactId>
+                <version>${plugin-version-enunciate-maven-plugin}</version>
+                <configuration>
+                    <!-- The subdirectory of the site where the documentation will be put. -->
+                    <!-- Note that if this isn't set, the documentation will overwrite apidocs location on the site which is used by the 
+                        javadoc plugin. -->
+                    <docsSubdir>enunciatedocs</docsSubdir>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-changelog-plugin</artifactId>
+                <version>${plugin-version-maven-changelog-plugin}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-changes-plugin</artifactId>
+                <version>2.9</version>
+                <configuration>
+                    <useJql>true</useJql>
+                    <webUser>foo</webUser>
+                    <webPassword>bar</webPassword>
+                    <onlyCurrentVersion>true</onlyCurrentVersion>
+                    <columnNames>Component,Type,Key,Summary,Status,Resolution,Fix
+                        Version</columnNames>
+                    <sortColumnNames>Component ASC,Type ASC,Key DESC</sortColumnNames>
+                    <resolutionIds>Fixed</resolutionIds>
+                    <statusIds>Closed</statusIds>
+                    <typeIds>Bug,New Feature,Improvement</typeIds>
+                    <!-- <filter>project = MSE AND issuetype in (Bug, Improvement, "New Feature") AND resolution = Fixed AND status = 
+                        Closed</filter> -->
+                </configuration>
+                <inherited>false</inherited>
+            </plugin>
+        </plugins>
+    </reporting>
+
+    <properties>
+
+        <!-- build switches -->
+        <branch>master</branch>
+
+        <!-- project defaults -->
+        <project-name>${project.artifactId}</project-name>
+        <project-version>${project.version}</project-version>
+        <project-home>${user.home}/.${project-name}</project-home>
+        <project-branch>${branch}</project-branch>
+        <project-buildtime>${maven-build-timestamp}</project-buildtime>
+        <project-builddate>${maven-build-timestamp-date}</project-builddate>
+
+        <!-- build defaults -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <property-java-compiler-source-level>1.7</property-java-compiler-source-level>
+        <property-java-compiler-compliance-level>${property-java-compiler-source-level}</property-java-compiler-compliance-level>
+        <assemblies-bin-distribution-base-directory>${project-name}</assemblies-bin-distribution-base-directory>
+        <assembly.id>bin</assembly.id> <!-- Default assembly id -->
+        <conventions-checkstyle-config>hr/nruzic/commons/conventions/checkstyle/allman-ansi-checks.xml</conventions-checkstyle-config>
+
+        <!-- repository locations -->
+        <internal-maven-repository-schema>http</internal-maven-repository-schema>
+        <internal-maven-repository-host>localhost</internal-maven-repository-host>
+        <internal-maven-repository-port>80</internal-maven-repository-port>
+        <internal-maven-repository-server>${internal-maven-repository-schema}://${internal-maven-repository-host}:${internal-maven-repository-port}</internal-maven-repository-server>
+        <internal-maven-repository-web>${internal-maven-repository-server}/</internal-maven-repository-web>
+        <internal-maven-repository-basepath>content/repositories</internal-maven-repository-basepath>
+        <internal-maven-repository-name>3pp</internal-maven-repository-name>
+        <internal-maven-repository-releases-name>releases</internal-maven-repository-releases-name>
+        <internal-maven-repository-snapshots-name>${project-branch}-snapshots</internal-maven-repository-snapshots-name>
+        <internal-maven-repository-url>${internal-maven-repository-server}/content/groups/${internal-maven-repository-name}</internal-maven-repository-url>
+        <internal-releases-maven-repository-url>${internal-maven-repository-server}/content/repositories/${internal-maven-repository-releases-name}</internal-releases-maven-repository-url>
+        <internal-snapshots-maven-repository-url>${internal-maven-repository-server}/content/repositories/${internal-maven-repository-snapshots-name}</internal-snapshots-maven-repository-url>
+
+        <!-- site locations -->
+        <project-web>https://localhost/project-site/${project-name}/${project-version}</project-web>
+        <project-site-deploy-url>file://${project-home}/project-site/${project-name}/${project-version}</project-site-deploy-url>
+        <project-site-stage-dir>${project-home}/project-site/${project-name}/${project-version}</project-site-stage-dir>
+
+        <!-- continous integration software locations -->
+        <continuous-integration-managament-url>https://localhost</continuous-integration-managament-url>
+
+        <!-- issue management -->
+        <issue-management-url>http://localhost:8080/browse/</issue-management-url>
+
+        <!-- dependencies -->
+        <dependency-version-apache-commons-pool>1.6</dependency-version-apache-commons-pool>
+        <dependency-version-apache-commons-dbcp>1.4</dependency-version-apache-commons-dbcp>
+        <dependency-version-jdbc-driver-hypersql>2.2.8</dependency-version-jdbc-driver-hypersql>
+        <dependency-version-jdbc-driver-mysql>5.1.20</dependency-version-jdbc-driver-mysql>
+        <dependency-version-saxon-he>9.4</dependency-version-saxon-he>
+        <dependency-version-commons-lang>2.6</dependency-version-commons-lang>
+        <dependency-version-commons-codec>1.6</dependency-version-commons-codec>
+        <dependency-version-jsch>0.1.54</dependency-version-jsch>
+        <dependency-version-retryer>0.2</dependency-version-retryer>
+        <dependency-version-dom4j>1.6.1</dependency-version-dom4j>
+        <dependency-version-slf4j>1.4.3</dependency-version-slf4j>
+        <dependency-version-log4j>1.2.15</dependency-version-log4j>
+        <dependency-version-javax-servlet>2.5</dependency-version-javax-servlet>
+        <dependency-version-jersey-servlet>1.12</dependency-version-jersey-servlet>
+        <dependency-version-osgi-core>4.2.0</dependency-version-osgi-core>
+        <dependency-version-osgi-compendium>4.2.0</dependency-version-osgi-compendium>
+        <dependency-version-apache-felix>3.0.9</dependency-version-apache-felix>
+        <dependency-version-apache-felix-src-annotations>1.6.0</dependency-version-apache-felix-src-annotations>
+        <dependency-version-apache-felix-src-generator>1.1.4</dependency-version-apache-felix-src-generator>
+        <dependency-version-junit>4.9.0</dependency-version-junit>
+        <dependency-version-dbunit>2.4.8</dependency-version-dbunit>
+        <dependency-version-pax-exam>2.5.0</dependency-version-pax-exam>
+        <dependency-version-pax-logging>1.6.8</dependency-version-pax-logging>
+        <dependency-version-pax-url>1.4.0.RC1</dependency-version-pax-url>
+        <dependency-version-pax-web-jetty-bundle>1.0.11</dependency-version-pax-web-jetty-bundle>
+        <dependency-version-pzz-commons>1.6.0-M6</dependency-version-pzz-commons>
+        <dependency-version-nruzic-commons-conventions>2.2.0-RC4</dependency-version-nruzic-commons-conventions>
+        <dependency-version-nruzic-commons-assemblies>1.0.0-RC1</dependency-version-nruzic-commons-assemblies>
+        <dependency-version-maven-wagon-ssh>2.10</dependency-version-maven-wagon-ssh>
+        <dependency-version-maven-filtering>1.3</dependency-version-maven-filtering>
+        <dependency-version-plexus-utils>3.0.24</dependency-version-plexus-utils>
+
+        <plugin-version-maven-compiler-plugin>3.6.1</plugin-version-maven-compiler-plugin>
+        <plugin-version-maven-resources-plugin>3.0.1</plugin-version-maven-resources-plugin>
+        <plugin-version-maven-source-plugin>3.0.1</plugin-version-maven-source-plugin>
+        <plugin-version-maven-assembly-plugin>2.6</plugin-version-maven-assembly-plugin>
+        <plugin-version-maven-failsafe-plugin>2.19.1</plugin-version-maven-failsafe-plugin>
+        <plugin-version-maven-dependency-plugin>2.10</plugin-version-maven-dependency-plugin>
+        <plugin-version-maven-release-plugin>2.5.3</plugin-version-maven-release-plugin>
+        <plugin-version-maven-site-plugin>3.6</plugin-version-maven-site-plugin>
+        <plugin-version-maven-javadoc-plugin>2.10.4</plugin-version-maven-javadoc-plugin>
+        <plugin-version-maven-jxr-plugin>2.5</plugin-version-maven-jxr-plugin>
+        <plugin-version-maven-surefire-report-plugin>2.19.1</plugin-version-maven-surefire-report-plugin>
+        <plugin-version-maven-project-info-reports-plugin>2.9</plugin-version-maven-project-info-reports-plugin>
+        <plugin-version-maven-checkstyle-plugin>2.17</plugin-version-maven-checkstyle-plugin>
+        <plugin-version-cobertura-maven-plugin>2.7</plugin-version-cobertura-maven-plugin>
+        <plugin-version-taglist-maven-plugin>2.4</plugin-version-taglist-maven-plugin>
+        <plugin-version-maven-antrun-plugin>1.8</plugin-version-maven-antrun-plugin>
+        <plugin-version-enunciate-maven-plugin>2.9.1</plugin-version-enunciate-maven-plugin>
+        <plugin-version-maven-changelog-plugin>2.3</plugin-version-maven-changelog-plugin>
+        <plugin-version-build-helper-maven-plugin>3.0.0</plugin-version-build-helper-maven-plugin>
+        <plugin-version-asciidoctor-maven-plugin>1.5.6</plugin-version-asciidoctor-maven-plugin>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <activation>
+                <property>
+                    <name>doRelease</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+            <properties>
+                <project-site-deploy-url>scp://localhost/var/www/project-site/${project-name}/${project-version}</project-site-deploy-url>
+            </properties>
+        </profile>
+        <profile>
+            <id>java8-doclint-disabled</id>
+            <activation>
+                <jdk>[1.8,)</jdk>
+            </activation>
+            <properties>
+                <javadoc.opts>-Xdoclint:none</javadoc.opts>
+            </properties>
+        </profile>
+        <profile>
+            <id>clean-config</id>
+            <activation>
+                <property>
+                    <name>cleanConfig</name>
+                </property>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <artifactId>maven-resources-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <id>copy-resources-2-project-home</id>
+                                    <phase>process-resources</phase>
+                                    <goals>
+                                        <goal>copy-resources</goal>
+                                    </goals>
+                                    <configuration>
+                                        <outputDirectory>${project-home}/config</outputDirectory>
+                                        <resources>
+                                            <resource>
+                                                <directory>src/main/config</directory>
+                                                <filtering>true</filtering>
+                                                <includes>
+                                                    <include>**/*.properties</include>
+                                                    <include>**/*.cfg</include>
+                                                    <include>**/*.xml</include>
+                                                    <include>**/*.txt</include>
+                                                </includes>
+                                            </resource>
+                                            <resource>
+                                                <directory>src/main/config</directory>
+                                                <filtering>false</filtering>
+                                                <excludes>
+                                                    <exclude>**/*.properties</exclude>
+                                                    <exclude>**/*.cfg</exclude>
+                                                    <exclude>**/*.xml</exclude>
+                                                    <exclude>**/*.txt</exclude>
+                                                </excludes>
+                                            </resource>
+                                            <resource>
+                                                <directory>src/test/config</directory>
+                                                <filtering>true</filtering>
+                                                <includes>
+                                                    <include>**/*.properties</include>
+                                                    <include>**/*.cfg</include>
+                                                    <include>**/*.xml</include>
+                                                    <include>**/*.txt</include>
+                                                </includes>
+                                            </resource>
+                                            <resource>
+                                                <directory>src/test/config</directory>
+                                                <filtering>false</filtering>
+                                                <excludes>
+                                                    <exclude>**/*.properties</exclude>
+                                                    <exclude>**/*.cfg</exclude>
+                                                    <exclude>**/*.xml</exclude>
+                                                    <exclude>**/*.txt</exclude>
+                                                </excludes>
+                                            </resource>
+                                            <resource>
+                                                <directory>src/it/config</directory>
+                                                <filtering>true</filtering>
+                                                <includes>
+                                                    <include>**/*.properties</include>
+                                                    <include>**/*.cfg</include>
+                                                    <include>**/*.xml</include>
+                                                    <include>**/*.txt</include>
+                                                </includes>
+                                            </resource>
+                                            <resource>
+                                                <directory>src/it/config</directory>
+                                                <filtering>false</filtering>
+                                                <excludes>
+                                                    <exclude>**/*.properties</exclude>
+                                                    <exclude>**/*.cfg</exclude>
+                                                    <exclude>**/*.xml</exclude>
+                                                    <exclude>**/*.txt</exclude>
+                                                </excludes>
+                                            </resource>
+                                        </resources>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-antrun-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <id>remove-project-home-dir</id>
+                                    <phase>clean</phase>
+                                    <goals>
+                                        <goal>run</goal>
+                                    </goals>
+                                    <configuration>
+                                        <target>
+                                            <!-- Delete build home directory -->
+                                            <delete dir="${project-home}" />
+                                        </target>
+                                    </configuration>
+                                </execution>
+                                <execution>
+                                    <id>create-project-home-dir</id>
+                                    <phase>initialize</phase>
+                                    <goals>
+                                        <goal>run</goal>
+                                    </goals>
+                                    <configuration>
+                                        <target>
+                                            <!-- Create build home directory -->
+                                            <mkdir dir="${project-home}" />
+                                        </target>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+        <profile>
+            <id>buildenv-localhost</id>
+            <activation>
+                <property>
+                    <name>buildenv</name>
+                    <value>localhost</value>
+                </property>
+            </activation>
+            <build>
+                <filters>
+                    <filter>${project.basedir}/src/main/filters/build-localhost.properties</filter>
+                    <filter>${project.basedir}/src/test/filters/build-localhost.properties</filter>
+                    <filter>${project.basedir}/src/it/filters/build-localhost.properties</filter>
+                </filters>
+            </build>
+        </profile>
+        <profile>
+            <id>buildenv-jenkins</id>
+            <activation>
+                <property>
+                    <name>buildenv</name>
+                    <value>jenkins</value>
+                </property>
+            </activation>
+            <build>
+                <filters>
+                    <filter>${project.basedir}/src/main/filters/build-jenkins.properties</filter>
+                    <filter>${project.basedir}/src/test/filters/build-jenkins.properties</filter>
+                    <filter>${project.basedir}/src/it/filters/build-jenkins.properties</filter>
+                </filters>
+            </build>
+            <properties>
+                <!-- SonarQube parameters -->
+                <sonar.host.url>${env.SONAR_HOST_URL}</sonar.host.url>
+                <!-- Password based authentication -->
+                <!-- <sonar.login>${env.SONAR_LOGIN}</sonar.login> -->
+                <!-- <sonar.password>${env.SONAR_PASSWORD}</sonar.password> -->
+                <!-- Token based authentication -->
+                <sonar.login>${SONAR_AUTH_TOKEN}</sonar.login>
+                <sonar.password />
+            </properties>
+        </profile>
+    </profiles>
+
+</project>
