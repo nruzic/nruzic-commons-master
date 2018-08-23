@@ -1,0 +1,1 @@
+= Master POM definitions for my own Java projects
