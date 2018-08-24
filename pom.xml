@@ -5,7 +5,7 @@
 
     <groupId>com.github.nruzic.commons.master</groupId>
     <artifactId>nruzic-commons-master</artifactId>
-    <version>1.0.0-alpha1</version>
+    <version>1.0.0-alpha2-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>nruzic commons master</name>
     <description>Common POM definitions for java projects</description>
@@ -22,7 +22,7 @@
         <url>http://github.com/nruzic/nruzic-commons-master</url>
         <connection>scm:git:http://github.com/nruzic/nruzic-commons-master</connection>
         <developerConnection>scm:git:git@github.com:nruzic/nruzic-commons-master</developerConnection>
-        <tag>1.0.0-alpha1</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
