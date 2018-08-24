@@ -21,9 +21,9 @@
     </licenses>
 
     <scm>
-        <url>https://github.com/nruzic/nruzic-commons-master</url>
-        <connection>scm:git:https://github.com/nruzic/nruzic-commons-master</connection>
-        <developerConnection>scm:git:https://github.com/nruzic/nruzic-commons-master</developerConnection>
+        <url>http://github.com/nruzic/nruzic-commons-master</url>
+        <connection>scm:git:http://github.com/nruzic/nruzic-commons-master</connection>
+        <developerConnection>scm:git:git@github.com:nruzic/nruzic-commons-master</developerConnection>
         <tag>HEAD</tag>
     </scm>
 
@@ -109,8 +109,8 @@
         <dependency-version-pax-url>1.4.0.RC1</dependency-version-pax-url>
         <dependency-version-pax-web-jetty-bundle>1.0.11</dependency-version-pax-web-jetty-bundle>
         <dependency-version-pzz-commons>1.6.0-M6</dependency-version-pzz-commons>
-        <dependency-version-nruzic-commons-conventions>1.0.0-SNAPSHOT</dependency-version-nruzic-commons-conventions>
-        <dependency-version-nruzic-commons-assemblies>1.0.0-SNAPSHOT</dependency-version-nruzic-commons-assemblies>
+        <dependency-version-nruzic-commons-conventions>1.0.0</dependency-version-nruzic-commons-conventions>
+        <dependency-version-nruzic-commons-assemblies>1.0.0</dependency-version-nruzic-commons-assemblies>
         <dependency-version-maven-wagon-ssh>2.10</dependency-version-maven-wagon-ssh>
         <dependency-version-maven-filtering>1.3</dependency-version-maven-filtering>
         <dependency-version-plexus-utils>3.0.24</dependency-version-plexus-utils>
@@ -118,15 +118,15 @@
         <plugin-version-maven-compiler-plugin>3.6.1</plugin-version-maven-compiler-plugin>
         <plugin-version-maven-resources-plugin>3.0.1</plugin-version-maven-resources-plugin>
         <plugin-version-maven-source-plugin>3.0.1</plugin-version-maven-source-plugin>
-        <plugin-version-maven-assembly-plugin>2.6</plugin-version-maven-assembly-plugin>
+        <plugin-version-maven-assembly-plugin>3.1.0</plugin-version-maven-assembly-plugin>
         <plugin-version-maven-failsafe-plugin>2.19.1</plugin-version-maven-failsafe-plugin>
         <plugin-version-maven-dependency-plugin>2.10</plugin-version-maven-dependency-plugin>
         <plugin-version-maven-release-plugin>2.5.3</plugin-version-maven-release-plugin>
-        <plugin-version-maven-site-plugin>3.6</plugin-version-maven-site-plugin>
-        <plugin-version-maven-javadoc-plugin>2.10.4</plugin-version-maven-javadoc-plugin>
+        <plugin-version-maven-site-plugin>3.7.1</plugin-version-maven-site-plugin>
+        <plugin-version-maven-javadoc-plugin>3.0.1</plugin-version-maven-javadoc-plugin>
         <plugin-version-maven-jxr-plugin>2.5</plugin-version-maven-jxr-plugin>
         <plugin-version-maven-surefire-report-plugin>2.19.1</plugin-version-maven-surefire-report-plugin>
-        <plugin-version-maven-project-info-reports-plugin>2.9</plugin-version-maven-project-info-reports-plugin>
+        <plugin-version-maven-project-info-reports-plugin>3.0.0</plugin-version-maven-project-info-reports-plugin>
         <plugin-version-maven-checkstyle-plugin>2.17</plugin-version-maven-checkstyle-plugin>
         <plugin-version-cobertura-maven-plugin>2.7</plugin-version-cobertura-maven-plugin>
         <plugin-version-taglist-maven-plugin>2.4</plugin-version-taglist-maven-plugin>
@@ -260,7 +260,7 @@
                     </executions>
                     <dependencies>
                         <dependency>
-                            <groupId>hr.nruzic.commons.assemblies</groupId>
+                            <groupId>com.github.nruzic.commons.assemblies</groupId>
                             <artifactId>nruzic-commons-assemblies</artifactId>
                             <version>${dependency-version-nruzic-commons-assemblies}</version>
                         </dependency>
@@ -345,7 +345,7 @@
                     <version>${plugin-version-maven-checkstyle-plugin}</version>
                     <dependencies>
                         <dependency>
-                            <groupId>hr.nruzic.commons.conventions</groupId>
+                            <groupId>com.github.nruzic.commons.conventions</groupId>
                             <artifactId>nruzic-commons-conventions</artifactId>
                             <version>${dependency-version-nruzic-commons-conventions}</version>
                         </dependency>
@@ -562,11 +562,20 @@
                     <artifactId>maven-release-plugin</artifactId>
                     <version>${plugin-version-maven-release-plugin}</version>
                     <configuration>
+                        <!-- automatically assign parent version to submodules 
+                            if submodule is not specifying it's own version -->
                         <autoVersionSubmodules>true</autoVersionSubmodules>
-                        <preparationGoals>clean install site</preparationGoals>
+                        <!-- this is a hack to trigger custom release profile 
+                            (not the one from master pom) during preparation step, in addition to execution 
+                            by perform step which is triggered by releaseProfiles tag -->
+                        <arguments>-DdoRelease</arguments>
+                        <!-- prepare settings -->
+                        <preparationGoals>clean verify site</preparationGoals>
+                        <!-- completion settings -->
+                        <completionGoals>clean verify site</completionGoals>
+                        <!-- perform settings -->
                         <useReleaseProfile>false</useReleaseProfile>
                         <releaseProfiles>release</releaseProfiles>
-                        <goals>deploy</goals>
                     </configuration>
                 </plugin>
 
@@ -796,6 +805,31 @@
                         </dependency>
                     </dependencies>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>${version-maven-gpg-plugin}</version>
+                    <executions>
+                        <execution>
+                            <id>sign-artifacts</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>sign</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.sonatype.plugins</groupId>
+                    <artifactId>nexus-staging-maven-plugin</artifactId>
+                    <version>${version-nexus-staging-maven-plugin}</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <serverId>ossrh-staging-repo</serverId>
+                        <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                        <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
@@ -987,27 +1021,10 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>${version-maven-gpg-plugin}</version>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
                     </plugin>
                     <plugin>
                         <groupId>org.sonatype.plugins</groupId>
                         <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>${version-nexus-staging-maven-plugin}</version>
-                        <extensions>true</extensions>
-                        <configuration>
-                            <serverId>ossrh-staging-repo</serverId>
-                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                        </configuration>
                     </plugin>
                 </plugins>
             </build>
@@ -1015,6 +1032,7 @@
                 <project-site-deploy-url>scp://localhost/var/www/project-site/${project-name}/${project-version}</project-site-deploy-url>
             </properties>
         </profile>
+
         <profile>
             <id>java8-doclint-disabled</id>
             <activation>
@@ -1024,6 +1042,7 @@
                 <javadoc.opts>-Xdoclint:none</javadoc.opts>
             </properties>
         </profile>
+
         <profile>
             <id>clean-config</id>
             <activation>
@@ -1149,6 +1168,7 @@
                 </pluginManagement>
             </build>
         </profile>
+
         <profile>
             <id>buildenv-localhost</id>
             <activation>
@@ -1165,6 +1185,7 @@
                 </filters>
             </build>
         </profile>
+
         <profile>
             <id>buildenv-jenkins</id>
             <activation>
