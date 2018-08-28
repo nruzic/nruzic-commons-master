@@ -742,7 +742,7 @@
                                 <outputDirectory>${project.build.directory}/doc/pdf</outputDirectory>
                                 <attributes>
                                     <pdf-stylesdir>${project.basedir}/src/main/doc/resources/themes</pdf-stylesdir>
-                                    <pdf-style>nruzic</pdf-style>
+                                    <pdf-style>default</pdf-style>
                                 </attributes>
                             </configuration>
                         </execution>
@@ -774,7 +774,7 @@
                                 <outputDirectory>${project.build.directory}/doc/pdf</outputDirectory>
                                 <attributes>
                                     <pdf-stylesdir>${project.basedir}/src/main/doc/resources/themes</pdf-stylesdir>
-                                    <pdf-style>nruzic</pdf-style>
+                                    <pdf-style>default</pdf-style>
                                 </attributes>
                             </configuration>
                         </execution>
@@ -995,6 +995,10 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctor-maven-plugin</artifactId>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
