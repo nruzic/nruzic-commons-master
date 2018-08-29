@@ -81,57 +81,32 @@
         <issue-management-url>http://localhost:8080/browse/</issue-management-url>
 
         <!-- dependencies -->
-        <dependency-version-apache-commons-pool>1.6</dependency-version-apache-commons-pool>
-        <dependency-version-apache-commons-dbcp>1.4</dependency-version-apache-commons-dbcp>
-        <dependency-version-jdbc-driver-hypersql>2.2.8</dependency-version-jdbc-driver-hypersql>
-        <dependency-version-jdbc-driver-mysql>5.1.20</dependency-version-jdbc-driver-mysql>
-        <dependency-version-saxon-he>9.4</dependency-version-saxon-he>
-        <dependency-version-commons-lang>2.6</dependency-version-commons-lang>
-        <dependency-version-commons-codec>1.6</dependency-version-commons-codec>
-        <dependency-version-jsch>0.1.54</dependency-version-jsch>
-        <dependency-version-retryer>0.2</dependency-version-retryer>
-        <dependency-version-dom4j>1.6.1</dependency-version-dom4j>
-        <dependency-version-slf4j>1.4.3</dependency-version-slf4j>
-        <dependency-version-log4j>1.2.15</dependency-version-log4j>
-        <dependency-version-javax-servlet>2.5</dependency-version-javax-servlet>
-        <dependency-version-jersey-servlet>1.12</dependency-version-jersey-servlet>
-        <dependency-version-osgi-core>4.2.0</dependency-version-osgi-core>
-        <dependency-version-osgi-compendium>4.2.0</dependency-version-osgi-compendium>
-        <dependency-version-apache-felix>3.0.9</dependency-version-apache-felix>
-        <dependency-version-apache-felix-src-annotations>1.6.0</dependency-version-apache-felix-src-annotations>
-        <dependency-version-apache-felix-src-generator>1.1.4</dependency-version-apache-felix-src-generator>
-        <dependency-version-junit>4.9.0</dependency-version-junit>
-        <dependency-version-dbunit>2.4.8</dependency-version-dbunit>
-        <dependency-version-pax-exam>2.5.0</dependency-version-pax-exam>
-        <dependency-version-pax-logging>1.6.8</dependency-version-pax-logging>
-        <dependency-version-pax-url>1.4.0.RC1</dependency-version-pax-url>
-        <dependency-version-pax-web-jetty-bundle>1.0.11</dependency-version-pax-web-jetty-bundle>
-        <dependency-version-pzz-commons>1.6.0-M6</dependency-version-pzz-commons>
-        <dependency-version-nruzic-commons-conventions>1.0.0</dependency-version-nruzic-commons-conventions>
-        <dependency-version-nruzic-commons-assemblies>1.0.0</dependency-version-nruzic-commons-assemblies>
-        <dependency-version-maven-wagon-ssh>2.10</dependency-version-maven-wagon-ssh>
-        <dependency-version-maven-filtering>3.1.2</dependency-version-maven-filtering>
-        <dependency-version-plexus-utils>3.0.24</dependency-version-plexus-utils>
-
-        <plugin-version-maven-compiler-plugin>3.6.1</plugin-version-maven-compiler-plugin>
-        <plugin-version-maven-resources-plugin>3.0.1</plugin-version-maven-resources-plugin>
-        <plugin-version-maven-source-plugin>3.0.1</plugin-version-maven-source-plugin>
-        <plugin-version-maven-assembly-plugin>3.1.0</plugin-version-maven-assembly-plugin>
-        <plugin-version-maven-failsafe-plugin>2.19.1</plugin-version-maven-failsafe-plugin>
-        <plugin-version-maven-dependency-plugin>2.10</plugin-version-maven-dependency-plugin>
-        <plugin-version-maven-release-plugin>2.5.3</plugin-version-maven-release-plugin>
-        <plugin-version-maven-site-plugin>3.7.1</plugin-version-maven-site-plugin>
-        <plugin-version-maven-javadoc-plugin>3.0.1</plugin-version-maven-javadoc-plugin>
-        <plugin-version-maven-jxr-plugin>2.5</plugin-version-maven-jxr-plugin>
-        <plugin-version-maven-surefire-report-plugin>2.19.1</plugin-version-maven-surefire-report-plugin>
-        <plugin-version-maven-project-info-reports-plugin>3.0.0</plugin-version-maven-project-info-reports-plugin>
-        <plugin-version-maven-checkstyle-plugin>3.0.0</plugin-version-maven-checkstyle-plugin>
-        <plugin-version-taglist-maven-plugin>2.4</plugin-version-taglist-maven-plugin>
-        <plugin-version-maven-antrun-plugin>1.8</plugin-version-maven-antrun-plugin>
-        <plugin-version-enunciate-maven-plugin>2.9.1</plugin-version-enunciate-maven-plugin>
-        <plugin-version-maven-changelog-plugin>2.3</plugin-version-maven-changelog-plugin>
-        <plugin-version-build-helper-maven-plugin>3.0.0</plugin-version-build-helper-maven-plugin>
-        <plugin-version-asciidoctor-maven-plugin>1.5.6</plugin-version-asciidoctor-maven-plugin>
+        <version-jsch>0.1.54</version-jsch>
+        <version-nruzic-commons-conventions>1.0.0</version-nruzic-commons-conventions>
+        <version-nruzic-commons-assemblies>1.0.0</version-nruzic-commons-assemblies>
+        <version-maven-wagon-ssh>2.10</version-maven-wagon-ssh>
+        <version-maven-filtering>3.1.2</version-maven-filtering>
+        <version-plexus-utils>3.0.24</version-plexus-utils>
+        <version-maven-compiler-plugin>3.8.0</version-maven-compiler-plugin>
+        <version-maven-resources-plugin>3.0.1</version-maven-resources-plugin>
+        <version-maven-source-plugin>3.0.1</version-maven-source-plugin>
+        <version-maven-assembly-plugin>3.1.0</version-maven-assembly-plugin>
+        <version-maven-failsafe-plugin>2.19.1</version-maven-failsafe-plugin>
+        <version-maven-dependency-plugin>2.10</version-maven-dependency-plugin>
+        <version-maven-release-plugin>2.5.3</version-maven-release-plugin>
+        <version-maven-site-plugin>3.7.1</version-maven-site-plugin>
+        <version-maven-javadoc-plugin>3.0.1</version-maven-javadoc-plugin>
+        <version-maven-jxr-plugin>2.5</version-maven-jxr-plugin>
+        <version-maven-surefire-plugin>2.22.0</version-maven-surefire-plugin>
+        <version-maven-surefire-report-plugin>${version-maven-surefire-plugin}</version-maven-surefire-report-plugin>
+        <version-maven-project-info-reports-plugin>3.0.0</version-maven-project-info-reports-plugin>
+        <version-maven-checkstyle-plugin>3.0.0</version-maven-checkstyle-plugin>
+        <version-taglist-maven-plugin>2.4</version-taglist-maven-plugin>
+        <version-maven-antrun-plugin>1.8</version-maven-antrun-plugin>
+        <version-enunciate-maven-plugin>2.9.1</version-enunciate-maven-plugin>
+        <version-maven-changelog-plugin>2.3</version-maven-changelog-plugin>
+        <version-build-helper-maven-plugin>3.0.0</version-build-helper-maven-plugin>
+        <version-asciidoctor-maven-plugin>1.5.6</version-asciidoctor-maven-plugin>
         <version-maven-gpg-plugin>1.6</version-maven-gpg-plugin>
         <version-nexus-staging-maven-plugin>1.6.7</version-nexus-staging-maven-plugin>
     </properties>
@@ -154,12 +129,12 @@
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>
                 <artifactId>wagon-ssh</artifactId>
-                <version>${dependency-version-maven-wagon-ssh}</version>
+                <version>${version-maven-wagon-ssh}</version>
             </extension>
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>
                 <artifactId>wagon-http</artifactId>
-                <version>${dependency-version-maven-wagon-ssh}</version>
+                <version>${version-maven-wagon-ssh}</version>
             </extension>
         </extensions>
 
@@ -183,7 +158,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>${plugin-version-maven-compiler-plugin}</version>
+                    <version>${version-maven-compiler-plugin}</version>
                     <configuration>
                         <source>${property-java-compiler-source-level}</source>
                         <target>${property-java-compiler-compliance-level}</target>
@@ -194,7 +169,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
-                    <version>${plugin-version-maven-resources-plugin}</version>
+                    <version>${version-maven-resources-plugin}</version>
                     <configuration>
                         <encoding>${project.build.sourceEncoding}</encoding>
                     </configuration>
@@ -203,7 +178,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
-                    <version>${plugin-version-maven-source-plugin}</version>
+                    <version>${version-maven-source-plugin}</version>
                     <executions>
                         <execution>
                             <id>attach-sources</id>
@@ -218,7 +193,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>${plugin-version-maven-javadoc-plugin}</version>
+                    <version>${version-maven-javadoc-plugin}</version>
                     <configuration>
                         <!-- Default configuration for all executions -->
                         <outputDirectory>${project.build.directory}/javadocs</outputDirectory>
@@ -240,7 +215,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
-                    <version>${plugin-version-maven-assembly-plugin}</version>
+                    <version>${version-maven-assembly-plugin}</version>
                     <configuration>
                         <descriptorSourceDirectory>${project.basedir}/src/main/assemblies</descriptorSourceDirectory>
                     </configuration>
@@ -271,13 +246,13 @@
                         <dependency>
                             <groupId>com.github.nruzic.commons.assemblies</groupId>
                             <artifactId>nruzic-commons-assemblies</artifactId>
-                            <version>${dependency-version-nruzic-commons-assemblies}</version>
+                            <version>${version-nruzic-commons-assemblies}</version>
                         </dependency>
                         <!-- ignoring missing filter file === BEGINING === -->
                         <dependency>
                             <groupId>org.apache.maven.shared</groupId>
                             <artifactId>maven-filtering</artifactId>
-                            <version>${dependency-version-maven-filtering}</version>
+                            <version>${version-maven-filtering}</version>
                             <classifier>OVERRIDED</classifier>
                             <type>jar</type>
                             <optional>true</optional>
@@ -287,7 +262,7 @@
                         <dependency>
                             <groupId>com.github.nruzic.org.apache.maven.shared</groupId>
                             <artifactId>maven-filtering</artifactId>
-                            <version>${dependency-version-maven-filtering}</version>
+                            <version>${version-maven-filtering}</version>
                         </dependency>
                         <!-- ignoring missing filter file === END === -->
                     </dependencies>
@@ -296,7 +271,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
-                    <version>${plugin-version-maven-site-plugin}</version>
+                    <version>${version-maven-site-plugin}</version>
                     <configuration>
                         <stagingDirectory>${project-site-stage-dir}</stagingDirectory>
                         <asciidoc>
@@ -322,7 +297,7 @@
                             <!-- add support for ssh/scp -->
                             <groupId>org.apache.maven.wagon</groupId>
                             <artifactId>wagon-ssh</artifactId>
-                            <version>${dependency-version-maven-wagon-ssh}</version>
+                            <version>${version-maven-wagon-ssh}</version>
                             <exclusions>
                                 <!-- ecxluding jsch, v.0.1.50 does not work 
                                     with recent ssh servers (key exchange issue) -->
@@ -337,13 +312,13 @@
                         <dependency>
                             <groupId>com.jcraft</groupId>
                             <artifactId>jsch</artifactId>
-                            <version>${dependency-version-jsch}</version>
+                            <version>${version-jsch}</version>
                         </dependency>
                         <!-- adoc support -->
                         <dependency>
                             <groupId>org.asciidoctor</groupId>
                             <artifactId>asciidoctor-maven-plugin</artifactId>
-                            <version>${plugin-version-asciidoctor-maven-plugin}</version>
+                            <version>${version-asciidoctor-maven-plugin}</version>
                         </dependency>
                         <!-- add support for markdown syntax -->
                         <dependency>
@@ -365,12 +340,12 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>${plugin-version-maven-checkstyle-plugin}</version>
+                    <version>${version-maven-checkstyle-plugin}</version>
                     <dependencies>
                         <dependency>
                             <groupId>com.github.nruzic.commons.conventions</groupId>
                             <artifactId>nruzic-commons-conventions</artifactId>
-                            <version>${dependency-version-nruzic-commons-conventions}</version>
+                            <version>${version-nruzic-commons-conventions}</version>
                         </dependency>
                     </dependencies>
                     <configuration>
@@ -394,7 +369,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>${plugin-version-build-helper-maven-plugin}</version>
+                    <version>${version-build-helper-maven-plugin}</version>
                     <executions>
                         <execution>
                             <id>add-timestamp-property</id>
@@ -462,7 +437,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-antrun-plugin</artifactId>
-                    <version>${plugin-version-maven-antrun-plugin}</version>
+                    <version>${version-maven-antrun-plugin}</version>
                     <executions>
                         <execution>
                             <id>sources-fix-eol</id>
@@ -501,8 +476,14 @@
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${version-maven-surefire-plugin}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>${plugin-version-maven-failsafe-plugin}</version>
+                    <version>${version-maven-failsafe-plugin}</version>
                     <configuration>
                         <forkMode>once</forkMode>
                         <argLine>-Xmx512M -XX:MaxPermSize=256M
@@ -521,7 +502,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-dependency-plugin</artifactId>
-                    <version>${plugin-version-maven-dependency-plugin}</version>
+                    <version>${version-maven-dependency-plugin}</version>
                     <configuration>
                         <reResolve>false</reResolve>
                         <resolutionFuzziness>version</resolutionFuzziness>
@@ -540,7 +521,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-release-plugin</artifactId>
-                    <version>${plugin-version-maven-release-plugin}</version>
+                    <version>${version-maven-release-plugin}</version>
                     <configuration>
                         <!-- automatically assign parent version to submodules 
                             if submodule is not specifying it's own version -->
@@ -606,7 +587,7 @@
                 <plugin>
                     <groupId>com.webcohesion.enunciate</groupId>
                     <artifactId>enunciate-maven-plugin</artifactId>
-                    <version>${plugin-version-enunciate-maven-plugin}</version>
+                    <version>${version-enunciate-maven-plugin}</version>
                     <executions>
                         <execution>
                             <goals>
@@ -624,13 +605,13 @@
                         <dependency>
                             <groupId>org.codehaus.plexus</groupId>
                             <artifactId>plexus-utils</artifactId>
-                            <version>${dependency-version-plexus-utils}</version>
+                            <version>${version-plexus-utils}</version>
                         </dependency>
                         <!-- ignoring missing filter file === BEGINING === -->
                         <dependency>
                             <groupId>org.apache.maven.shared</groupId>
                             <artifactId>maven-filtering</artifactId>
-                            <version>${dependency-version-maven-filtering}</version>
+                            <version>${version-maven-filtering}</version>
                             <classifier>OVERRIDED</classifier>
                             <type>jar</type>
                             <optional>true</optional>
@@ -640,7 +621,7 @@
                         <dependency>
                             <groupId>com.github.nruzic.org.apache.maven.shared</groupId>
                             <artifactId>maven-filtering</artifactId>
-                            <version>${dependency-version-maven-filtering}</version>
+                            <version>${version-maven-filtering}</version>
                         </dependency>
                         <!-- ignoring missing filter file === END === -->
                     </dependencies>
@@ -670,7 +651,7 @@
                 <plugin>
                     <groupId>org.asciidoctor</groupId>
                     <artifactId>asciidoctor-maven-plugin</artifactId>
-                    <version>${plugin-version-asciidoctor-maven-plugin}</version>
+                    <version>${version-asciidoctor-maven-plugin}</version>
                     <configuration>
                         <sourceDirectory>${project.basedir}/src/main/doc/adoc</sourceDirectory>
                         <relativeBaseDir>true</relativeBaseDir>
@@ -859,7 +840,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>${plugin-version-maven-project-info-reports-plugin}</version>
+                <version>${version-maven-project-info-reports-plugin}</version>
                 <configuration>
                     <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
                     <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
@@ -868,7 +849,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>${plugin-version-maven-surefire-report-plugin}</version>
+                <version>${version-maven-surefire-report-plugin}</version>
                 <configuration>
                     <aggregate>true</aggregate>
                 </configuration>
@@ -890,7 +871,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${plugin-version-maven-javadoc-plugin}</version>
+                <version>${version-maven-javadoc-plugin}</version>
                 <configuration>
                     <!-- Default configuration for all reports -->
                     <outputDirectory>${project.build.directory}/javadocs</outputDirectory>
@@ -920,12 +901,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
-                <version>${plugin-version-maven-jxr-plugin}</version>
+                <version>${version-maven-jxr-plugin}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>${plugin-version-maven-checkstyle-plugin}</version>
+                <version>${version-maven-checkstyle-plugin}</version>
                 <configuration>
                     <configLocation>${conventions-checkstyle-config}</configLocation>
                 </configuration>
@@ -933,7 +914,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>taglist-maven-plugin</artifactId>
-                <version>${plugin-version-taglist-maven-plugin}</version>
+                <version>${version-taglist-maven-plugin}</version>
                 <configuration>
                     <aggregate>true</aggregate>
                 </configuration>
@@ -941,7 +922,7 @@
             <plugin>
                 <groupId>com.webcohesion.enunciate</groupId>
                 <artifactId>enunciate-maven-plugin</artifactId>
-                <version>${plugin-version-enunciate-maven-plugin}</version>
+                <version>${version-enunciate-maven-plugin}</version>
                 <configuration>
                     <!-- The subdirectory of the site where the documentation 
                         will be put. -->
@@ -953,7 +934,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-changelog-plugin</artifactId>
-                <version>${plugin-version-maven-changelog-plugin}</version>
+                <version>${version-maven-changelog-plugin}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
