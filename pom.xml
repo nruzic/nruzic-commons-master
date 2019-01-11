@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<!-- ============================================================================================================== -->
+<!--                                                                                                                -->
+<!-- Copyright 2019 Nikola Ruzic                                                                                    -->
+<!--                                                                                                                -->
+<!-- Permission is hereby granted, free of charge, to any person obtaining a copy of this software                  -->
+<!-- and associated documentation files (the "Software"), to deal in the Software without restriction,              -->
+<!-- including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,          -->
+<!-- and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,          -->
+<!-- subject to the following conditions:                                                                           -->
+<!--                                                                                                                -->
+<!-- The above copyright notice and this permission notice shall be included in all copies or substantial           -->
+<!-- portions of the Software.                                                                                      -->
+<!--                                                                                                                -->
+<!-- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING                  -->
+<!-- BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.    -->
+<!-- IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,        -->
+<!-- WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE   -->
+<!-- OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                                                  -->
+<!--                                                                                                                -->
+<!-- ============================================================================================================== -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -7,6 +28,7 @@
     <artifactId>nruzic-commons-master</artifactId>
     <version>2.0.3-SNAPSHOT</version>
     <packaging>pom</packaging>
+
     <name>nruzic commons master</name>
     <description>Common POM definitions for java projects</description>
     <url>${project-site-url}</url>
@@ -32,26 +54,44 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <property-java-compiler-source-level>1.8</property-java-compiler-source-level>
-        <property-java-compiler-compliance-level>${property-java-compiler-source-level}</property-java-compiler-compliance-level>
+        <property-java-compiler-compliance-level>
+            ${property-java-compiler-source-level}
+        </property-java-compiler-compliance-level>
         <assemblies-bin-distribution-base-directory>${project-name}</assemblies-bin-distribution-base-directory>
         <assembly.id>bin</assembly.id> <!-- Default assembly id -->
-        <conventions-checkstyle-config>hr/nruzic/commons/conventions/checkstyle/allman-ansi-checks.xml</conventions-checkstyle-config>
-        <conventions-checkstyle-suppressions>hr/nruzic/commons/conventions/checkstyle/checkstyle-suppressions.xml</conventions-checkstyle-suppressions>
-        <conventions-eclipse-formatter>hr/nruzic/commons/conventions/eclipse/formatter/allman-ansi-eclipse-formatter.xml</conventions-eclipse-formatter>
+        <conventions-checkstyle-config>
+            hr/nruzic/commons/conventions/checkstyle/allman-ansi-checks.xml
+        </conventions-checkstyle-config>
+        <conventions-checkstyle-suppressions>
+            hr/nruzic/commons/conventions/checkstyle/checkstyle-suppressions.xml
+        </conventions-checkstyle-suppressions>
+        <conventions-eclipse-formatter>
+            hr/nruzic/commons/conventions/eclipse/formatter/allman-ansi-eclipse-formatter.xml
+        </conventions-eclipse-formatter>
 
         <!-- repository locations -->
         <internal-maven-repository-schema>http</internal-maven-repository-schema>
         <internal-maven-repository-host>localhost</internal-maven-repository-host>
         <internal-maven-repository-port>80</internal-maven-repository-port>
-        <internal-maven-repository-server>${internal-maven-repository-schema}://${internal-maven-repository-host}:${internal-maven-repository-port}</internal-maven-repository-server>
+        <internal-maven-repository-server>
+            ${internal-maven-repository-schema}://${internal-maven-repository-host}:${internal-maven-repository-port}
+        </internal-maven-repository-server>
         <internal-maven-repository-web>${internal-maven-repository-server}/</internal-maven-repository-web>
         <internal-maven-repository-basepath>repositories</internal-maven-repository-basepath>
         <internal-maven-repository-name>libs-release</internal-maven-repository-name>
         <internal-maven-repository-releases-name>libs-release-local</internal-maven-repository-releases-name>
         <internal-maven-repository-snapshots-name>libs-snapshot-local</internal-maven-repository-snapshots-name>
-        <internal-maven-repository-url>${internal-maven-repository-server}/${internal-maven-repository-basepath}/${internal-maven-repository-name}</internal-maven-repository-url>
-        <internal-releases-maven-repository-url>${internal-maven-repository-server}/${internal-maven-repository-basepath}/${internal-maven-repository-releases-name}</internal-releases-maven-repository-url>
-        <internal-snapshots-maven-repository-url>${internal-maven-repository-server}/${internal-maven-repository-basepath}/${internal-maven-repository-snapshots-name}</internal-snapshots-maven-repository-url>
+        <internal-maven-repository-url>
+            ${internal-maven-repository-server}/${internal-maven-repository-basepath}/${internal-maven-repository-name}
+        </internal-maven-repository-url>
+        <!-- CHECKSTYLE:OFF -->
+        <internal-releases-maven-repository-url>
+            ${internal-maven-repository-server}/${internal-maven-repository-basepath}/${internal-maven-repository-releases-name}
+        </internal-releases-maven-repository-url>
+        <internal-snapshots-maven-repository-url>
+            ${internal-maven-repository-server}/${internal-maven-repository-basepath}/${internal-maven-repository-snapshots-name}
+        </internal-snapshots-maven-repository-url>
+        <!-- CHECKSTYLE:ON -->
 
         <!-- site locations -->
         <project-site-id>local-site</project-site-id>
@@ -59,11 +99,21 @@
         <project-site-host>localhost</project-site-host>
         <project-site-basepath>project</project-site-basepath>
         <project-site-protocol>http</project-site-protocol>
-        <project-site-url>${project-site-protocol}://${project-site-host}/${project-site-basepath}/${project-name}/${project-version}/${branch}</project-site-url>
+        <!-- CHECKSTYLE:OFF -->
+        <project-site-url>
+            ${project-site-protocol}://${project-site-host}/${project-site-basepath}/${project-name}/${project-version}/${branch}
+        </project-site-url>
+        <!-- CHECKSTYLE:ON -->
         <project-site-deploy-protocol>scp</project-site-deploy-protocol>
         <project-site-deploy-basepath>var/www/html/project</project-site-deploy-basepath>
-        <project-site-deploy-url>${project-site-deploy-protocol}://${project-site-host}/${project-site-deploy-basepath}/${project-name}/${project-version}/${branch}</project-site-deploy-url>
-        <project-site-stage-dir>${project-home}/site-stage/${project-name}/${project-version}/${branch}</project-site-stage-dir>
+        <!-- CHECKSTYLE:OFF -->
+        <project-site-deploy-url>
+            ${project-site-deploy-protocol}://${project-site-host}/${project-site-deploy-basepath}/${project-name}/${project-version}/${branch}
+        </project-site-deploy-url>
+        <!-- CHECKSTYLE:ON -->
+        <project-site-stage-dir>
+            ${project-home}/site-stage/${project-name}/${project-version}/${branch}
+        </project-site-stage-dir>
 
         <!-- continous integration software locations -->
         <continuous-integration-managament-url>https://localhost</continuous-integration-managament-url>
@@ -73,7 +123,7 @@
         <issue-management-url>https://localhost</issue-management-url>
 
         <!-- dependencies -->
-        <version-nruzic-commons-conventions>2.0.1</version-nruzic-commons-conventions>
+        <version-nruzic-commons-conventions>2.0.2</version-nruzic-commons-conventions>
         <version-nruzic-commons-assemblies>1.0.0</version-nruzic-commons-assemblies>
         <version-maven-wagon>3.2.0</version-maven-wagon>
         <version-maven-filtering>3.1.2</version-maven-filtering>
@@ -339,7 +389,7 @@
                         <!-- Default configuration for all executions -->
                         <outputDirectory>${project.build.directory}/javadocs</outputDirectory>
                         <reportOutputDirectory>${project.reporting.outputDirectory}/javadocs</reportOutputDirectory>
-                        <!-- Workaround for http://stackoverflow.com/questions/15886209/maven-is-not-working-in-java-8-when-javadoc-tags-are-incomplete -->
+                        <!-- Workaround for http://stackoverflow.com/questions/15886209 -->
                         <additionalparam>${javadoc.opts}</additionalparam>
                     </configuration>
                     <executions>
@@ -490,8 +540,9 @@
                             <version>1.8</version>
                         </dependency>
                         <!-- Fixing java.lang.NoClassDefFoundError: org/apache/maven/doxia/sink/impl/XhtmlBaseSink
-                            error due to the introduction of asciidoctor maven plugin. For more info
-                            take a look at http://maven.40175.n5.nabble.com/maven-site-plugin-3-5-ClassNotFoundException-td5862952.html -->
+                        error due to the introduction of asciidoctor maven plugin. For more info take a look at
+                        http://maven.40175.n5.nabble.com/maven-site-plugin-3-5-ClassNotFoundException-td5862952.html
+                        -->
                         <dependency>
                             <groupId>org.apache.maven.doxia</groupId>
                             <artifactId>doxia-core</artifactId>
@@ -510,18 +561,13 @@
                         <failOnViolation>true</failOnViolation>
                         <!-- Summarize broken rules -->
                         <logViolationsToConsole>true</logViolationsToConsole>
-                        <!-- Add test/it sources to check process, main sources are included by default -->
-                        <includeTestSourceDirectory>true</includeTestSourceDirectory>
-                        <!-- Define test sources explicitly because default ${project.testCompileSourceRoots} is not enough -->
-                        <testSourceDirectories>src/test/java,src/it/java</testSourceDirectories>
-                        <!-- Files to check in main and test/it sources -->
+                        <!-- location of the source directories to be used for Checkstyle.
+                             Expand check to whole project base directory because
+                             default ${project.compileSourceRoots} is not enough -->
+                        <sourceDirectories>${project.basedir}</sourceDirectories>
+                        <!-- Check all files in source directory,
+                             and use suppression definition for exclusions -->
                         <includes>**\/*</includes>
-                        <!-- Add main resources to check process -->
-                        <includeResources>true</includeResources>
-                        <!-- Add test/it resources to check process -->
-                        <includeTestResources>true</includeTestResources>
-                        <!-- Files to check in main and test/it resources -->
-                        <resourceIncludes>**\/*</resourceIncludes>
                         <!-- Location of suppressions file -->
                         <suppressionsLocation>${conventions-checkstyle-suppressions}</suppressionsLocation>
                         <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
@@ -717,8 +763,10 @@
                             </goals>
                             <phase>generate-resources</phase>
                             <configuration>
+                                <!-- CHECKSTYLE:OFF -->
                                 <swaggerInput>${project.build.directory}/enunciate-docs/apidocs/ui/swagger.json</swaggerInput>
                                 <outputFile>${project.build.directory}/doc/adoc/${project.build.finalName}-swagger</outputFile>
+                                <!-- CHECKSTYLE:ON -->
                                 <config>
                                     <swagger2markup.swaggerMarkupLanguage>HTML</swagger2markup.swaggerMarkupLanguage>
                                     <swagger2markup.markupLanguage>ASCIIDOC</swagger2markup.markupLanguage>
@@ -1328,7 +1376,8 @@
                                     <phase>process-sources</phase>
                                     <configuration>
                                         <target>
-                                            <replaceregexp match="\s+$" replace="" byline="true" encoding="UTF-8">
+                                            <replaceregexp match="\s+$" replace="" byline="true"
+                                                encoding="UTF-8">
                                                 <fileset dir="${project.basedir}" erroronmissingdir="false">
                                                     <include name="*" />
                                                 </fileset>
@@ -1344,8 +1393,10 @@
                                     <phase>process-sources</phase>
                                     <configuration>
                                         <target>
-                                            <replaceregexp match="\s+$" replace="" byline="true" encoding="UTF-8">
-                                                <fileset dir="${project.basedir}/src/main" erroronmissingdir="false">
+                                            <replaceregexp match="\s+$" replace="" byline="true"
+                                                encoding="UTF-8">
+                                                <fileset dir="${project.basedir}/src/main"
+                                                    erroronmissingdir="false">
                                                     <include name="java/**/*" />
                                                     <include name="aspect/**/*" />
                                                 </fileset>
@@ -1361,8 +1412,10 @@
                                     <phase>process-resources</phase>
                                     <configuration>
                                         <target>
-                                            <replaceregexp match="\s+$" replace="" byline="true" encoding="UTF-8">
-                                                <fileset dir="${project.basedir}/src/main" erroronmissingdir="false">
+                                            <replaceregexp match="\s+$" replace="" byline="true"
+                                                encoding="UTF-8">
+                                                <fileset dir="${project.basedir}/src/main"
+                                                    erroronmissingdir="false">
                                                     <include name="**/*" />
                                                     <exclude name="java/**/*" />
                                                     <exclude name="aspect/**/*" />
@@ -1379,8 +1432,10 @@
                                     <phase>process-test-sources</phase>
                                     <configuration>
                                         <target>
-                                            <replaceregexp match="\s+$" replace="" byline="true" encoding="UTF-8">
-                                                <fileset dir="${project.basedir}/src/test" erroronmissingdir="false">
+                                            <replaceregexp match="\s+$" replace="" byline="true"
+                                                encoding="UTF-8">
+                                                <fileset dir="${project.basedir}/src/test"
+                                                    erroronmissingdir="false">
                                                     <include name="java/**/*" />
                                                     <include name="aspect/**/*" />
                                                 </fileset>
@@ -1396,8 +1451,10 @@
                                     <phase>process-test-resources</phase>
                                     <configuration>
                                         <target>
-                                            <replaceregexp match="\s+$" replace="" byline="true" encoding="UTF-8">
-                                                <fileset dir="${project.basedir}/src/test" erroronmissingdir="false">
+                                            <replaceregexp match="\s+$" replace="" byline="true"
+                                                encoding="UTF-8">
+                                                <fileset dir="${project.basedir}/src/test"
+                                                    erroronmissingdir="false">
                                                     <include name="**/*" />
                                                     <exclude name="java/**/*" />
                                                     <exclude name="aspect/**/*" />
@@ -1414,8 +1471,10 @@
                                     <phase>process-test-sources</phase>
                                     <configuration>
                                         <target>
-                                            <replaceregexp match="\s+$" replace="" byline="true" encoding="UTF-8">
-                                                <fileset dir="${project.basedir}/src/it" erroronmissingdir="false">
+                                            <replaceregexp match="\s+$" replace="" byline="true"
+                                                encoding="UTF-8">
+                                                <fileset dir="${project.basedir}/src/it"
+                                                    erroronmissingdir="false">
                                                     <include name="java/**/*" />
                                                     <include name="aspect/**/*" />
                                                 </fileset>
@@ -1431,8 +1490,10 @@
                                     <phase>process-test-resources</phase>
                                     <configuration>
                                         <target>
-                                            <replaceregexp match="\s+$" replace="" byline="true" encoding="UTF-8">
-                                                <fileset dir="${project.basedir}/src/it" erroronmissingdir="false">
+                                            <replaceregexp match="\s+$" replace="" byline="true"
+                                                encoding="UTF-8">
+                                                <fileset dir="${project.basedir}/src/it"
+                                                    erroronmissingdir="false">
                                                     <include name="**/*" />
                                                     <exclude name="java/**/*" />
                                                     <exclude name="aspect/**/*" />
@@ -1449,7 +1510,8 @@
                                     <phase>prepare-package</phase>
                                     <configuration>
                                         <target>
-                                            <replaceregexp match="\s+$" replace="" byline="true" encoding="UTF-8">
+                                            <replaceregexp match="\s+$" replace="" byline="true"
+                                                encoding="UTF-8">
                                                 <fileset dir="${project.basedir}/src" erroronmissingdir="false">
                                                     <include name="**/*" />
                                                     <exclude name="main/**/*" />
@@ -1469,7 +1531,8 @@
                                     <phase>process-sources</phase>
                                     <configuration>
                                         <target>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
+                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true">
                                                 <patternset>
                                                     <include name="*" />
                                                     <exclude name="*.bat" />
@@ -1480,7 +1543,9 @@
                                                     <exclude name="*.SH" />
                                                 </patternset>
                                             </fixcrlf>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="lf">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
+                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true"
+                                                eol="lf">
                                                 <patternset>
                                                     <include name="*.bsh" />
                                                     <include name="*.BSH" />
@@ -1488,7 +1553,9 @@
                                                     <include name="*.SH" />
                                                 </patternset>
                                             </fixcrlf>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="crlf">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
+                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true"
+                                                eol="crlf">
                                                 <patternset>
                                                     <include name="*.bat" />
                                                     <include name="*.BAT" />
@@ -1505,7 +1572,9 @@
                                     <phase>process-sources</phase>
                                     <configuration>
                                         <target>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" javafiles="yes">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
+                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true"
+                                                javafiles="yes">
                                                 <patternset>
                                                     <include name="src/main/**/*.java" />
                                                     <include name="src/main/**/*.JAVA" />
@@ -1522,7 +1591,8 @@
                                     <phase>process-resources</phase>
                                     <configuration>
                                         <target>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
+                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true">
                                                 <patternset>
                                                     <include name="src/main/**/*" />
                                                     <exclude name="src/main/**/*.java" />
@@ -1535,7 +1605,9 @@
                                                     <exclude name="src/main/**/*.SH" />
                                                 </patternset>
                                             </fixcrlf>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="lf">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
+                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true"
+                                                eol="lf">
                                                 <patternset>
                                                     <include name="src/main/**/*.bsh" />
                                                     <include name="src/main/**/*.BSH" />
@@ -1543,7 +1615,9 @@
                                                     <include name="src/main/**/*.SH" />
                                                 </patternset>
                                             </fixcrlf>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="crlf">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
+                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true"
+                                                eol="crlf">
                                                 <patternset>
                                                     <include name="src/main/**/*.bat" />
                                                     <include name="src/main/**/*.BAT" />
@@ -1560,7 +1634,9 @@
                                     <phase>process-test-sources</phase>
                                     <configuration>
                                         <target>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" javafiles="yes">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
+                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true"
+                                                javafiles="yes">
                                                 <patternset>
                                                     <include name="src/test/**/*.java" />
                                                     <include name="src/test/**/*.JAVA" />
@@ -1577,7 +1653,8 @@
                                     <phase>process-test-resources</phase>
                                     <configuration>
                                         <target>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
+                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true">
                                                 <patternset>
                                                     <include name="src/test/**/*" />
                                                     <exclude name="src/test/**/*.java" />
@@ -1590,7 +1667,9 @@
                                                     <exclude name="src/test/**/*.SH" />
                                                 </patternset>
                                             </fixcrlf>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="lf">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
+                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true"
+                                                eol="lf">
                                                 <patternset>
                                                     <include name="src/test/**/*.bsh" />
                                                     <include name="src/test/**/*.BSH" />
@@ -1598,7 +1677,9 @@
                                                     <include name="src/test/**/*.SH" />
                                                 </patternset>
                                             </fixcrlf>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="crlf">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
+                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true"
+                                                eol="crlf">
                                                 <patternset>
                                                     <include name="src/test/**/*.bat" />
                                                     <include name="src/test/**/*.BAT" />
@@ -1615,7 +1696,9 @@
                                     <phase>process-test-sources</phase>
                                     <configuration>
                                         <target>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" javafiles="yes">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
+                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true"
+                                                javafiles="yes">
                                                 <patternset>
                                                     <include name="src/it/**/*.java" />
                                                     <include name="src/it/**/*.JAVA" />
@@ -1632,7 +1715,8 @@
                                     <phase>process-test-resources</phase>
                                     <configuration>
                                         <target>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
+                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true">
                                                 <patternset>
                                                     <include name="src/it/**/*" />
                                                     <exclude name="src/it/**/*.java" />
@@ -1645,7 +1729,9 @@
                                                     <exclude name="src/it/**/*.SH" />
                                                 </patternset>
                                             </fixcrlf>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="lf">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
+                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true"
+                                                eol="lf">
                                                 <patternset>
                                                     <include name="src/it/**/*.bsh" />
                                                     <include name="src/it/**/*.BSH" />
@@ -1653,7 +1739,9 @@
                                                     <include name="src/it/**/*.SH" />
                                                 </patternset>
                                             </fixcrlf>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="crlf">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
+                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true"
+                                                eol="crlf">
                                                 <patternset>
                                                     <include name="src/it/**/*.bat" />
                                                     <include name="src/it/**/*.BAT" />
@@ -1670,7 +1758,8 @@
                                     <phase>prepare-package</phase>
                                     <configuration>
                                         <target>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
+                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true">
                                                 <patternset>
                                                     <include name="src/**/*" />
                                                     <exclude name="src/main/**/*" />
@@ -1686,7 +1775,9 @@
                                                     <exclude name="src/**/*.SH" />
                                                 </patternset>
                                             </fixcrlf>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="lf">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
+                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true"
+                                                eol="lf">
                                                 <patternset>
                                                     <include name="src/**/*.bsh" />
                                                     <include name="src/**/*.BSH" />
@@ -1697,7 +1788,9 @@
                                                     <exclude name="src/it/**/*" />
                                                 </patternset>
                                             </fixcrlf>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="crlf">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
+                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true"
+                                                eol="crlf">
                                                 <patternset>
                                                     <include name="src/**/*.bat" />
                                                     <include name="src/**/*.BAT" />
