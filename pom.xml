@@ -1772,29 +1772,6 @@
                         <groupId>net.revelc.code</groupId>
                         <artifactId>impsort-maven-plugin</artifactId>
                     </plugin>
-                    <plugin>
-                        <groupId>au.com.acegi</groupId>
-                        <artifactId>xml-format-maven-plugin</artifactId>
-                        <version>3.0.7</version>
-                        <executions>
-                            <execution>
-                                <id>format-xml</id>
-                                <goals>
-                                    <goal>xml-format</goal>
-                                </goals>
-                                <phase>prepare-package</phase>
-                                <configuration>
-                                    <indentSize>4</indentSize>
-                                    <lineEnding>SYSTEM</lineEnding>
-                                    <includes>
-                                        <include>**/*.xml</include>
-                                        <include>**/*.xsd</include>
-                                        <include>**/*.wadl</include>
-                                    </includes>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
                 </plugins>
             </build>
         </profile>
