@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
     <name>nruzic commons master</name>
     <description>Common POM definitions for java projects</description>
-    <url>${project-web}</url>
+    <url>${project-site-url}</url>
 
     <licenses>
         <license>
@@ -17,24 +17,6 @@
             <url>http://www.opensource.org/licenses/mit-license.php</url>
         </license>
     </licenses>
-
-    <scm>
-        <url>http://github.com/nruzic/nruzic-commons-master</url>
-        <connection>scm:git:http://github.com/nruzic/nruzic-commons-master</connection>
-        <developerConnection>scm:git:git@github.com:nruzic/nruzic-commons-master</developerConnection>
-        <tag>HEAD</tag>
-    </scm>
-
-    <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh-snapshot-repo</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>ossrh-staging-repo</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-    </distributionManagement>
 
     <properties>
         <!-- project defaults -->
@@ -54,6 +36,8 @@
         <assemblies-bin-distribution-base-directory>${project-name}</assemblies-bin-distribution-base-directory>
         <assembly.id>bin</assembly.id> <!-- Default assembly id -->
         <conventions-checkstyle-config>hr/nruzic/commons/conventions/checkstyle/allman-ansi-checks.xml</conventions-checkstyle-config>
+        <conventions-checkstyle-suppressions>hr/nruzic/commons/conventions/checkstyle/checkstyle-suppressions.xml</conventions-checkstyle-suppressions>
+        <conventions-eclipse-formatter>hr/nruzic/commons/conventions/eclipse/formatter/allman-ansi-eclipse-formatter.xml</conventions-eclipse-formatter>
 
         <!-- repository locations -->
         <internal-maven-repository-schema>http</internal-maven-repository-schema>
@@ -61,55 +45,88 @@
         <internal-maven-repository-port>80</internal-maven-repository-port>
         <internal-maven-repository-server>${internal-maven-repository-schema}://${internal-maven-repository-host}:${internal-maven-repository-port}</internal-maven-repository-server>
         <internal-maven-repository-web>${internal-maven-repository-server}/</internal-maven-repository-web>
-        <internal-maven-repository-basepath>content/repositories</internal-maven-repository-basepath>
-        <internal-maven-repository-name>3pp</internal-maven-repository-name>
-        <internal-maven-repository-releases-name>releases</internal-maven-repository-releases-name>
-        <internal-maven-repository-snapshots-name>${project-branch}-snapshots</internal-maven-repository-snapshots-name>
-        <internal-maven-repository-url>${internal-maven-repository-server}/content/groups/${internal-maven-repository-name}</internal-maven-repository-url>
-        <internal-releases-maven-repository-url>${internal-maven-repository-server}/content/repositories/${internal-maven-repository-releases-name}</internal-releases-maven-repository-url>
-        <internal-snapshots-maven-repository-url>${internal-maven-repository-server}/content/repositories/${internal-maven-repository-snapshots-name}</internal-snapshots-maven-repository-url>
+        <internal-maven-repository-basepath>repositories</internal-maven-repository-basepath>
+        <internal-maven-repository-name>libs-release</internal-maven-repository-name>
+        <internal-maven-repository-releases-name>libs-release-local</internal-maven-repository-releases-name>
+        <internal-maven-repository-snapshots-name>libs-snapshot-local</internal-maven-repository-snapshots-name>
+        <internal-maven-repository-url>${internal-maven-repository-server}/${internal-maven-repository-basepath}/${internal-maven-repository-name}</internal-maven-repository-url>
+        <internal-releases-maven-repository-url>${internal-maven-repository-server}/${internal-maven-repository-basepath}/${internal-maven-repository-releases-name}</internal-releases-maven-repository-url>
+        <internal-snapshots-maven-repository-url>${internal-maven-repository-server}/${internal-maven-repository-basepath}/${internal-maven-repository-snapshots-name}</internal-snapshots-maven-repository-url>
 
         <!-- site locations -->
-        <project-web>https://localhost/project-site/${project-name}/${project-version}</project-web>
-        <project-site-deploy-url>file://${project-home}/project-site/${project-name}/${project-version}</project-site-deploy-url>
-        <project-site-stage-dir>${project-home}/project-site/${project-name}/${project-version}</project-site-stage-dir>
+        <project-site-id>local-site</project-site-id>
+        <project-site-name>Projects Internal Site </project-site-name>
+        <project-site-host>localhost</project-site-host>
+        <project-site-basepath>project</project-site-basepath>
+        <project-site-protocol>http</project-site-protocol>
+        <project-site-url>${project-site-protocol}://${project-site-host}/${project-site-basepath}/${project-name}/${project-version}/${branch}</project-site-url>
+        <project-site-deploy-protocol>scp</project-site-deploy-protocol>
+        <project-site-deploy-basepath>var/www/html/project</project-site-deploy-basepath>
+        <project-site-deploy-url>${project-site-deploy-protocol}://${project-site-host}/${project-site-deploy-basepath}/${project-name}/${project-version}/${branch}</project-site-deploy-url>
+        <project-site-stage-dir>${project-home}/site-stage/${project-name}/${project-version}/${branch}</project-site-stage-dir>
 
         <!-- continous integration software locations -->
         <continuous-integration-managament-url>https://localhost</continuous-integration-managament-url>
 
         <!-- issue management -->
-        <issue-management-url>http://localhost:8080/browse/</issue-management-url>
+        <issue-management-system-name>JIRA</issue-management-system-name>
+        <issue-management-url>https://localhost</issue-management-url>
 
         <!-- dependencies -->
-        <version-jsch>0.1.54</version-jsch>
-        <version-nruzic-commons-conventions>1.0.0</version-nruzic-commons-conventions>
+        <version-nruzic-commons-conventions>2.0.0-SNAPSHOT</version-nruzic-commons-conventions>
         <version-nruzic-commons-assemblies>1.0.0</version-nruzic-commons-assemblies>
-        <version-maven-wagon-ssh>2.10</version-maven-wagon-ssh>
+        <version-maven-wagon>3.2.0</version-maven-wagon>
         <version-maven-filtering>3.1.2</version-maven-filtering>
         <version-plexus-utils>3.0.24</version-plexus-utils>
         <version-maven-compiler-plugin>3.8.0</version-maven-compiler-plugin>
-        <version-maven-resources-plugin>3.0.1</version-maven-resources-plugin>
+        <version-maven-resources-plugin>3.1.0</version-maven-resources-plugin>
         <version-maven-source-plugin>3.0.1</version-maven-source-plugin>
         <version-maven-assembly-plugin>3.1.0</version-maven-assembly-plugin>
-        <version-maven-failsafe-plugin>2.19.1</version-maven-failsafe-plugin>
+        <version-maven-failsafe-plugin>3.0.0-M2</version-maven-failsafe-plugin>
         <version-maven-dependency-plugin>2.10</version-maven-dependency-plugin>
         <version-maven-release-plugin>2.5.3</version-maven-release-plugin>
         <version-maven-site-plugin>3.7.1</version-maven-site-plugin>
         <version-maven-javadoc-plugin>3.0.1</version-maven-javadoc-plugin>
         <version-maven-jxr-plugin>2.5</version-maven-jxr-plugin>
-        <version-maven-surefire-plugin>2.22.0</version-maven-surefire-plugin>
-        <version-maven-surefire-report-plugin>${version-maven-surefire-plugin}</version-maven-surefire-report-plugin>
+        <version-maven-surefire-plugin>3.0.0-M2</version-maven-surefire-plugin>
+        <version-maven-surefire-report-plugin>3.0.0-M2</version-maven-surefire-report-plugin>
         <version-maven-project-info-reports-plugin>3.0.0</version-maven-project-info-reports-plugin>
         <version-maven-checkstyle-plugin>3.0.0</version-maven-checkstyle-plugin>
         <version-taglist-maven-plugin>2.4</version-taglist-maven-plugin>
         <version-maven-antrun-plugin>1.8</version-maven-antrun-plugin>
-        <version-enunciate-maven-plugin>2.9.1</version-enunciate-maven-plugin>
+        <version-enunciate-maven-plugin>2.11.1</version-enunciate-maven-plugin>
         <version-maven-changelog-plugin>2.3</version-maven-changelog-plugin>
         <version-build-helper-maven-plugin>3.0.0</version-build-helper-maven-plugin>
-        <version-asciidoctor-maven-plugin>1.5.6</version-asciidoctor-maven-plugin>
+        <version-asciidoctor-maven-plugin>1.5.7.1</version-asciidoctor-maven-plugin>
         <version-maven-gpg-plugin>1.6</version-maven-gpg-plugin>
         <version-nexus-staging-maven-plugin>1.6.7</version-nexus-staging-maven-plugin>
+        <version-maven-changes-plugin>2.12.1</version-maven-changes-plugin>
+        <version-formatter-maven-plugin>2.8.1</version-formatter-maven-plugin>
+        <version-impsort-maven-plugin>1.2.0</version-impsort-maven-plugin>
     </properties>
+
+    <scm>
+        <url>http://github.com/nruzic/nruzic-commons-master</url>
+        <connection>scm:git:http://github.com/nruzic/nruzic-commons-master</connection>
+        <developerConnection>scm:git:git@github.com:nruzic/nruzic-commons-master</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
+    <issueManagement>
+        <system>${issue-management-system-name}</system>
+        <url>${issue-management-url}</url>
+    </issueManagement>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh-snapshot-repo</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh-staging-repo</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 
     <developers>
         <developer>
@@ -124,19 +141,6 @@
     </developers>
 
     <build>
-        <extensions>
-            <!-- Enabling the use of FTP -->
-            <extension>
-                <groupId>org.apache.maven.wagon</groupId>
-                <artifactId>wagon-ssh</artifactId>
-                <version>${version-maven-wagon-ssh}</version>
-            </extension>
-            <extension>
-                <groupId>org.apache.maven.wagon</groupId>
-                <artifactId>wagon-http</artifactId>
-                <version>${version-maven-wagon-ssh}</version>
-            </extension>
-        </extensions>
 
         <testResources>
             <testResource>
@@ -155,217 +159,6 @@
 
         <pluginManagement>
             <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>${version-maven-compiler-plugin}</version>
-                    <configuration>
-                        <source>${property-java-compiler-source-level}</source>
-                        <target>${property-java-compiler-compliance-level}</target>
-                        <encoding>${project.build.sourceEncoding}</encoding>
-                    </configuration>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-resources-plugin</artifactId>
-                    <version>${version-maven-resources-plugin}</version>
-                    <configuration>
-                        <encoding>${project.build.sourceEncoding}</encoding>
-                    </configuration>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-source-plugin</artifactId>
-                    <version>${version-maven-source-plugin}</version>
-                    <executions>
-                        <execution>
-                            <id>attach-sources</id>
-                            <goals>
-                                <goal>jar</goal>
-                            </goals>
-                            <phase>prepare-package</phase>
-                        </execution>
-                    </executions>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>${version-maven-javadoc-plugin}</version>
-                    <configuration>
-                        <!-- Default configuration for all executions -->
-                        <outputDirectory>${project.build.directory}/javadocs</outputDirectory>
-                        <reportOutputDirectory>${project.reporting.outputDirectory}/javadocs</reportOutputDirectory>
-                        <!-- Workaround for http://stackoverflow.com/questions/15886209/maven-is-not-working-in-java-8-when-javadoc-tags-are-incomplete -->
-                        <additionalparam>${javadoc.opts}</additionalparam>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>attach-javadocs</id>
-                            <goals>
-                                <goal>jar</goal>
-                            </goals>
-                            <phase>prepare-package</phase>
-                        </execution>
-                    </executions>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-assembly-plugin</artifactId>
-                    <version>${version-maven-assembly-plugin}</version>
-                    <configuration>
-                        <descriptorSourceDirectory>${project.basedir}/src/main/assemblies</descriptorSourceDirectory>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>assemble-default-binary-distribution</id>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>single</goal>
-                            </goals>
-                            <configuration>
-                                <descriptorRefs>
-                                    <descriptorRef>bin-default</descriptorRef>
-                                </descriptorRefs>
-                                <filters>
-                                    <filter>${project.basedir}/src/main/filters/target-default.properties</filter>
-                                    <filter>${project.basedir}/src/main/filters/target-production.properties</filter>
-                                    <filter>${project.basedir}/src/main/filters/target-bin.properties</filter>
-                                </filters>
-                                <!-- <finalName>${project.build.finalName}-bin</finalName> 
-                                    <appendAssemblyId>false</appendAssemblyId> -->
-                                <tarLongFileMode>gnu</tarLongFileMode>
-                                <siteDirectory>${project-site-stage-dir}</siteDirectory>
-                            </configuration>
-                        </execution>
-                    </executions>
-                    <dependencies>
-                        <dependency>
-                            <groupId>com.github.nruzic.commons.assemblies</groupId>
-                            <artifactId>nruzic-commons-assemblies</artifactId>
-                            <version>${version-nruzic-commons-assemblies}</version>
-                        </dependency>
-                        <!-- ignoring missing filter file === BEGINING === -->
-                        <dependency>
-                            <groupId>org.apache.maven.shared</groupId>
-                            <artifactId>maven-filtering</artifactId>
-                            <version>${version-maven-filtering}</version>
-                            <classifier>OVERRIDED</classifier>
-                            <type>jar</type>
-                            <optional>true</optional>
-                            <scope>system</scope>
-                            <systemPath>${project.basedir}/pom.xml</systemPath>
-                        </dependency>
-                        <dependency>
-                            <groupId>com.github.nruzic.org.apache.maven.shared</groupId>
-                            <artifactId>maven-filtering</artifactId>
-                            <version>${version-maven-filtering}</version>
-                        </dependency>
-                        <!-- ignoring missing filter file === END === -->
-                    </dependencies>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-site-plugin</artifactId>
-                    <version>${version-maven-site-plugin}</version>
-                    <configuration>
-                        <stagingDirectory>${project-site-stage-dir}</stagingDirectory>
-                        <asciidoc>
-                            <sourceDirectory>${project.basedir}/src/site/asciidoc</sourceDirectory>
-                            <!-- <sourceDocumentName>refdoc.adoc</sourceDocumentName> -->
-                            <!-- <baseDir>${project.basedir}/src/site/asciidoc/users/refdoc</baseDir> -->
-                            <relativeBaseDir>true</relativeBaseDir>
-                            <preserveDirectories>true</preserveDirectories>
-                            <headerFooter>true</headerFooter>
-                            <backend>html</backend>
-                            <doctype>book</doctype>
-                            <attributes>
-                                <project-version>${project.version}</project-version>
-                                <maven-build-timestamp>${maven.build.timestamp}</maven-build-timestamp>
-                            </attributes>
-                        </asciidoc>
-                        <moduleExcludes>
-                            <asciidoc>**/_*.adoc</asciidoc>
-                        </moduleExcludes>
-                    </configuration>
-                    <dependencies>
-                        <dependency>
-                            <!-- add support for ssh/scp -->
-                            <groupId>org.apache.maven.wagon</groupId>
-                            <artifactId>wagon-ssh</artifactId>
-                            <version>${version-maven-wagon-ssh}</version>
-                            <exclusions>
-                                <!-- ecxluding jsch, v.0.1.50 does not work 
-                                    with recent ssh servers (key exchange issue) -->
-                                <exclusion>
-                                    <groupId>com.jcraft</groupId>
-                                    <artifactId>jsch</artifactId>
-                                </exclusion>
-                            </exclusions>
-                        </dependency>
-                        <!-- adding jsch implementation to replace older 
-                            version from wagon-ssh -->
-                        <dependency>
-                            <groupId>com.jcraft</groupId>
-                            <artifactId>jsch</artifactId>
-                            <version>${version-jsch}</version>
-                        </dependency>
-                        <!-- adoc support -->
-                        <dependency>
-                            <groupId>org.asciidoctor</groupId>
-                            <artifactId>asciidoctor-maven-plugin</artifactId>
-                            <version>${version-asciidoctor-maven-plugin}</version>
-                        </dependency>
-                        <!-- add support for markdown syntax -->
-                        <dependency>
-                            <groupId>org.apache.maven.doxia</groupId>
-                            <artifactId>doxia-module-markdown</artifactId>
-                            <version>1.7</version>
-                        </dependency>
-                        <!-- Fixing java.lang.NoClassDefFoundError: org/apache/maven/doxia/sink/impl/XhtmlBaseSink 
-                            error due to the introduction of asciidoctor maven plugin. For more info 
-                            take a look at http://maven.40175.n5.nabble.com/maven-site-plugin-3-5-ClassNotFoundException-td5862952.html -->
-                        <dependency>
-                            <groupId>org.apache.maven.doxia</groupId>
-                            <artifactId>doxia-core</artifactId>
-                            <version>1.7</version>
-                        </dependency>
-                    </dependencies>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>${version-maven-checkstyle-plugin}</version>
-                    <dependencies>
-                        <dependency>
-                            <groupId>com.github.nruzic.commons.conventions</groupId>
-                            <artifactId>nruzic-commons-conventions</artifactId>
-                            <version>${version-nruzic-commons-conventions}</version>
-                        </dependency>
-                    </dependencies>
-                    <configuration>
-                        <configLocation>${conventions-checkstyle-config}</configLocation>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>validate-checks</id>
-                            <phase>verify</phase>
-                            <configuration>
-                                <failOnViolation>true</failOnViolation>
-                                <logViolationsToConsole>true</logViolationsToConsole>
-                            </configuration>
-                            <goals>
-                                <goal>check</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>build-helper-maven-plugin</artifactId>
@@ -417,88 +210,29 @@
                                 </sources>
                             </configuration>
                         </execution>
-                        <execution>
-                            <id>add-test-resource</id>
-                            <phase>generate-test-resources</phase>
-                            <goals>
-                                <goal>add-test-resource</goal>
-                            </goals>
-                            <configuration>
-                                <resources>
-                                    <resource>
-                                        <directory>src/it/resources</directory>
-                                    </resource>
-                                </resources>
-                            </configuration>
-                        </execution>
                     </executions>
                 </plugin>
-
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-antrun-plugin</artifactId>
                     <version>${version-maven-antrun-plugin}</version>
                     <executions>
                         <execution>
-                            <id>sources-fix-eol</id>
-                            <phase>process-test-resources</phase>
+                            <id>copy-doc-to-site</id>
+                            <phase>site</phase>
                             <goals>
                                 <goal>run</goal>
                             </goals>
                             <configuration>
                                 <target>
-                                    <fixcrlf srcdir="${project.basedir}" includes="README README.txt LICENCE LICENCE.txt" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" />
-                                    <fixcrlf srcdir="${project.basedir}" includes="src/**/*.java" javafiles="yes" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" />
-                                    <fixcrlf srcdir="${project.basedir}" includes="src/**/*.ad src/**/*.adoc src/**/*.cfg src/**/*.json src/**/*.properties src/**/*.sql src/**/*.cql src/**/*.template src/**/*.txt src/**/*.TXT src/**/*.xml src/**/*.xsd" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" />
-                                    <fixcrlf srcdir="${project.basedir}" includes="src/**/*.bsh src/**/*.sh" eol="lf" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" />
-                                    <fixcrlf srcdir="${project.basedir}" includes="src/**/*.bat" eol="crlf" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" />
-                                </target>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>sources-trim-spaces</id>
-                            <phase>process-test-resources</phase>
-                            <goals>
-                                <goal>run</goal>
-                            </goals>
-                            <configuration>
-                                <target>
-                                    <replaceregexp match="\s+$" replace="" byline="true" encoding="UTF-8">
-                                        <fileset dir="${project.basedir}">
-                                            <include name="src/**/*.java" />
-                                        </fileset>
-                                    </replaceregexp>
+                                    <copy todir="${project.build.directory}/site/doc" failonerror="false">
+                                        <fileset dir="${project.build.directory}/doc" />
+                                    </copy>
                                 </target>
                             </configuration>
                         </execution>
                     </executions>
                 </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>${version-maven-surefire-plugin}</version>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>${version-maven-failsafe-plugin}</version>
-                    <configuration>
-                        <forkMode>once</forkMode>
-                        <argLine>-Xmx512M -XX:MaxPermSize=256M
-                            -XX:+CMSClassUnloadingEnabled</argLine>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>integration-test</goal>
-                                <goal>verify</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-dependency-plugin</artifactId>
@@ -517,17 +251,172 @@
                         </execution>
                     </executions>
                 </plugin>
-
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${version-maven-resources-plugin}</version>
+                    <configuration>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                    </configuration>
+                    <dependencies>
+                        <!-- ignoring missing filter file === BEGINING === -->
+                        <dependency>
+                            <groupId>org.apache.maven.shared</groupId>
+                            <artifactId>maven-filtering</artifactId>
+                            <version>${version-maven-filtering}</version>
+                            <classifier>OVERRIDED</classifier>
+                            <type>jar</type>
+                            <optional>true</optional>
+                            <scope>system</scope>
+                            <systemPath>${project.basedir}/pom.xml</systemPath>
+                        </dependency>
+                        <dependency>
+                            <groupId>com.github.nruzic.org.apache.maven.shared</groupId>
+                            <artifactId>maven-filtering</artifactId>
+                            <version>${version-maven-filtering}</version>
+                        </dependency>
+                        <!-- ignoring missing filter file === END === -->
+                    </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${version-maven-compiler-plugin}</version>
+                    <configuration>
+                        <source>${property-java-compiler-source-level}</source>
+                        <target>${property-java-compiler-compliance-level}</target>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${version-maven-surefire-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>${version-maven-failsafe-plugin}</version>
+                    <configuration>
+                        <forkMode>once</forkMode>
+                        <argLine>-Xmx512M -XX:MaxPermSize=256M
+                            -XX:+CMSClassUnloadingEnabled</argLine>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>integration-test</id>
+                            <goals>
+                                <goal>integration-test</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>verify</id>
+                            <goals>
+                                <goal>verify</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>${version-maven-source-plugin}</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                            <phase>prepare-package</phase>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>${version-maven-javadoc-plugin}</version>
+                    <configuration>
+                        <!-- Default configuration for all executions -->
+                        <outputDirectory>${project.build.directory}/javadocs</outputDirectory>
+                        <reportOutputDirectory>${project.reporting.outputDirectory}/javadocs</reportOutputDirectory>
+                        <!-- Workaround for http://stackoverflow.com/questions/15886209/maven-is-not-working-in-java-8-when-javadoc-tags-are-incomplete -->
+                        <additionalparam>${javadoc.opts}</additionalparam>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>attach-javadocs</id>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                            <phase>prepare-package</phase>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>${version-maven-assembly-plugin}</version>
+                    <configuration>
+                        <descriptorSourceDirectory>${project.basedir}/src/main/assemblies</descriptorSourceDirectory>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>assemble-default-binary-distribution</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>single</goal>
+                            </goals>
+                            <configuration>
+                                <descriptorRefs>
+                                    <descriptorRef>bin-default</descriptorRef>
+                                </descriptorRefs>
+                                <filters>
+                                    <filter>${project.basedir}/src/main/filters/target-default.properties</filter>
+                                    <filter>${project.basedir}/src/main/filters/target-production.properties</filter>
+                                    <filter>${project.basedir}/src/main/filters/target-bin.properties</filter>
+                                </filters>
+                                <!-- <finalName>${project.build.finalName}-bin</finalName>
+                                    <appendAssemblyId>false</appendAssemblyId> -->
+                                <tarLongFileMode>gnu</tarLongFileMode>
+                                <siteDirectory>${project-site-stage-dir}</siteDirectory>
+                            </configuration>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.github.nruzic.commons.assemblies</groupId>
+                            <artifactId>nruzic-commons-assemblies</artifactId>
+                            <version>${version-nruzic-commons-assemblies}</version>
+                        </dependency>
+                        <!-- ignoring missing filter file === BEGINING === -->
+                        <dependency>
+                            <groupId>org.apache.maven.shared</groupId>
+                            <artifactId>maven-filtering</artifactId>
+                            <version>${version-maven-filtering}</version>
+                            <classifier>OVERRIDED</classifier>
+                            <type>jar</type>
+                            <optional>true</optional>
+                            <scope>system</scope>
+                            <systemPath>${project.basedir}/pom.xml</systemPath>
+                        </dependency>
+                        <dependency>
+                            <groupId>com.github.nruzic.org.apache.maven.shared</groupId>
+                            <artifactId>maven-filtering</artifactId>
+                            <version>${version-maven-filtering}</version>
+                        </dependency>
+                        <!-- ignoring missing filter file === END === -->
+                    </dependencies>
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-release-plugin</artifactId>
                     <version>${version-maven-release-plugin}</version>
                     <configuration>
-                        <!-- automatically assign parent version to submodules 
+                        <!-- automatically assign parent version to submodules
                             if submodule is not specifying it's own version -->
                         <autoVersionSubmodules>true</autoVersionSubmodules>
-                        <!-- this is a hack to trigger custom release profile 
-                            (not the one from master pom) during preparation step, in addition to execution 
+                        <!-- this is a hack to trigger custom release profile
+                            (not the one from master pom) during preparation step, in addition to execution
                             by perform step which is triggered by releaseProfiles tag -->
                         <arguments>-DdoRelease</arguments>
                         <!-- prepare settings -->
@@ -539,7 +428,126 @@
                         <releaseProfiles>release</releaseProfiles>
                     </configuration>
                 </plugin>
-
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>${version-maven-site-plugin}</version>
+                    <configuration>
+                        <stagingDirectory>${project-site-stage-dir}</stagingDirectory>
+                        <asciidoc>
+                            <sourceDirectory>${project.basedir}/src/site/asciidoc</sourceDirectory>
+                            <!-- <sourceDocumentName>refdoc.adoc</sourceDocumentName> -->
+                            <!-- <baseDir>${project.basedir}/src/site/asciidoc/users/refdoc</baseDir> -->
+                            <relativeBaseDir>true</relativeBaseDir>
+                            <preserveDirectories>true</preserveDirectories>
+                            <headerFooter>true</headerFooter>
+                            <backend>html</backend>
+                            <doctype>book</doctype>
+                            <attributes>
+                                <project-version>${project.version}</project-version>
+                                <maven-build-timestamp>${maven.build.timestamp}</maven-build-timestamp>
+                            </attributes>
+                        </asciidoc>
+                        <moduleExcludes>
+                            <asciidoc>**/_*.adoc</asciidoc>
+                        </moduleExcludes>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>attach-descriptor</id>
+                            <goals>
+                                <goal>attach-descriptor</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <!-- add support for ssh/scp -->
+                        <dependency>
+                            <groupId>org.apache.maven.wagon</groupId>
+                            <artifactId>wagon-ssh</artifactId>
+                            <version>${version-maven-wagon}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.maven.wagon</groupId>
+                            <artifactId>wagon-provider-api</artifactId>
+                            <version>${version-maven-wagon}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.maven.wagon</groupId>
+                            <artifactId>wagon-webdav-jackrabbit</artifactId>
+                            <version>${version-maven-wagon}</version>
+                        </dependency>
+                        <!-- adoc support -->
+                        <dependency>
+                            <groupId>org.asciidoctor</groupId>
+                            <artifactId>asciidoctor-maven-plugin</artifactId>
+                            <version>${version-asciidoctor-maven-plugin}</version>
+                        </dependency>
+                        <!-- add support for markdown syntax -->
+                        <dependency>
+                            <groupId>org.apache.maven.doxia</groupId>
+                            <artifactId>doxia-module-markdown</artifactId>
+                            <version>1.8</version>
+                        </dependency>
+                        <!-- Fixing java.lang.NoClassDefFoundError: org/apache/maven/doxia/sink/impl/XhtmlBaseSink
+                            error due to the introduction of asciidoctor maven plugin. For more info
+                            take a look at http://maven.40175.n5.nabble.com/maven-site-plugin-3-5-ClassNotFoundException-td5862952.html -->
+                        <dependency>
+                            <groupId>org.apache.maven.doxia</groupId>
+                            <artifactId>doxia-core</artifactId>
+                            <version>1.8</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>${version-maven-checkstyle-plugin}</version>
+                    <configuration>
+                        <!-- Check rules definition -->
+                        <configLocation>${conventions-checkstyle-config}</configLocation>
+                        <!-- Stop build on error -->
+                        <failOnViolation>true</failOnViolation>
+                        <!-- Summarize broken rules -->
+                        <logViolationsToConsole>true</logViolationsToConsole>
+                        <!-- Add test/it sources to check process, main sources are included by default -->
+                        <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                        <!-- Define test sources explicitly because default ${project.testCompileSourceRoots} is not enough -->
+                        <testSourceDirectories>src/test/java,src/it/java</testSourceDirectories>
+                        <!-- Files to check in main and test/it sources -->
+                        <includes>**\/*</includes>
+                        <!-- Add main resources to check process -->
+                        <includeResources>true</includeResources>
+                        <!-- Add test/it resources to check process -->
+                        <includeTestResources>true</includeTestResources>
+                        <!-- Files to check in main and test/it resources -->
+                        <resourceIncludes>**\/*</resourceIncludes>
+                        <!-- Location of suppressions file -->
+                        <suppressionsLocation>${conventions-checkstyle-suppressions}</suppressionsLocation>
+                        <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>validate-checks</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                            <version>8.16</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>com.github.nruzic.commons.conventions</groupId>
+                            <artifactId>nruzic-commons-conventions</artifactId>
+                            <version>${version-nruzic-commons-conventions}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
@@ -580,6 +588,76 @@
                                     </requireProperty>
                                 </rules>
                                 <fail>true</fail>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>net.revelc.code.formatter</groupId>
+                    <artifactId>formatter-maven-plugin</artifactId>
+                    <version>${version-formatter-maven-plugin}</version>
+                    <executions>
+                        <execution>
+                            <id>format-java-sources</id>
+                            <goals>
+                                <goal>format</goal>
+                            </goals>
+                            <phase>process-sources</phase>
+                            <configuration>
+                                <configFile>${conventions-eclipse-formatter}</configFile>
+                                <directories>src/main/java,src/main/aspect</directories>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>format-java-test-sources</id>
+                            <goals>
+                                <goal>format</goal>
+                            </goals>
+                            <phase>process-test-sources</phase>
+                            <configuration>
+                                <configFile>${conventions-eclipse-formatter}</configFile>
+                                <directories>src/test/java,src/it/java</directories>
+                            </configuration>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.github.nruzic.commons.conventions</groupId>
+                            <artifactId>nruzic-commons-conventions</artifactId>
+                            <version>${version-nruzic-commons-conventions}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>net.revelc.code</groupId>
+                    <artifactId>impsort-maven-plugin</artifactId>
+                    <version>${version-impsort-maven-plugin}</version>
+                    <configuration>
+                        <groups>java,javax,com,hr,io,net,org</groups>
+                        <staticGroups>java,javax,com,hr,io,net,org</staticGroups>
+                        <staticAfter>true</staticAfter>
+                        <joinStaticWithNonStatic>false</joinStaticWithNonStatic>
+                        <removeUnused>true</removeUnused>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>order-java-sources-imports</id>
+                            <goals>
+                                <goal>sort</goal>
+                            </goals>
+                            <phase>process-sources</phase>
+                            <configuration>
+                                <directories>src/main/java,src/main/aspect</directories>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>order-java-test-sources-imports</id>
+                            <goals>
+                                <goal>sort</goal>
+                            </goals>
+                            <phase>process-test-sources</phase>
+                            <configuration>
+                                <directories>src/test/java,src/it/java</directories>
                             </configuration>
                         </execution>
                     </executions>
@@ -653,7 +731,7 @@
                     <artifactId>asciidoctor-maven-plugin</artifactId>
                     <version>${version-asciidoctor-maven-plugin}</version>
                     <configuration>
-                        <sourceDirectory>${project.basedir}/src/main/doc/adoc</sourceDirectory>
+                        <sourceDirectory>${project.basedir}/src/doc/adoc</sourceDirectory>
                         <relativeBaseDir>true</relativeBaseDir>
                         <preserveDirectories>true</preserveDirectories>
                         <doctype>book</doctype>
@@ -665,10 +743,10 @@
                             <!-- maximum section level to display -->
                             <toclevels>3</toclevels>
                             <!-- prefix used for auto-generated section IDs -->
-                            <idprefix>_section_</idprefix>
-                            <!-- word separator used in auto-generated section 
+                            <idprefix>_</idprefix>
+                            <!-- word separator used in auto-generated section
                                 IDs -->
-                            <idseparator>-</idseparator>
+                            <idseparator>_</idseparator>
                             <!-- numbers sections to depth specified by sectnumlevels -->
                             <sectnums>true</sectnums>
                             <!-- adds an anchor in front of the section title -->
@@ -685,6 +763,13 @@
                             <revdate>${project-builddate}</revdate>
                             <!-- organization owning document -->
                             <organization>${project.organization.name}</organization>
+                            <!-- ############################################################## -->
+                            <!-- For custom content to the head or footer of an output document -->
+                            <!-- ############################################################## -->
+                            <!-- Specifies which docinfo files to apply -->
+                            <docinfo>shared,private</docinfo>
+                            <!-- Specifies docinfo files location -->
+                            <docinfodir>${project.basedir}/src/doc/resources/html</docinfodir>
                             <!-- ################# -->
                             <!-- custom attributes -->
                             <!-- ################# -->
@@ -722,8 +807,9 @@
                                 <backend>pdf</backend>
                                 <outputDirectory>${project.build.directory}/doc/pdf</outputDirectory>
                                 <attributes>
-                                    <pdf-stylesdir>${project.basedir}/src/main/doc/resources/themes</pdf-stylesdir>
+                                    <pdf-stylesdir>${project.basedir}/src/doc/resources/themes</pdf-stylesdir>
                                     <pdf-style>default</pdf-style>
+                                    <pdf-fontsdir>${project.basedir}/src/doc/resources/fonts</pdf-fontsdir>
                                 </attributes>
                             </configuration>
                         </execution>
@@ -754,29 +840,37 @@
                                 <sourceDirectory>${project.build.directory}/doc/adoc</sourceDirectory>
                                 <outputDirectory>${project.build.directory}/doc/pdf</outputDirectory>
                                 <attributes>
-                                    <pdf-stylesdir>${project.basedir}/src/main/doc/resources/themes</pdf-stylesdir>
+                                    <pdf-stylesdir>${project.basedir}/src/doc/resources/themes</pdf-stylesdir>
                                     <pdf-style>default</pdf-style>
+                                    <pdf-fontsdir>${project.basedir}/src/doc/resources/fonts</pdf-fontsdir>
                                 </attributes>
                             </configuration>
                         </execution>
                     </executions>
                     <dependencies>
-                        <!-- Override the default jruby artifact provided 
-                            by the plugin -->
-                        <dependency>
-                            <groupId>org.jruby</groupId>
-                            <artifactId>jruby-complete</artifactId>
-                            <version>1.7.26</version>
-                        </dependency>
                         <dependency>
                             <groupId>org.asciidoctor</groupId>
                             <artifactId>asciidoctorj-pdf</artifactId>
                             <version>1.5.0-alpha.16</version>
                         </dependency>
+                        <!-- Override the default jruby artifact provided
+                            by the plugin -->
+                        <dependency>
+                            <groupId>org.jruby</groupId>
+                            <artifactId>jruby-complete</artifactId>
+                            <version>9.1.17.0</version>
+                        </dependency>
+                        <!-- Comment this section to use the default AsciidoctorJ artifact provided
+                            by the plugin -->
+                        <dependency>
+                            <groupId>org.asciidoctor</groupId>
+                            <artifactId>asciidoctorj</artifactId>
+                            <version>1.5.7</version>
+                        </dependency>
                         <dependency>
                             <groupId>org.asciidoctor</groupId>
                             <artifactId>asciidoctorj-diagram</artifactId>
-                            <version>1.5.4</version>
+                            <version>1.5.10</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -836,6 +930,7 @@
     </build>
 
     <reporting>
+        <excludeDefaults>false</excludeDefaults>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -851,7 +946,8 @@
                 <artifactId>maven-surefire-report-plugin</artifactId>
                 <version>${version-maven-surefire-report-plugin}</version>
                 <configuration>
-                    <aggregate>true</aggregate>
+                    <alwaysGenerateSurefireReport>true</alwaysGenerateSurefireReport>
+                    <alwaysGenerateFailsafeReport>true</alwaysGenerateFailsafeReport>
                 </configuration>
                 <reportSets>
                     <reportSet>
@@ -884,16 +980,8 @@
                             <!-- Specific configuration for the given reports -->
                         </configuration>
                         <reports>
-                            <report>javadoc</report>
-                        </reports>
-                    </reportSet>
-                    <reportSet>
-                        <id>aggregate</id>
-                        <configuration>
-                            <!-- Specific configuration for the given reports -->
-                        </configuration>
-                        <reports>
-                            <report>aggregate</report>
+                            <report>javadoc-no-fork</report>
+                            <report>test-javadoc-no-fork</report>
                         </reports>
                     </reportSet>
                 </reportSets>
@@ -924,9 +1012,9 @@
                 <artifactId>enunciate-maven-plugin</artifactId>
                 <version>${version-enunciate-maven-plugin}</version>
                 <configuration>
-                    <!-- The subdirectory of the site where the documentation 
+                    <!-- The subdirectory of the site where the documentation
                         will be put. -->
-                    <!-- Note that if this isn't set, the documentation will 
+                    <!-- Note that if this isn't set, the documentation will
                         overwrite apidocs location on the site which is used by the javadoc plugin. -->
                     <docsSubdir>enunciatedocs</docsSubdir>
                 </configuration>
@@ -939,7 +1027,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-changes-plugin</artifactId>
-                <version>2.9</version>
+                <version>${version-maven-changes-plugin}</version>
                 <configuration>
                     <useJql>true</useJql>
                     <webUser>foo</webUser>
@@ -951,7 +1039,7 @@
                     <resolutionIds>Fixed</resolutionIds>
                     <statusIds>Closed</statusIds>
                     <typeIds>Bug,New Feature,Improvement</typeIds>
-                    <!-- <filter>project = MSE AND issuetype in (Bug, Improvement, 
+                    <!-- <filter>project = MSE AND issuetype in (Bug, Improvement,
                         "New Feature") AND resolution = Fixed AND status = Closed</filter> -->
                 </configuration>
                 <inherited>false</inherited>
@@ -960,11 +1048,44 @@
     </reporting>
 
     <profiles>
+
         <profile>
-            <id>release</id>
+            <activation>
+                <file>
+                    <exists>.aggregator</exists>
+                </file>
+            </activation>
+            <reporting>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <reportSets>
+                            <reportSet>
+                                <id>default</id>
+                                <reports>
+                                    <report>aggregate</report>
+                                    <report>test-aggregate</report>
+                                </reports>
+                            </reportSet>
+                        </reportSets>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-report-plugin</artifactId>
+                        <configuration>
+                            <aggregate>true</aggregate>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </reporting>
+        </profile>
+
+        <profile>
+            <id>releaseTasks</id>
             <activation>
                 <property>
-                    <name>doRelease</name>
+                    <name>releaseTasks</name>
                 </property>
             </activation>
             <build>
@@ -995,15 +1116,15 @@
                     </plugin>
                 </plugins>
             </build>
-            <properties>
-                <project-site-deploy-url>scp://localhost/var/www/project-site/${project-name}/${project-version}</project-site-deploy-url>
-            </properties>
         </profile>
 
         <profile>
+            <!-- https://openjdk.java.net/jeps/172 -->
             <id>java8-doclint-disabled</id>
             <activation>
-                <jdk>[1.8,)</jdk>
+                <property>
+                    <name>noJavadocChecks</name>
+                </property>
             </activation>
             <properties>
                 <javadoc.opts>-Xdoclint:none</javadoc.opts>
@@ -1135,13 +1256,18 @@
         </profile>
 
         <profile>
-            <id>buildenv-localhost</id>
+            <id>buildEnv-localhost</id>
             <activation>
                 <property>
-                    <name>buildenv</name>
+                    <name>buildEnv</name>
                     <value>localhost</value>
                 </property>
             </activation>
+            <properties>
+                <project-site-host />
+                <project-site-deploy-protocol>file</project-site-deploy-protocol>
+                <project-site-deploy-basepath>${project-home}/site</project-site-deploy-basepath>
+            </properties>
             <build>
                 <filters>
                     <filter>${project.basedir}/src/main/filters/build-localhost.properties</filter>
@@ -1152,10 +1278,10 @@
         </profile>
 
         <profile>
-            <id>buildenv-jenkins</id>
+            <id>buildEnv-jenkins</id>
             <activation>
                 <property>
-                    <name>buildenv</name>
+                    <name>buildEnv</name>
                     <value>jenkins</value>
                 </property>
             </activation>
@@ -1177,6 +1303,432 @@
                 <sonar.password />
             </properties>
         </profile>
+
+        <profile>
+            <id>formatting-profile</id>
+            <activation>
+                <property>
+                    <name>doFormatting</name>
+                </property>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-antrun-plugin</artifactId>
+                            <executions>
+                                <!-- Trim spaces at end of line -->
+                                <execution>
+                                    <id>trim-spaces-on-project-base-files</id>
+                                    <goals>
+                                        <goal>run</goal>
+                                    </goals>
+                                    <phase>process-sources</phase>
+                                    <configuration>
+                                        <target>
+                                            <replaceregexp match="\s+$" replace="" byline="true" encoding="UTF-8">
+                                                <fileset dir="${project.basedir}" erroronmissingdir="false">
+                                                    <include name="*" />
+                                                </fileset>
+                                            </replaceregexp>
+                                        </target>
+                                    </configuration>
+                                </execution>
+                                <execution>
+                                    <id>trim-spaces-on-main-sources</id>
+                                    <goals>
+                                        <goal>run</goal>
+                                    </goals>
+                                    <phase>process-sources</phase>
+                                    <configuration>
+                                        <target>
+                                            <replaceregexp match="\s+$" replace="" byline="true" encoding="UTF-8">
+                                                <fileset dir="${project.basedir}/src/main" erroronmissingdir="false">
+                                                    <include name="java/**/*" />
+                                                    <include name="aspect/**/*" />
+                                                </fileset>
+                                            </replaceregexp>
+                                        </target>
+                                    </configuration>
+                                </execution>
+                                <execution>
+                                    <id>trim-spaces-on-main-resources</id>
+                                    <goals>
+                                        <goal>run</goal>
+                                    </goals>
+                                    <phase>process-resources</phase>
+                                    <configuration>
+                                        <target>
+                                            <replaceregexp match="\s+$" replace="" byline="true" encoding="UTF-8">
+                                                <fileset dir="${project.basedir}/src/main" erroronmissingdir="false">
+                                                    <include name="**/*" />
+                                                    <exclude name="java/**/*" />
+                                                    <exclude name="aspect/**/*" />
+                                                </fileset>
+                                            </replaceregexp>
+                                        </target>
+                                    </configuration>
+                                </execution>
+                                <execution>
+                                    <id>trim-spaces-on-test-sources</id>
+                                    <goals>
+                                        <goal>run</goal>
+                                    </goals>
+                                    <phase>process-test-sources</phase>
+                                    <configuration>
+                                        <target>
+                                            <replaceregexp match="\s+$" replace="" byline="true" encoding="UTF-8">
+                                                <fileset dir="${project.basedir}/src/test" erroronmissingdir="false">
+                                                    <include name="java/**/*" />
+                                                    <include name="aspect/**/*" />
+                                                </fileset>
+                                            </replaceregexp>
+                                        </target>
+                                    </configuration>
+                                </execution>
+                                <execution>
+                                    <id>trim-spaces-on-test-resources</id>
+                                    <goals>
+                                        <goal>run</goal>
+                                    </goals>
+                                    <phase>process-test-resources</phase>
+                                    <configuration>
+                                        <target>
+                                            <replaceregexp match="\s+$" replace="" byline="true" encoding="UTF-8">
+                                                <fileset dir="${project.basedir}/src/test" erroronmissingdir="false">
+                                                    <include name="**/*" />
+                                                    <exclude name="java/**/*" />
+                                                    <exclude name="aspect/**/*" />
+                                                </fileset>
+                                            </replaceregexp>
+                                        </target>
+                                    </configuration>
+                                </execution>
+                                <execution>
+                                    <id>trim-spaces-on-it-sources</id>
+                                    <goals>
+                                        <goal>run</goal>
+                                    </goals>
+                                    <phase>process-test-sources</phase>
+                                    <configuration>
+                                        <target>
+                                            <replaceregexp match="\s+$" replace="" byline="true" encoding="UTF-8">
+                                                <fileset dir="${project.basedir}/src/it" erroronmissingdir="false">
+                                                    <include name="java/**/*" />
+                                                    <include name="aspect/**/*" />
+                                                </fileset>
+                                            </replaceregexp>
+                                        </target>
+                                    </configuration>
+                                </execution>
+                                <execution>
+                                    <id>trim-spaces-on-it-resources</id>
+                                    <goals>
+                                        <goal>run</goal>
+                                    </goals>
+                                    <phase>process-test-resources</phase>
+                                    <configuration>
+                                        <target>
+                                            <replaceregexp match="\s+$" replace="" byline="true" encoding="UTF-8">
+                                                <fileset dir="${project.basedir}/src/it" erroronmissingdir="false">
+                                                    <include name="**/*" />
+                                                    <exclude name="java/**/*" />
+                                                    <exclude name="aspect/**/*" />
+                                                </fileset>
+                                            </replaceregexp>
+                                        </target>
+                                    </configuration>
+                                </execution>
+                                <execution>
+                                    <id>trim-spaces-on-remaining-src-files</id>
+                                    <goals>
+                                        <goal>run</goal>
+                                    </goals>
+                                    <phase>prepare-package</phase>
+                                    <configuration>
+                                        <target>
+                                            <replaceregexp match="\s+$" replace="" byline="true" encoding="UTF-8">
+                                                <fileset dir="${project.basedir}/src" erroronmissingdir="false">
+                                                    <include name="**/*" />
+                                                    <exclude name="main/**/*" />
+                                                    <exclude name="test/**/*" />
+                                                    <exclude name="it/**/*" />
+                                                </fileset>
+                                            </replaceregexp>
+                                        </target>
+                                    </configuration>
+                                </execution>
+                                <!-- Add missing new line at the end of a file -->
+                                <execution>
+                                    <id>fix-eol-on-project-base-files</id>
+                                    <goals>
+                                        <goal>run</goal>
+                                    </goals>
+                                    <phase>process-sources</phase>
+                                    <configuration>
+                                        <target>
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true">
+                                                <patternset>
+                                                    <include name="*" />
+                                                    <exclude name="*.bat" />
+                                                    <exclude name="*.BAT" />
+                                                    <exclude name="*.bsh" />
+                                                    <exclude name="*.BSH" />
+                                                    <exclude name="*.sh" />
+                                                    <exclude name="*.SH" />
+                                                </patternset>
+                                            </fixcrlf>
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="lf">
+                                                <patternset>
+                                                    <include name="*.bsh" />
+                                                    <include name="*.BSH" />
+                                                    <include name="*.sh" />
+                                                    <include name="*.SH" />
+                                                </patternset>
+                                            </fixcrlf>
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="crlf">
+                                                <patternset>
+                                                    <include name="*.bat" />
+                                                    <include name="*.BAT" />
+                                                </patternset>
+                                            </fixcrlf>
+                                        </target>
+                                    </configuration>
+                                </execution>
+                                <execution>
+                                    <id>fix-eol-on-main-sources</id>
+                                    <goals>
+                                        <goal>run</goal>
+                                    </goals>
+                                    <phase>process-sources</phase>
+                                    <configuration>
+                                        <target>
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" javafiles="yes">
+                                                <patternset>
+                                                    <include name="src/main/**/*.java" />
+                                                    <include name="src/main/**/*.JAVA" />
+                                                </patternset>
+                                            </fixcrlf>
+                                        </target>
+                                    </configuration>
+                                </execution>
+                                <execution>
+                                    <id>fix-eol-on-main-resources</id>
+                                    <goals>
+                                        <goal>run</goal>
+                                    </goals>
+                                    <phase>process-resources</phase>
+                                    <configuration>
+                                        <target>
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true">
+                                                <patternset>
+                                                    <include name="src/main/**/*" />
+                                                    <exclude name="src/main/**/*.java" />
+                                                    <exclude name="src/main/**/*.JAVA" />
+                                                    <exclude name="src/main/**/*.bat" />
+                                                    <exclude name="src/main/**/*.BAT" />
+                                                    <exclude name="src/main/**/*.bsh" />
+                                                    <exclude name="src/main/**/*.BSH" />
+                                                    <exclude name="src/main/**/*.sh" />
+                                                    <exclude name="src/main/**/*.SH" />
+                                                </patternset>
+                                            </fixcrlf>
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="lf">
+                                                <patternset>
+                                                    <include name="src/main/**/*.bsh" />
+                                                    <include name="src/main/**/*.BSH" />
+                                                    <include name="src/main/**/*.sh" />
+                                                    <include name="src/main/**/*.SH" />
+                                                </patternset>
+                                            </fixcrlf>
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="crlf">
+                                                <patternset>
+                                                    <include name="src/main/**/*.bat" />
+                                                    <include name="src/main/**/*.BAT" />
+                                                </patternset>
+                                            </fixcrlf>
+                                        </target>
+                                    </configuration>
+                                </execution>
+                                <execution>
+                                    <id>fix-eol-on-test-sources</id>
+                                    <goals>
+                                        <goal>run</goal>
+                                    </goals>
+                                    <phase>process-test-sources</phase>
+                                    <configuration>
+                                        <target>
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" javafiles="yes">
+                                                <patternset>
+                                                    <include name="src/test/**/*.java" />
+                                                    <include name="src/test/**/*.JAVA" />
+                                                </patternset>
+                                            </fixcrlf>
+                                        </target>
+                                    </configuration>
+                                </execution>
+                                <execution>
+                                    <id>fix-eol-on-test-resources</id>
+                                    <goals>
+                                        <goal>run</goal>
+                                    </goals>
+                                    <phase>process-test-resources</phase>
+                                    <configuration>
+                                        <target>
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true">
+                                                <patternset>
+                                                    <include name="src/test/**/*" />
+                                                    <exclude name="src/test/**/*.java" />
+                                                    <exclude name="src/test/**/*.JAVA" />
+                                                    <exclude name="src/test/**/*.bat" />
+                                                    <exclude name="src/test/**/*.BAT" />
+                                                    <exclude name="src/test/**/*.bsh" />
+                                                    <exclude name="src/test/**/*.BSH" />
+                                                    <exclude name="src/test/**/*.sh" />
+                                                    <exclude name="src/test/**/*.SH" />
+                                                </patternset>
+                                            </fixcrlf>
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="lf">
+                                                <patternset>
+                                                    <include name="src/test/**/*.bsh" />
+                                                    <include name="src/test/**/*.BSH" />
+                                                    <include name="src/test/**/*.sh" />
+                                                    <include name="src/test/**/*.SH" />
+                                                </patternset>
+                                            </fixcrlf>
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="crlf">
+                                                <patternset>
+                                                    <include name="src/test/**/*.bat" />
+                                                    <include name="src/test/**/*.BAT" />
+                                                </patternset>
+                                            </fixcrlf>
+                                        </target>
+                                    </configuration>
+                                </execution>
+                                <execution>
+                                    <id>fix-eol-on-it-sources</id>
+                                    <goals>
+                                        <goal>run</goal>
+                                    </goals>
+                                    <phase>process-test-sources</phase>
+                                    <configuration>
+                                        <target>
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" javafiles="yes">
+                                                <patternset>
+                                                    <include name="src/it/**/*.java" />
+                                                    <include name="src/it/**/*.JAVA" />
+                                                </patternset>
+                                            </fixcrlf>
+                                        </target>
+                                    </configuration>
+                                </execution>
+                                <execution>
+                                    <id>fix-eol-on-it-resources</id>
+                                    <goals>
+                                        <goal>run</goal>
+                                    </goals>
+                                    <phase>process-test-resources</phase>
+                                    <configuration>
+                                        <target>
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true">
+                                                <patternset>
+                                                    <include name="src/it/**/*" />
+                                                    <exclude name="src/it/**/*.java" />
+                                                    <exclude name="src/it/**/*.JAVA" />
+                                                    <exclude name="src/it/**/*.bat" />
+                                                    <exclude name="src/it/**/*.BAT" />
+                                                    <exclude name="src/it/**/*.bsh" />
+                                                    <exclude name="src/it/**/*.BSH" />
+                                                    <exclude name="src/it/**/*.sh" />
+                                                    <exclude name="src/it/**/*.SH" />
+                                                </patternset>
+                                            </fixcrlf>
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="lf">
+                                                <patternset>
+                                                    <include name="src/it/**/*.bsh" />
+                                                    <include name="src/it/**/*.BSH" />
+                                                    <include name="src/it/**/*.sh" />
+                                                    <include name="src/it/**/*.SH" />
+                                                </patternset>
+                                            </fixcrlf>
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="crlf">
+                                                <patternset>
+                                                    <include name="src/it/**/*.bat" />
+                                                    <include name="src/it/**/*.BAT" />
+                                                </patternset>
+                                            </fixcrlf>
+                                        </target>
+                                    </configuration>
+                                </execution>
+                                <execution>
+                                    <id>fix-eol-on-remaining-src-files</id>
+                                    <goals>
+                                        <goal>run</goal>
+                                    </goals>
+                                    <phase>prepare-package</phase>
+                                    <configuration>
+                                        <target>
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true">
+                                                <patternset>
+                                                    <include name="src/**/*" />
+                                                    <exclude name="src/main/**/*" />
+                                                    <exclude name="src/test/**/*" />
+                                                    <exclude name="src/it/**/*" />
+                                                    <exclude name="src/**/*.java" />
+                                                    <exclude name="src/**/*.JAVA" />
+                                                    <exclude name="src/**/*.bat" />
+                                                    <exclude name="src/**/*.BAT" />
+                                                    <exclude name="src/**/*.bsh" />
+                                                    <exclude name="src/**/*.BSH" />
+                                                    <exclude name="src/**/*.sh" />
+                                                    <exclude name="src/**/*.SH" />
+                                                </patternset>
+                                            </fixcrlf>
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="lf">
+                                                <patternset>
+                                                    <include name="src/**/*.bsh" />
+                                                    <include name="src/**/*.BSH" />
+                                                    <include name="src/**/*.sh" />
+                                                    <include name="src/**/*.SH" />
+                                                    <exclude name="src/main/**/*" />
+                                                    <exclude name="src/test/**/*" />
+                                                    <exclude name="src/it/**/*" />
+                                                </patternset>
+                                            </fixcrlf>
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="crlf">
+                                                <patternset>
+                                                    <include name="src/**/*.bat" />
+                                                    <include name="src/**/*.BAT" />
+                                                    <exclude name="src/main/**/*" />
+                                                    <exclude name="src/test/**/*" />
+                                                    <exclude name="src/it/**/*" />
+                                                </patternset>
+                                            </fixcrlf>
+                                        </target>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>net.revelc.code.formatter</groupId>
+                        <artifactId>formatter-maven-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>net.revelc.code</groupId>
+                        <artifactId>impsort-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
     </profiles>
 
 </project>
