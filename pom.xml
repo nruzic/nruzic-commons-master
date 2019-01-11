@@ -19,14 +19,13 @@
 <!-- OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                                                  -->
 <!--                                                                                                                -->
 <!-- ============================================================================================================== -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.nruzic.commons.master</groupId>
     <artifactId>nruzic-commons-master</artifactId>
-    <version>2.0.3-SNAPSHOT</version>
+    <version>2.0.3</version>
     <packaging>pom</packaging>
 
     <name>nruzic commons master</name>
@@ -159,7 +158,7 @@
         <url>http://github.com/nruzic/nruzic-commons-master</url>
         <connection>scm:git:http://github.com/nruzic/nruzic-commons-master</connection>
         <developerConnection>scm:git:git@github.com:nruzic/nruzic-commons-master</developerConnection>
-        <tag>HEAD</tag>
+        <tag>nruzic-commons-master-2.0.3</tag>
     </scm>
 
     <issueManagement>
@@ -1376,8 +1375,7 @@
                                     <phase>process-sources</phase>
                                     <configuration>
                                         <target>
-                                            <replaceregexp match="\s+$" replace="" byline="true"
-                                                encoding="UTF-8">
+                                            <replaceregexp match="\s+$" replace="" byline="true" encoding="UTF-8">
                                                 <fileset dir="${project.basedir}" erroronmissingdir="false">
                                                     <include name="*" />
                                                 </fileset>
@@ -1393,10 +1391,8 @@
                                     <phase>process-sources</phase>
                                     <configuration>
                                         <target>
-                                            <replaceregexp match="\s+$" replace="" byline="true"
-                                                encoding="UTF-8">
-                                                <fileset dir="${project.basedir}/src/main"
-                                                    erroronmissingdir="false">
+                                            <replaceregexp match="\s+$" replace="" byline="true" encoding="UTF-8">
+                                                <fileset dir="${project.basedir}/src/main" erroronmissingdir="false">
                                                     <include name="java/**/*" />
                                                     <include name="aspect/**/*" />
                                                 </fileset>
@@ -1412,10 +1408,8 @@
                                     <phase>process-resources</phase>
                                     <configuration>
                                         <target>
-                                            <replaceregexp match="\s+$" replace="" byline="true"
-                                                encoding="UTF-8">
-                                                <fileset dir="${project.basedir}/src/main"
-                                                    erroronmissingdir="false">
+                                            <replaceregexp match="\s+$" replace="" byline="true" encoding="UTF-8">
+                                                <fileset dir="${project.basedir}/src/main" erroronmissingdir="false">
                                                     <include name="**/*" />
                                                     <exclude name="java/**/*" />
                                                     <exclude name="aspect/**/*" />
@@ -1432,10 +1426,8 @@
                                     <phase>process-test-sources</phase>
                                     <configuration>
                                         <target>
-                                            <replaceregexp match="\s+$" replace="" byline="true"
-                                                encoding="UTF-8">
-                                                <fileset dir="${project.basedir}/src/test"
-                                                    erroronmissingdir="false">
+                                            <replaceregexp match="\s+$" replace="" byline="true" encoding="UTF-8">
+                                                <fileset dir="${project.basedir}/src/test" erroronmissingdir="false">
                                                     <include name="java/**/*" />
                                                     <include name="aspect/**/*" />
                                                 </fileset>
@@ -1451,10 +1443,8 @@
                                     <phase>process-test-resources</phase>
                                     <configuration>
                                         <target>
-                                            <replaceregexp match="\s+$" replace="" byline="true"
-                                                encoding="UTF-8">
-                                                <fileset dir="${project.basedir}/src/test"
-                                                    erroronmissingdir="false">
+                                            <replaceregexp match="\s+$" replace="" byline="true" encoding="UTF-8">
+                                                <fileset dir="${project.basedir}/src/test" erroronmissingdir="false">
                                                     <include name="**/*" />
                                                     <exclude name="java/**/*" />
                                                     <exclude name="aspect/**/*" />
@@ -1471,10 +1461,8 @@
                                     <phase>process-test-sources</phase>
                                     <configuration>
                                         <target>
-                                            <replaceregexp match="\s+$" replace="" byline="true"
-                                                encoding="UTF-8">
-                                                <fileset dir="${project.basedir}/src/it"
-                                                    erroronmissingdir="false">
+                                            <replaceregexp match="\s+$" replace="" byline="true" encoding="UTF-8">
+                                                <fileset dir="${project.basedir}/src/it" erroronmissingdir="false">
                                                     <include name="java/**/*" />
                                                     <include name="aspect/**/*" />
                                                 </fileset>
@@ -1490,10 +1478,8 @@
                                     <phase>process-test-resources</phase>
                                     <configuration>
                                         <target>
-                                            <replaceregexp match="\s+$" replace="" byline="true"
-                                                encoding="UTF-8">
-                                                <fileset dir="${project.basedir}/src/it"
-                                                    erroronmissingdir="false">
+                                            <replaceregexp match="\s+$" replace="" byline="true" encoding="UTF-8">
+                                                <fileset dir="${project.basedir}/src/it" erroronmissingdir="false">
                                                     <include name="**/*" />
                                                     <exclude name="java/**/*" />
                                                     <exclude name="aspect/**/*" />
@@ -1510,8 +1496,7 @@
                                     <phase>prepare-package</phase>
                                     <configuration>
                                         <target>
-                                            <replaceregexp match="\s+$" replace="" byline="true"
-                                                encoding="UTF-8">
+                                            <replaceregexp match="\s+$" replace="" byline="true" encoding="UTF-8">
                                                 <fileset dir="${project.basedir}/src" erroronmissingdir="false">
                                                     <include name="**/*" />
                                                     <exclude name="main/**/*" />
@@ -1531,8 +1516,7 @@
                                     <phase>process-sources</phase>
                                     <configuration>
                                         <target>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
-                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true">
                                                 <patternset>
                                                     <include name="*" />
                                                     <exclude name="*.bat" />
@@ -1543,9 +1527,7 @@
                                                     <exclude name="*.SH" />
                                                 </patternset>
                                             </fixcrlf>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
-                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true"
-                                                eol="lf">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="lf">
                                                 <patternset>
                                                     <include name="*.bsh" />
                                                     <include name="*.BSH" />
@@ -1553,9 +1535,7 @@
                                                     <include name="*.SH" />
                                                 </patternset>
                                             </fixcrlf>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
-                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true"
-                                                eol="crlf">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="crlf">
                                                 <patternset>
                                                     <include name="*.bat" />
                                                     <include name="*.BAT" />
@@ -1572,9 +1552,7 @@
                                     <phase>process-sources</phase>
                                     <configuration>
                                         <target>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
-                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true"
-                                                javafiles="yes">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" javafiles="yes">
                                                 <patternset>
                                                     <include name="src/main/**/*.java" />
                                                     <include name="src/main/**/*.JAVA" />
@@ -1591,8 +1569,7 @@
                                     <phase>process-resources</phase>
                                     <configuration>
                                         <target>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
-                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true">
                                                 <patternset>
                                                     <include name="src/main/**/*" />
                                                     <exclude name="src/main/**/*.java" />
@@ -1605,9 +1582,7 @@
                                                     <exclude name="src/main/**/*.SH" />
                                                 </patternset>
                                             </fixcrlf>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
-                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true"
-                                                eol="lf">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="lf">
                                                 <patternset>
                                                     <include name="src/main/**/*.bsh" />
                                                     <include name="src/main/**/*.BSH" />
@@ -1615,9 +1590,7 @@
                                                     <include name="src/main/**/*.SH" />
                                                 </patternset>
                                             </fixcrlf>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
-                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true"
-                                                eol="crlf">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="crlf">
                                                 <patternset>
                                                     <include name="src/main/**/*.bat" />
                                                     <include name="src/main/**/*.BAT" />
@@ -1634,9 +1607,7 @@
                                     <phase>process-test-sources</phase>
                                     <configuration>
                                         <target>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
-                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true"
-                                                javafiles="yes">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" javafiles="yes">
                                                 <patternset>
                                                     <include name="src/test/**/*.java" />
                                                     <include name="src/test/**/*.JAVA" />
@@ -1653,8 +1624,7 @@
                                     <phase>process-test-resources</phase>
                                     <configuration>
                                         <target>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
-                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true">
                                                 <patternset>
                                                     <include name="src/test/**/*" />
                                                     <exclude name="src/test/**/*.java" />
@@ -1667,9 +1637,7 @@
                                                     <exclude name="src/test/**/*.SH" />
                                                 </patternset>
                                             </fixcrlf>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
-                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true"
-                                                eol="lf">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="lf">
                                                 <patternset>
                                                     <include name="src/test/**/*.bsh" />
                                                     <include name="src/test/**/*.BSH" />
@@ -1677,9 +1645,7 @@
                                                     <include name="src/test/**/*.SH" />
                                                 </patternset>
                                             </fixcrlf>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
-                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true"
-                                                eol="crlf">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="crlf">
                                                 <patternset>
                                                     <include name="src/test/**/*.bat" />
                                                     <include name="src/test/**/*.BAT" />
@@ -1696,9 +1662,7 @@
                                     <phase>process-test-sources</phase>
                                     <configuration>
                                         <target>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
-                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true"
-                                                javafiles="yes">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" javafiles="yes">
                                                 <patternset>
                                                     <include name="src/it/**/*.java" />
                                                     <include name="src/it/**/*.JAVA" />
@@ -1715,8 +1679,7 @@
                                     <phase>process-test-resources</phase>
                                     <configuration>
                                         <target>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
-                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true">
                                                 <patternset>
                                                     <include name="src/it/**/*" />
                                                     <exclude name="src/it/**/*.java" />
@@ -1729,9 +1692,7 @@
                                                     <exclude name="src/it/**/*.SH" />
                                                 </patternset>
                                             </fixcrlf>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
-                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true"
-                                                eol="lf">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="lf">
                                                 <patternset>
                                                     <include name="src/it/**/*.bsh" />
                                                     <include name="src/it/**/*.BSH" />
@@ -1739,9 +1700,7 @@
                                                     <include name="src/it/**/*.SH" />
                                                 </patternset>
                                             </fixcrlf>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
-                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true"
-                                                eol="crlf">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="crlf">
                                                 <patternset>
                                                     <include name="src/it/**/*.bat" />
                                                     <include name="src/it/**/*.BAT" />
@@ -1758,8 +1717,7 @@
                                     <phase>prepare-package</phase>
                                     <configuration>
                                         <target>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
-                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true">
                                                 <patternset>
                                                     <include name="src/**/*" />
                                                     <exclude name="src/main/**/*" />
@@ -1775,9 +1733,7 @@
                                                     <exclude name="src/**/*.SH" />
                                                 </patternset>
                                             </fixcrlf>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
-                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true"
-                                                eol="lf">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="lf">
                                                 <patternset>
                                                     <include name="src/**/*.bsh" />
                                                     <include name="src/**/*.BSH" />
@@ -1788,9 +1744,7 @@
                                                     <exclude name="src/it/**/*" />
                                                 </patternset>
                                             </fixcrlf>
-                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8"
-                                                outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true"
-                                                eol="crlf">
+                                            <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="crlf">
                                                 <patternset>
                                                     <include name="src/**/*.bat" />
                                                     <include name="src/**/*.BAT" />
