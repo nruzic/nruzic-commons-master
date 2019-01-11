@@ -73,7 +73,7 @@
         <issue-management-url>https://localhost</issue-management-url>
 
         <!-- dependencies -->
-        <version-nruzic-commons-conventions>2.0.0</version-nruzic-commons-conventions>
+        <version-nruzic-commons-conventions>2.0.1</version-nruzic-commons-conventions>
         <version-nruzic-commons-assemblies>1.0.0</version-nruzic-commons-assemblies>
         <version-maven-wagon>3.2.0</version-maven-wagon>
         <version-maven-filtering>3.1.2</version-maven-filtering>
