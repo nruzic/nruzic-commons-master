@@ -567,7 +567,7 @@
                         <!-- Check all files in source directory,
                              and use suppression definition for exclusions -->
                         <includes>**\/*</includes>
-                        <excludes>.*,.*/,target/</excludes>
+                        <excludes>**\/.*,**\/.*\/,**\/target\/</excludes>
                         <!-- Location of suppressions file -->
                         <suppressionsLocation>${conventions-checkstyle-suppressions}</suppressionsLocation>
                         <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
