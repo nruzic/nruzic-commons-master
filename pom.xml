@@ -467,7 +467,7 @@
                         <!-- this is a hack to trigger custom release profile
                             (not the one from master pom) during preparation step, in addition to execution
                             by perform step which is triggered by releaseProfiles tag -->
-                        <arguments>-DdoRelease</arguments>
+                        <arguments>-DreleaseTasks</arguments>
                         <!-- prepare settings -->
                         <preparationGoals>clean verify site</preparationGoals>
                         <!-- completion settings -->
