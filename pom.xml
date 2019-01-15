@@ -25,7 +25,7 @@
 
     <groupId>com.github.nruzic.commons.master</groupId>
     <artifactId>nruzic-commons-master</artifactId>
-    <version>2.0.10</version>
+    <version>2.0.11-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>nruzic commons master</name>
@@ -158,7 +158,7 @@
         <url>http://github.com/nruzic/nruzic-commons-master</url>
         <connection>scm:git:http://github.com/nruzic/nruzic-commons-master</connection>
         <developerConnection>scm:git:git@github.com:nruzic/nruzic-commons-master</developerConnection>
-        <tag>nruzic-commons-master-2.0.10</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <issueManagement>
