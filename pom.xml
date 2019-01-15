@@ -1503,6 +1503,16 @@
                                                     <exclude name="main/**/*" />
                                                     <exclude name="test/**/*" />
                                                     <exclude name="it/**/*" />
+                                                    <exclude name="**/lib/**/*" />
+                                                    <exclude name="**/library/**/*" />
+                                                    <exclude name="**/libraries/**/*" />
+                                                    <exclude name="**/bin/**/*" />
+                                                    <exclude name="**/binary/**/*" />
+                                                    <exclude name="**/binaries/**/*" />
+                                                    <exclude name="**/image/**/*" />
+                                                    <exclude name="**/images/**/*" />
+                                                    <exclude name="**/font/**/*" />
+                                                    <exclude name="**/fonts/**/*" />
                                                 </fileset>
                                             </replaceregexp>
                                         </target>
@@ -1732,6 +1742,16 @@
                                                     <exclude name="src/**/*.BSH" />
                                                     <exclude name="src/**/*.sh" />
                                                     <exclude name="src/**/*.SH" />
+                                                    <exclude name="src/**/lib/**/*" />
+                                                    <exclude name="src/**/library/**/*" />
+                                                    <exclude name="src/**/libraries/**/*" />
+                                                    <exclude name="src/**/bin/**/*" />
+                                                    <exclude name="src/**/binary/**/*" />
+                                                    <exclude name="src/**/binaries/**/*" />
+                                                    <exclude name="src/**/image/**/*" />
+                                                    <exclude name="src/**/images/**/*" />
+                                                    <exclude name="src/**/font/**/*" />
+                                                    <exclude name="src/**/fonts/**/*" />
                                                 </patternset>
                                             </fixcrlf>
                                             <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="lf">
