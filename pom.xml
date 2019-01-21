@@ -40,22 +40,16 @@
     </licenses>
 
     <properties>
-        <!-- project defaults -->
-        <project-name>${project.artifactId}</project-name>
-        <project-version>${project.version}</project-version>
-        <project-home>${user.home}/.${project-name}</project-home>
-        <project-branch>${branch}</project-branch>
-        <project-buildtime>${maven-build-timestamp}</project-buildtime>
-        <project-builddate>${maven-build-timestamp-date}</project-builddate>
+        <!-- build switches -->
+        <branch>master</branch>
+        <encoding>UTF-8</encoding>
+        <java>1.8</java>
 
         <!-- build defaults -->
-        <branch>master</branch>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <property-java-compiler-source-level>1.8</property-java-compiler-source-level>
-        <property-java-compiler-compliance-level>
-            ${property-java-compiler-source-level}
-        </property-java-compiler-compliance-level>
+        <java-compiler-source-level>1.8</java-compiler-source-level>
+        <java-compiler-compliance-level>${java-compiler-source-level}</java-compiler-compliance-level>
         <assemblies-bin-distribution-base-directory>${project-name}</assemblies-bin-distribution-base-directory>
         <assembly.id>bin</assembly.id> <!-- Default assembly id -->
         <conventions-checkstyle-config>
@@ -67,6 +61,17 @@
         <conventions-eclipse-formatter>
             hr/nruzic/commons/conventions/eclipse/formatter/allman-ansi-eclipse-formatter.xml
         </conventions-eclipse-formatter>
+        <checkstyle.failOnViolation>true</checkstyle.failOnViolation>
+        <settings-security>${user.home}/.m2/settings-security.xml</settings-security>
+        <adoc-show-hints>false</adoc-show-hints>
+
+        <!-- project generalities -->
+        <project-name>${project.artifactId}</project-name>
+        <project-version>${project.version}</project-version>
+        <project-home>${user.home}/.${project-name}</project-home>
+        <project-branch>${branch}</project-branch>
+        <project-buildtime>${maven-build-timestamp}</project-buildtime>
+        <project-builddate>${maven-build-timestamp-date}</project-builddate>
 
         <!-- repository locations -->
         <internal-maven-repository-schema>http</internal-maven-repository-schema>
@@ -100,22 +105,23 @@
         <project-site-protocol>http</project-site-protocol>
         <!-- CHECKSTYLE:OFF -->
         <project-site-url>
-            ${project-site-protocol}://${project-site-host}/${project-site-basepath}/${project-name}/${project-version}/${branch}
+            ${project-site-protocol}://${project-site-host}/${project-site-basepath}/${project-name}/${project-version}/${project-branch}
         </project-site-url>
         <!-- CHECKSTYLE:ON -->
         <project-site-deploy-protocol>scp</project-site-deploy-protocol>
         <project-site-deploy-basepath>var/www/html/project</project-site-deploy-basepath>
         <!-- CHECKSTYLE:OFF -->
         <project-site-deploy-url>
-            ${project-site-deploy-protocol}://${project-site-host}/${project-site-deploy-basepath}/${project-name}/${project-version}/${branch}
+            ${project-site-deploy-protocol}://${project-site-host}/${project-site-deploy-basepath}/${project-name}/${project-version}/${project-branch}
         </project-site-deploy-url>
         <!-- CHECKSTYLE:ON -->
         <project-site-stage-dir>
-            ${project-home}/site-stage/${project-name}/${project-version}/${branch}
+            ${project-home}/site-stage/${project-name}/${project-version}/${project-branch}
         </project-site-stage-dir>
 
-        <!-- continous integration software locations -->
-        <continuous-integration-managament-url>https://localhost</continuous-integration-managament-url>
+        <!-- continuous integration software locations -->
+        <ci-managament-system>Jenkins</ci-managament-system>
+        <ci-managament-url>https://localhost</ci-managament-url>
 
         <!-- issue management -->
         <issue-management-system-name>JIRA</issue-management-system-name>
@@ -161,21 +167,37 @@
         <tag>HEAD</tag>
     </scm>
 
-    <issueManagement>
-        <system>${issue-management-system-name}</system>
-        <url>${issue-management-url}</url>
-    </issueManagement>
+    <repositories>
+    </repositories>
+
+    <pluginRepositories>
+    </pluginRepositories>
+
+    <ciManagement>
+        <system>${ci-managament-system}</system>
+        <url>${ci-managament-url}</url>
+    </ciManagement>
 
     <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh-snapshot-repo</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
         <repository>
             <id>ossrh-staging-repo</id>
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
+        <snapshotRepository>
+            <id>ossrh-snapshot-repo</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <site>
+            <id>${project-site-id}</id>
+            <name>${project-site-name}</name>
+            <url>${project-site-deploy-url}</url>
+        </site>
     </distributionManagement>
+
+    <issueManagement>
+        <system>${issue-management-system-name}</system>
+        <url>${issue-management-url}</url>
+    </issueManagement>
 
     <developers>
         <developer>
@@ -222,6 +244,8 @@
                             <configuration>
                                 <name>maven-build-timestamp</name>
                                 <pattern>yyyy-MM-dd HH:mm</pattern>
+                                <locale>hr,HR</locale>
+                                <timeZone>GMT+1</timeZone>
                             </configuration>
                         </execution>
                         <execution>
@@ -233,6 +257,8 @@
                             <configuration>
                                 <name>maven-build-timestamp-date</name>
                                 <pattern>yyyy-MM-dd</pattern>
+                                <locale>hr,HR</locale>
+                                <timeZone>GMT+1</timeZone>
                             </configuration>
                         </execution>
                         <execution>
@@ -332,8 +358,8 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${version-maven-compiler-plugin}</version>
                     <configuration>
-                        <source>${property-java-compiler-source-level}</source>
-                        <target>${property-java-compiler-compliance-level}</target>
+                        <source>${java-compiler-source-level}</source>
+                        <target>${java-compiler-compliance-level}</target>
                         <encoding>${project.build.sourceEncoding}</encoding>
                     </configuration>
                 </plugin>
@@ -467,14 +493,14 @@
                         <!-- this is a hack to trigger custom release profile
                             (not the one from master pom) during preparation step, in addition to execution
                             by perform step which is triggered by releaseProfiles tag -->
-                        <arguments>-DreleaseTasks</arguments>
+                        <arguments>-DreleaseTasks -Dbranch=${project-branch} -Dsettings.security=${settings-security}</arguments>
                         <!-- prepare settings -->
                         <preparationGoals>clean verify site</preparationGoals>
                         <!-- completion settings -->
                         <completionGoals>clean verify site</completionGoals>
                         <!-- perform settings -->
                         <useReleaseProfile>false</useReleaseProfile>
-                        <releaseProfiles>release</releaseProfiles>
+                        <releaseProfiles>releaseTasks</releaseProfiles>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -557,7 +583,7 @@
                         <!-- Check rules definition -->
                         <configLocation>${conventions-checkstyle-config}</configLocation>
                         <!-- Stop build on error -->
-                        <failOnViolation>true</failOnViolation>
+                        <failOnViolation>${checkstyle.failOnViolation}</failOnViolation>
                         <!-- Summarize broken rules -->
                         <logViolationsToConsole>true</logViolationsToConsole>
                         <!-- location of the source directories to be used for Checkstyle.
@@ -566,8 +592,45 @@
                         <sourceDirectories>${project.basedir}</sourceDirectories>
                         <!-- Check all files in source directory,
                              and use suppression definition for exclusions -->
-                        <includes>*,src\/</includes>
-                        <excludes>.*,.*\/,target\/,**/lib/,**/library/,**/libraries/,**/bin/,**/binary/,**/binaries/,**/image/,**/images/,**/font/,**/fonts/</excludes>
+                        <includes>*,src/</includes>
+                        <excludes>.*,
+                                  i2ot-jenkins-id-rsa,
+                                  **/*.asc,
+                                  **/*.doc,
+                                  **/*.docx,
+                                  **/*.exe,
+                                  **/*.gif,
+                                  **/*.gz,
+                                  **/*.ico,
+                                  **/*.jar,
+                                  **/*.jpg,
+                                  **/*.jpeg,
+                                  **/*.key,
+                                  **/*.min.js,
+                                  **/*.pdf,
+                                  **/*.png,
+                                  **/*.swc,
+                                  **/*.tar,
+                                  **/*.tgz,
+                                  **/*.tif,
+                                  **/*.tiff,
+                                  **/*.xls,
+                                  **/*.xlsx,
+                                  .*/,
+                                  **/.*/,
+                                  **/3pp/,
+                                  **/bin/,
+                                  **/binary/,
+                                  **/binaries/,
+                                  **/external/,
+                                  **/font/,
+                                  **/fonts/,
+                                  **/image/,
+                                  **/images/,
+                                  **/lib/,
+                                  **/library/,
+                                  **/libraries/,
+                                  target/</excludes>
                         <!-- Location of suppressions file -->
                         <suppressionsLocation>${conventions-checkstyle-suppressions}</suppressionsLocation>
                         <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
@@ -825,6 +888,7 @@
                             <_project-version>${project-version}</_project-version>
                             <_project-buildtime>${project-buildtime}</_project-buildtime>
                             <_project-builddate>${project-builddate}</_project-builddate>
+                            <a-show-hints>${adoc-show-hints}</a-show-hints>
                         </attributes>
                         <requires>
                             <require>asciidoctor-diagram</require>
@@ -1379,6 +1443,28 @@
                                             <replaceregexp match="\s+$" replace="" byline="true" encoding="UTF-8">
                                                 <fileset dir="${project.basedir}" erroronmissingdir="false">
                                                     <include name="*" />
+                                                    <exclude name=".*" />
+                                                    <exclude name="*.asc" />
+                                                    <exclude name="*.doc" />
+                                                    <exclude name="*.docx" />
+                                                    <exclude name="*.exe" />
+                                                    <exclude name="*.gif" />
+                                                    <exclude name="*.gz" />
+                                                    <exclude name="*.ico" />
+                                                    <exclude name="*.jar" />
+                                                    <exclude name="*.jpg" />
+                                                    <exclude name="*.jpeg" />
+                                                    <exclude name="*.key" />
+                                                    <exclude name="*.min.js" />
+                                                    <exclude name="*.pdf" />
+                                                    <exclude name="*.png" />
+                                                    <exclude name="*.swc" />
+                                                    <exclude name="*.tar" />
+                                                    <exclude name="*.tgz" />
+                                                    <exclude name="*.tif" />
+                                                    <exclude name="*.tiff" />
+                                                    <exclude name="*.xls" />
+                                                    <exclude name="*.xlsx" />
                                                 </fileset>
                                             </replaceregexp>
                                         </target>
@@ -1412,8 +1498,44 @@
                                             <replaceregexp match="\s+$" replace="" byline="true" encoding="UTF-8">
                                                 <fileset dir="${project.basedir}/src/main" erroronmissingdir="false">
                                                     <include name="**/*" />
-                                                    <exclude name="java/**/*" />
-                                                    <exclude name="aspect/**/*" />
+                                                    <exclude name="**/*.asc" />
+                                                    <exclude name="**/*.doc" />
+                                                    <exclude name="**/*.docx" />
+                                                    <exclude name="**/*.exe" />
+                                                    <exclude name="**/*.gif" />
+                                                    <exclude name="**/*.gz" />
+                                                    <exclude name="**/*.ico" />
+                                                    <exclude name="**/*.jar" />
+                                                    <exclude name="**/*.jpg" />
+                                                    <exclude name="**/*.jpeg" />
+                                                    <exclude name="**/*.key" />
+                                                    <exclude name="**/*.min.js" />
+                                                    <exclude name="**/*.pdf" />
+                                                    <exclude name="**/*.png" />
+                                                    <exclude name="**/*.swc" />
+                                                    <exclude name="**/*.tar" />
+                                                    <exclude name="**/*.tgz" />
+                                                    <exclude name="**/*.tif" />
+                                                    <exclude name="**/*.tiff" />
+                                                    <exclude name="**/*.xls" />
+                                                    <exclude name="**/*.xlsx" />
+                                                    <exclude name="**/.*/" />
+                                                    <exclude name="**/3pp/" />
+                                                    <exclude name="**/aspect/" />
+                                                    <exclude name="**/bin/" />
+                                                    <exclude name="**/binary/" />
+                                                    <exclude name="**/binaries/" />
+                                                    <exclude name="**/external/" />
+                                                    <exclude name="**/font/" />
+                                                    <exclude name="**/fonts/" />
+                                                    <exclude name="**/image/" />
+                                                    <exclude name="**/images/" />
+                                                    <exclude name="**/.images/" />
+                                                    <exclude name="**/java/" />
+                                                    <exclude name="**/lib/" />
+                                                    <exclude name="**/library/" />
+                                                    <exclude name="**/libraries/" />
+                                                    <exclude name="**/.libraries/" />
                                                 </fileset>
                                             </replaceregexp>
                                         </target>
@@ -1447,8 +1569,44 @@
                                             <replaceregexp match="\s+$" replace="" byline="true" encoding="UTF-8">
                                                 <fileset dir="${project.basedir}/src/test" erroronmissingdir="false">
                                                     <include name="**/*" />
-                                                    <exclude name="java/**/*" />
-                                                    <exclude name="aspect/**/*" />
+                                                    <exclude name="**/*.asc" />
+                                                    <exclude name="**/*.doc" />
+                                                    <exclude name="**/*.docx" />
+                                                    <exclude name="**/*.exe" />
+                                                    <exclude name="**/*.gif" />
+                                                    <exclude name="**/*.gz" />
+                                                    <exclude name="**/*.ico" />
+                                                    <exclude name="**/*.jar" />
+                                                    <exclude name="**/*.jpg" />
+                                                    <exclude name="**/*.jpeg" />
+                                                    <exclude name="**/*.key" />
+                                                    <exclude name="**/*.min.js" />
+                                                    <exclude name="**/*.pdf" />
+                                                    <exclude name="**/*.png" />
+                                                    <exclude name="**/*.swc" />
+                                                    <exclude name="**/*.tar" />
+                                                    <exclude name="**/*.tgz" />
+                                                    <exclude name="**/*.tif" />
+                                                    <exclude name="**/*.tiff" />
+                                                    <exclude name="**/*.xls" />
+                                                    <exclude name="**/*.xlsx" />
+                                                    <exclude name="**/.*/" />
+                                                    <exclude name="**/3pp/" />
+                                                    <exclude name="**/aspect/" />
+                                                    <exclude name="**/bin/" />
+                                                    <exclude name="**/binary/" />
+                                                    <exclude name="**/binaries/" />
+                                                    <exclude name="**/external/" />
+                                                    <exclude name="**/font/" />
+                                                    <exclude name="**/fonts/" />
+                                                    <exclude name="**/image/" />
+                                                    <exclude name="**/images/" />
+                                                    <exclude name="**/.images/" />
+                                                    <exclude name="**/java/" />
+                                                    <exclude name="**/lib/" />
+                                                    <exclude name="**/library/" />
+                                                    <exclude name="**/libraries/" />
+                                                    <exclude name="**/.libraries/" />
                                                 </fileset>
                                             </replaceregexp>
                                         </target>
@@ -1482,8 +1640,44 @@
                                             <replaceregexp match="\s+$" replace="" byline="true" encoding="UTF-8">
                                                 <fileset dir="${project.basedir}/src/it" erroronmissingdir="false">
                                                     <include name="**/*" />
-                                                    <exclude name="java/**/*" />
-                                                    <exclude name="aspect/**/*" />
+                                                    <exclude name="**/*.asc" />
+                                                    <exclude name="**/*.doc" />
+                                                    <exclude name="**/*.docx" />
+                                                    <exclude name="**/*.exe" />
+                                                    <exclude name="**/*.gif" />
+                                                    <exclude name="**/*.gz" />
+                                                    <exclude name="**/*.ico" />
+                                                    <exclude name="**/*.jar" />
+                                                    <exclude name="**/*.jpg" />
+                                                    <exclude name="**/*.jpeg" />
+                                                    <exclude name="**/*.key" />
+                                                    <exclude name="**/*.min.js" />
+                                                    <exclude name="**/*.pdf" />
+                                                    <exclude name="**/*.png" />
+                                                    <exclude name="**/*.swc" />
+                                                    <exclude name="**/*.tar" />
+                                                    <exclude name="**/*.tgz" />
+                                                    <exclude name="**/*.tif" />
+                                                    <exclude name="**/*.tiff" />
+                                                    <exclude name="**/*.xls" />
+                                                    <exclude name="**/*.xlsx" />
+                                                    <exclude name="**/.*/" />
+                                                    <exclude name="**/3pp/" />
+                                                    <exclude name="**/aspect/" />
+                                                    <exclude name="**/bin/" />
+                                                    <exclude name="**/binary/" />
+                                                    <exclude name="**/binaries/" />
+                                                    <exclude name="**/external/" />
+                                                    <exclude name="**/font/" />
+                                                    <exclude name="**/fonts/" />
+                                                    <exclude name="**/image/" />
+                                                    <exclude name="**/images/" />
+                                                    <exclude name="**/.images/" />
+                                                    <exclude name="**/java/" />
+                                                    <exclude name="**/lib/" />
+                                                    <exclude name="**/library/" />
+                                                    <exclude name="**/libraries/" />
+                                                    <exclude name="**/.libraries/" />
                                                 </fileset>
                                             </replaceregexp>
                                         </target>
@@ -1500,19 +1694,47 @@
                                             <replaceregexp match="\s+$" replace="" byline="true" encoding="UTF-8">
                                                 <fileset dir="${project.basedir}/src" erroronmissingdir="false">
                                                     <include name="**/*" />
+                                                    <exclude name="it/**/*" />
                                                     <exclude name="main/**/*" />
                                                     <exclude name="test/**/*" />
-                                                    <exclude name="it/**/*" />
-                                                    <exclude name="**/lib/**/*" />
-                                                    <exclude name="**/library/**/*" />
-                                                    <exclude name="**/libraries/**/*" />
-                                                    <exclude name="**/bin/**/*" />
-                                                    <exclude name="**/binary/**/*" />
-                                                    <exclude name="**/binaries/**/*" />
-                                                    <exclude name="**/image/**/*" />
-                                                    <exclude name="**/images/**/*" />
-                                                    <exclude name="**/font/**/*" />
-                                                    <exclude name="**/fonts/**/*" />
+                                                    <exclude name="**/*.asc" />
+                                                    <exclude name="**/*.doc" />
+                                                    <exclude name="**/*.docx" />
+                                                    <exclude name="**/*.exe" />
+                                                    <exclude name="**/*.gif" />
+                                                    <exclude name="**/*.gz" />
+                                                    <exclude name="**/*.ico" />
+                                                    <exclude name="**/*.jar" />
+                                                    <exclude name="**/*.jpg" />
+                                                    <exclude name="**/*.jpeg" />
+                                                    <exclude name="**/*.key" />
+                                                    <exclude name="**/*.min.js" />
+                                                    <exclude name="**/*.pdf" />
+                                                    <exclude name="**/*.png" />
+                                                    <exclude name="**/*.swc" />
+                                                    <exclude name="**/*.tar" />
+                                                    <exclude name="**/*.tgz" />
+                                                    <exclude name="**/*.tif" />
+                                                    <exclude name="**/*.tiff" />
+                                                    <exclude name="**/*.xls" />
+                                                    <exclude name="**/*.xlsx" />
+                                                    <exclude name="**/.*/" />
+                                                    <exclude name="**/3pp/" />
+                                                    <exclude name="**/aspect/" />
+                                                    <exclude name="**/bin/" />
+                                                    <exclude name="**/binary/" />
+                                                    <exclude name="**/binaries/" />
+                                                    <exclude name="**/external/" />
+                                                    <exclude name="**/font/" />
+                                                    <exclude name="**/fonts/" />
+                                                    <exclude name="**/image/" />
+                                                    <exclude name="**/images/" />
+                                                    <exclude name="**/.images/" />
+                                                    <exclude name="**/java/" />
+                                                    <exclude name="**/lib/" />
+                                                    <exclude name="**/library/" />
+                                                    <exclude name="**/libraries/" />
+                                                    <exclude name="**/.libraries/" />
                                                 </fileset>
                                             </replaceregexp>
                                         </target>
@@ -1530,26 +1752,42 @@
                                             <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true">
                                                 <patternset>
                                                     <include name="*" />
+                                                    <exclude name=".*" />
+                                                    <exclude name="*.asc" />
                                                     <exclude name="*.bat" />
-                                                    <exclude name="*.BAT" />
                                                     <exclude name="*.bsh" />
-                                                    <exclude name="*.BSH" />
+                                                    <exclude name="*.doc" />
+                                                    <exclude name="*.docx" />
+                                                    <exclude name="*.exe" />
+                                                    <exclude name="*.gif" />
+                                                    <exclude name="*.gz" />
+                                                    <exclude name="*.ico" />
+                                                    <exclude name="*.jar" />
+                                                    <exclude name="*.jpg" />
+                                                    <exclude name="*.jpeg" />
+                                                    <exclude name="*.key" />
+                                                    <exclude name="*.min.js" />
+                                                    <exclude name="*.pdf" />
+                                                    <exclude name="*.png" />
                                                     <exclude name="*.sh" />
-                                                    <exclude name="*.SH" />
+                                                    <exclude name="*.swc" />
+                                                    <exclude name="*.tar" />
+                                                    <exclude name="*.tgz" />
+                                                    <exclude name="*.tif" />
+                                                    <exclude name="*.tiff" />
+                                                    <exclude name="*.xls" />
+                                                    <exclude name="*.xlsx" />
                                                 </patternset>
                                             </fixcrlf>
                                             <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="lf">
                                                 <patternset>
                                                     <include name="*.bsh" />
-                                                    <include name="*.BSH" />
                                                     <include name="*.sh" />
-                                                    <include name="*.SH" />
                                                 </patternset>
                                             </fixcrlf>
                                             <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="crlf">
                                                 <patternset>
                                                     <include name="*.bat" />
-                                                    <include name="*.BAT" />
                                                 </patternset>
                                             </fixcrlf>
                                         </target>
@@ -1566,7 +1804,6 @@
                                             <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" javafiles="yes">
                                                 <patternset>
                                                     <include name="src/main/**/*.java" />
-                                                    <include name="src/main/**/*.JAVA" />
                                                 </patternset>
                                             </fixcrlf>
                                         </target>
@@ -1583,28 +1820,59 @@
                                             <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true">
                                                 <patternset>
                                                     <include name="src/main/**/*" />
-                                                    <exclude name="src/main/**/*.java" />
-                                                    <exclude name="src/main/**/*.JAVA" />
+                                                    <exclude name="src/main/**/*.asc" />
                                                     <exclude name="src/main/**/*.bat" />
-                                                    <exclude name="src/main/**/*.BAT" />
                                                     <exclude name="src/main/**/*.bsh" />
-                                                    <exclude name="src/main/**/*.BSH" />
+                                                    <exclude name="src/main/**/*.doc" />
+                                                    <exclude name="src/main/**/*.docx" />
+                                                    <exclude name="src/main/**/*.exe" />
+                                                    <exclude name="src/main/**/*.gif" />
+                                                    <exclude name="src/main/**/*.gz" />
+                                                    <exclude name="src/main/**/*.ico" />
+                                                    <exclude name="src/main/**/*.jar" />
+                                                    <exclude name="src/main/**/*.java" />
+                                                    <exclude name="src/main/**/*.jpg" />
+                                                    <exclude name="src/main/**/*.jpeg" />
+                                                    <exclude name="src/main/**/*.key" />
+                                                    <exclude name="src/main/**/*.min.js" />
+                                                    <exclude name="src/main/**/*.pdf" />
+                                                    <exclude name="src/main/**/*.png" />
                                                     <exclude name="src/main/**/*.sh" />
-                                                    <exclude name="src/main/**/*.SH" />
+                                                    <exclude name="src/main/**/*.swc" />
+                                                    <exclude name="src/main/**/*.tar" />
+                                                    <exclude name="src/main/**/*.tgz" />
+                                                    <exclude name="src/main/**/*.tif" />
+                                                    <exclude name="src/main/**/*.tiff" />
+                                                    <exclude name="src/main/**/*.xls" />
+                                                    <exclude name="src/main/**/*.xlsx" />
+                                                    <exclude name="src/main/**/.*/" />
+                                                    <exclude name="src/main/**/3pp/" />
+                                                    <exclude name="src/main/**/aspect/" />
+                                                    <exclude name="src/main/**/bin/" />
+                                                    <exclude name="src/main/**/binary/" />
+                                                    <exclude name="src/main/**/binaries/" />
+                                                    <exclude name="src/main/**/external/" />
+                                                    <exclude name="src/main/**/font/" />
+                                                    <exclude name="src/main/**/fonts/" />
+                                                    <exclude name="src/main/**/image/" />
+                                                    <exclude name="src/main/**/images/" />
+                                                    <exclude name="src/main/**/.images/" />
+                                                    <exclude name="src/main/**/java/" />
+                                                    <exclude name="src/main/**/lib/" />
+                                                    <exclude name="src/main/**/library/" />
+                                                    <exclude name="src/main/**/libraries/" />
+                                                    <exclude name="src/main/**/.libraries/" />
                                                 </patternset>
                                             </fixcrlf>
                                             <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="lf">
                                                 <patternset>
                                                     <include name="src/main/**/*.bsh" />
-                                                    <include name="src/main/**/*.BSH" />
                                                     <include name="src/main/**/*.sh" />
-                                                    <include name="src/main/**/*.SH" />
                                                 </patternset>
                                             </fixcrlf>
                                             <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="crlf">
                                                 <patternset>
                                                     <include name="src/main/**/*.bat" />
-                                                    <include name="src/main/**/*.BAT" />
                                                 </patternset>
                                             </fixcrlf>
                                         </target>
@@ -1621,7 +1889,6 @@
                                             <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" javafiles="yes">
                                                 <patternset>
                                                     <include name="src/test/**/*.java" />
-                                                    <include name="src/test/**/*.JAVA" />
                                                 </patternset>
                                             </fixcrlf>
                                         </target>
@@ -1638,28 +1905,59 @@
                                             <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true">
                                                 <patternset>
                                                     <include name="src/test/**/*" />
-                                                    <exclude name="src/test/**/*.java" />
-                                                    <exclude name="src/test/**/*.JAVA" />
+                                                    <exclude name="src/test/**/*.asc" />
                                                     <exclude name="src/test/**/*.bat" />
-                                                    <exclude name="src/test/**/*.BAT" />
                                                     <exclude name="src/test/**/*.bsh" />
-                                                    <exclude name="src/test/**/*.BSH" />
+                                                    <exclude name="src/test/**/*.doc" />
+                                                    <exclude name="src/test/**/*.docx" />
+                                                    <exclude name="src/test/**/*.exe" />
+                                                    <exclude name="src/test/**/*.gif" />
+                                                    <exclude name="src/test/**/*.gz" />
+                                                    <exclude name="src/test/**/*.ico" />
+                                                    <exclude name="src/test/**/*.jar" />
+                                                    <exclude name="src/test/**/*.java" />
+                                                    <exclude name="src/test/**/*.jpg" />
+                                                    <exclude name="src/test/**/*.jpeg" />
+                                                    <exclude name="src/test/**/*.key" />
+                                                    <exclude name="src/test/**/*.min.js" />
+                                                    <exclude name="src/test/**/*.pdf" />
+                                                    <exclude name="src/test/**/*.png" />
                                                     <exclude name="src/test/**/*.sh" />
-                                                    <exclude name="src/test/**/*.SH" />
+                                                    <exclude name="src/test/**/*.swc" />
+                                                    <exclude name="src/test/**/*.tar" />
+                                                    <exclude name="src/test/**/*.tgz" />
+                                                    <exclude name="src/test/**/*.tif" />
+                                                    <exclude name="src/test/**/*.tiff" />
+                                                    <exclude name="src/test/**/*.xls" />
+                                                    <exclude name="src/test/**/*.xlsx" />
+                                                    <exclude name="src/test/**/.*/" />
+                                                    <exclude name="src/test/**/3pp/" />
+                                                    <exclude name="src/test/**/aspect/" />
+                                                    <exclude name="src/test/**/bin/" />
+                                                    <exclude name="src/test/**/binary/" />
+                                                    <exclude name="src/test/**/binaries/" />
+                                                    <exclude name="src/test/**/external/" />
+                                                    <exclude name="src/test/**/font/" />
+                                                    <exclude name="src/test/**/fonts/" />
+                                                    <exclude name="src/test/**/image/" />
+                                                    <exclude name="src/test/**/images/" />
+                                                    <exclude name="src/test/**/.images/" />
+                                                    <exclude name="src/test/**/java/" />
+                                                    <exclude name="src/test/**/lib/" />
+                                                    <exclude name="src/test/**/library/" />
+                                                    <exclude name="src/test/**/libraries/" />
+                                                    <exclude name="src/test/**/.libraries/" />
                                                 </patternset>
                                             </fixcrlf>
                                             <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="lf">
                                                 <patternset>
                                                     <include name="src/test/**/*.bsh" />
-                                                    <include name="src/test/**/*.BSH" />
                                                     <include name="src/test/**/*.sh" />
-                                                    <include name="src/test/**/*.SH" />
                                                 </patternset>
                                             </fixcrlf>
                                             <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="crlf">
                                                 <patternset>
                                                     <include name="src/test/**/*.bat" />
-                                                    <include name="src/test/**/*.BAT" />
                                                 </patternset>
                                             </fixcrlf>
                                         </target>
@@ -1676,7 +1974,6 @@
                                             <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" javafiles="yes">
                                                 <patternset>
                                                     <include name="src/it/**/*.java" />
-                                                    <include name="src/it/**/*.JAVA" />
                                                 </patternset>
                                             </fixcrlf>
                                         </target>
@@ -1693,28 +1990,59 @@
                                             <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true">
                                                 <patternset>
                                                     <include name="src/it/**/*" />
-                                                    <exclude name="src/it/**/*.java" />
-                                                    <exclude name="src/it/**/*.JAVA" />
+                                                    <exclude name="src/it/**/*.asc" />
                                                     <exclude name="src/it/**/*.bat" />
-                                                    <exclude name="src/it/**/*.BAT" />
                                                     <exclude name="src/it/**/*.bsh" />
-                                                    <exclude name="src/it/**/*.BSH" />
+                                                    <exclude name="src/it/**/*.doc" />
+                                                    <exclude name="src/it/**/*.docx" />
+                                                    <exclude name="src/it/**/*.exe" />
+                                                    <exclude name="src/it/**/*.gif" />
+                                                    <exclude name="src/it/**/*.gz" />
+                                                    <exclude name="src/it/**/*.ico" />
+                                                    <exclude name="src/it/**/*.jar" />
+                                                    <exclude name="src/it/**/*.java" />
+                                                    <exclude name="src/it/**/*.jpg" />
+                                                    <exclude name="src/it/**/*.jpeg" />
+                                                    <exclude name="src/it/**/*.key" />
+                                                    <exclude name="src/it/**/*.min.js" />
+                                                    <exclude name="src/it/**/*.pdf" />
+                                                    <exclude name="src/it/**/*.png" />
                                                     <exclude name="src/it/**/*.sh" />
-                                                    <exclude name="src/it/**/*.SH" />
+                                                    <exclude name="src/it/**/*.swc" />
+                                                    <exclude name="src/it/**/*.tar" />
+                                                    <exclude name="src/it/**/*.tgz" />
+                                                    <exclude name="src/it/**/*.tif" />
+                                                    <exclude name="src/it/**/*.tiff" />
+                                                    <exclude name="src/it/**/*.xls" />
+                                                    <exclude name="src/it/**/*.xlsx" />
+                                                    <exclude name="src/it/**/.*/" />
+                                                    <exclude name="src/it/**/3pp/" />
+                                                    <exclude name="src/it/**/aspect/" />
+                                                    <exclude name="src/it/**/bin/" />
+                                                    <exclude name="src/it/**/binary/" />
+                                                    <exclude name="src/it/**/binaries/" />
+                                                    <exclude name="src/it/**/external/" />
+                                                    <exclude name="src/it/**/font/" />
+                                                    <exclude name="src/it/**/fonts/" />
+                                                    <exclude name="src/it/**/image/" />
+                                                    <exclude name="src/it/**/images/" />
+                                                    <exclude name="src/it/**/.images/" />
+                                                    <exclude name="src/it/**/java/" />
+                                                    <exclude name="src/it/**/lib/" />
+                                                    <exclude name="src/it/**/library/" />
+                                                    <exclude name="src/it/**/libraries/" />
+                                                    <exclude name="src/it/**/.libraries/" />
                                                 </patternset>
                                             </fixcrlf>
                                             <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="lf">
                                                 <patternset>
                                                     <include name="src/it/**/*.bsh" />
-                                                    <include name="src/it/**/*.BSH" />
                                                     <include name="src/it/**/*.sh" />
-                                                    <include name="src/it/**/*.SH" />
                                                 </patternset>
                                             </fixcrlf>
                                             <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="crlf">
                                                 <patternset>
                                                     <include name="src/it/**/*.bat" />
-                                                    <include name="src/it/**/*.BAT" />
                                                 </patternset>
                                             </fixcrlf>
                                         </target>
@@ -1731,47 +2059,68 @@
                                             <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true">
                                                 <patternset>
                                                     <include name="src/**/*" />
-                                                    <exclude name="src/main/**/*" />
-                                                    <exclude name="src/test/**/*" />
-                                                    <exclude name="src/it/**/*" />
-                                                    <exclude name="src/**/*.java" />
-                                                    <exclude name="src/**/*.JAVA" />
+                                                    <exclude name="src/it/" />
+                                                    <exclude name="src/main/" />
+                                                    <exclude name="src/test/" />
+                                                    <exclude name="src/**/*.asc" />
                                                     <exclude name="src/**/*.bat" />
-                                                    <exclude name="src/**/*.BAT" />
                                                     <exclude name="src/**/*.bsh" />
-                                                    <exclude name="src/**/*.BSH" />
+                                                    <exclude name="src/**/*.doc" />
+                                                    <exclude name="src/**/*.docx" />
+                                                    <exclude name="src/**/*.exe" />
+                                                    <exclude name="src/**/*.gif" />
+                                                    <exclude name="src/**/*.gz" />
+                                                    <exclude name="src/**/*.ico" />
+                                                    <exclude name="src/**/*.jar" />
+                                                    <exclude name="src/**/*.java" />
+                                                    <exclude name="src/**/*.jpg" />
+                                                    <exclude name="src/**/*.jpeg" />
+                                                    <exclude name="src/**/*.key" />
+                                                    <exclude name="src/**/*.min.js" />
+                                                    <exclude name="src/**/*.pdf" />
+                                                    <exclude name="src/**/*.png" />
                                                     <exclude name="src/**/*.sh" />
-                                                    <exclude name="src/**/*.SH" />
-                                                    <exclude name="src/**/lib/**/*" />
-                                                    <exclude name="src/**/library/**/*" />
-                                                    <exclude name="src/**/libraries/**/*" />
-                                                    <exclude name="src/**/bin/**/*" />
-                                                    <exclude name="src/**/binary/**/*" />
-                                                    <exclude name="src/**/binaries/**/*" />
-                                                    <exclude name="src/**/image/**/*" />
-                                                    <exclude name="src/**/images/**/*" />
-                                                    <exclude name="src/**/font/**/*" />
-                                                    <exclude name="src/**/fonts/**/*" />
+                                                    <exclude name="src/**/*.swc" />
+                                                    <exclude name="src/**/*.tar" />
+                                                    <exclude name="src/**/*.tgz" />
+                                                    <exclude name="src/**/*.tif" />
+                                                    <exclude name="src/**/*.tiff" />
+                                                    <exclude name="src/**/*.xls" />
+                                                    <exclude name="src/**/*.xlsx" />
+                                                    <exclude name="src/**/.*/" />
+                                                    <exclude name="src/**/3pp/" />
+                                                    <exclude name="src/**/aspect/" />
+                                                    <exclude name="src/**/bin/" />
+                                                    <exclude name="src/**/binary/" />
+                                                    <exclude name="src/**/binaries/" />
+                                                    <exclude name="src/**/external/" />
+                                                    <exclude name="src/**/font/" />
+                                                    <exclude name="src/**/fonts/" />
+                                                    <exclude name="src/**/image/" />
+                                                    <exclude name="src/**/images/" />
+                                                    <exclude name="src/**/.images/" />
+                                                    <exclude name="src/**/java/" />
+                                                    <exclude name="src/**/lib/" />
+                                                    <exclude name="src/**/library/" />
+                                                    <exclude name="src/**/libraries/" />
+                                                    <exclude name="src/**/.libraries/" />
                                                 </patternset>
                                             </fixcrlf>
                                             <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="lf">
                                                 <patternset>
                                                     <include name="src/**/*.bsh" />
-                                                    <include name="src/**/*.BSH" />
                                                     <include name="src/**/*.sh" />
-                                                    <include name="src/**/*.SH" />
-                                                    <exclude name="src/main/**/*" />
-                                                    <exclude name="src/test/**/*" />
-                                                    <exclude name="src/it/**/*" />
+                                                    <exclude name="src/it/" />
+                                                    <exclude name="src/main/" />
+                                                    <exclude name="src/test/" />
                                                 </patternset>
                                             </fixcrlf>
                                             <fixcrlf srcdir="${project.basedir}" encoding="UTF-8" outputencoding="UTF-8" tab="remove" tablength="4" fixlast="true" eol="crlf">
                                                 <patternset>
                                                     <include name="src/**/*.bat" />
-                                                    <include name="src/**/*.BAT" />
-                                                    <exclude name="src/main/**/*" />
-                                                    <exclude name="src/test/**/*" />
-                                                    <exclude name="src/it/**/*" />
+                                                    <exclude name="src/it/" />
+                                                    <exclude name="src/main/" />
+                                                    <exclude name="src/test/" />
                                                 </patternset>
                                             </fixcrlf>
                                         </target>
