@@ -187,11 +187,13 @@
             <id>ossrh-snapshot-repo</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
+        <!--
         <site>
             <id>${project-site-id}</id>
             <name>${project-site-name}</name>
             <url>${project-site-deploy-url}</url>
         </site>
+         -->
     </distributionManagement>
 
     <issueManagement>
