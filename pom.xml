@@ -100,11 +100,11 @@
         <!-- site locations -->
         <project-site-id>local-site</project-site-id>
         <project-site-name>Projects Internal Site </project-site-name>
-        <project-site-protocol>http</project-site-protocol>
-        <project-site-deploy-protocol>scp</project-site-deploy-protocol>
-        <project-site-host>localhost</project-site-host>
-        <project-site-basepath>project</project-site-basepath>
-        <project-site-deploy-basepath>var/www/html/project</project-site-deploy-basepath>
+        <project-site-protocol>file</project-site-protocol>
+        <project-site-deploy-protocol>file</project-site-deploy-protocol>
+        <project-site-host />
+        <project-site-basepath>${user.home}/maven-site</project-site-basepath>
+        <project-site-deploy-basepath>${user.home}/maven-site</project-site-deploy-basepath>
         <!-- CHECKSTYLE:OFF -->
         <project-site-url>${project-site-protocol}://${project-site-host}/${project-site-basepath}/${project-branch}/${project-name}/${project-version}</project-site-url>
         <project-site-deploy-url>${project-site-deploy-protocol}://${project-site-host}/${project-site-deploy-basepath}/${project-branch}/${project-name}/${project-version}</project-site-deploy-url>
