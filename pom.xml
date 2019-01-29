@@ -45,6 +45,9 @@
         <encoding>UTF-8</encoding>
         <java>1.8</java>
 
+        <!-- fot testing site descriptor -->
+        <foo>foo-from-nruzic-commons-master</foo>
+
         <!-- build defaults -->
         <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
