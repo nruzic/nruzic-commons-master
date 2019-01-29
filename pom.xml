@@ -153,7 +153,7 @@
         <version-build-helper-maven-plugin>3.0.0</version-build-helper-maven-plugin>
         <version-asciidoctor-maven-plugin>1.5.7.1</version-asciidoctor-maven-plugin>
         <version-maven-gpg-plugin>1.6</version-maven-gpg-plugin>
-        <version-nexus-staging-maven-plugin>1.6.7</version-nexus-staging-maven-plugin>
+        <version-nexus-staging-maven-plugin>1.6.8</version-nexus-staging-maven-plugin>
         <version-maven-changes-plugin>2.12.1</version-maven-changes-plugin>
         <version-formatter-maven-plugin>2.8.1</version-formatter-maven-plugin>
         <version-impsort-maven-plugin>1.2.0</version-impsort-maven-plugin>
@@ -1202,6 +1202,10 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
                     </plugin>
                 </plugins>
             </build>
