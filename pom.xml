@@ -27,7 +27,6 @@
     <artifactId>nruzic-commons-master</artifactId>
     <version>2.0.16-SNAPSHOT</version>
     <packaging>pom</packaging>
-
     <name>nruzic commons master</name>
     <description>Common POM definitions for java projects</description>
     <url>${project-site-url}</url>
@@ -40,15 +39,16 @@
     </licenses>
 
     <properties>
+
         <!-- build switches -->
         <branch>master</branch>
         <encoding>UTF-8</encoding>
         <java>1.8</java>
 
         <!-- build defaults -->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java-compiler-source-level>1.8</java-compiler-source-level>
+        <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
+        <java-compiler-source-level>${java}</java-compiler-source-level>
         <java-compiler-compliance-level>${java-compiler-source-level}</java-compiler-compliance-level>
         <assemblies-bin-distribution-base-directory>${project-name}</assemblies-bin-distribution-base-directory>
         <assembly.id>bin</assembly.id> <!-- Default assembly id -->
@@ -100,32 +100,28 @@
         <!-- site locations -->
         <project-site-id>local-site</project-site-id>
         <project-site-name>Projects Internal Site </project-site-name>
+        <project-site-protocol>http</project-site-protocol>
+        <project-site-deploy-protocol>scp</project-site-deploy-protocol>
         <project-site-host>localhost</project-site-host>
         <project-site-basepath>project</project-site-basepath>
-        <project-site-protocol>http</project-site-protocol>
-        <!-- CHECKSTYLE:OFF -->
-        <project-site-url>
-            ${project-site-protocol}://${project-site-host}/${project-site-basepath}/${project-name}/${project-version}/${project-branch}
-        </project-site-url>
-        <!-- CHECKSTYLE:ON -->
-        <project-site-deploy-protocol>scp</project-site-deploy-protocol>
         <project-site-deploy-basepath>var/www/html/project</project-site-deploy-basepath>
         <!-- CHECKSTYLE:OFF -->
-        <project-site-deploy-url>
-            ${project-site-deploy-protocol}://${project-site-host}/${project-site-deploy-basepath}/${project-name}/${project-version}/${project-branch}
-        </project-site-deploy-url>
+        <project-site-url>${project-site-protocol}://${project-site-host}/${project-site-basepath}/${project-branch}/${project-name}/${project-version}</project-site-url>
+        <project-site-deploy-url>${project-site-deploy-protocol}://${project-site-host}/${project-site-deploy-basepath}/${project-branch}/${project-name}/${project-version}</project-site-deploy-url>
         <!-- CHECKSTYLE:ON -->
         <project-site-stage-dir>
-            ${project-home}/site-stage/${project-name}/${project-version}/${project-branch}
+            ${user.home}/maven-stage/${project-branch}/${project-name}/${project-version}
         </project-site-stage-dir>
 
         <!-- continuous integration software locations -->
         <ci-managament-system>Jenkins</ci-managament-system>
-        <ci-managament-url>https://localhost</ci-managament-url>
+        <ci-managament-url>
+            https://localhost/job/foo/job/${project-name}/job/${project-branch}
+        </ci-managament-url>
 
         <!-- issue management -->
         <issue-management-system-name>JIRA</issue-management-system-name>
-        <issue-management-url>https://localhost</issue-management-url>
+        <issue-management-url>https://localhost/browse/${project-name}</issue-management-url>
 
         <!-- dependencies -->
         <version-nruzic-commons-conventions>2.0.12</version-nruzic-commons-conventions>
@@ -142,7 +138,7 @@
         <version-maven-release-plugin>2.5.3</version-maven-release-plugin>
         <version-maven-site-plugin>3.7.1</version-maven-site-plugin>
         <version-maven-javadoc-plugin>3.0.1</version-maven-javadoc-plugin>
-        <version-maven-jxr-plugin>2.5</version-maven-jxr-plugin>
+        <version-maven-jxr-plugin>3.0.0</version-maven-jxr-plugin>
         <version-maven-surefire-plugin>3.0.0-M2</version-maven-surefire-plugin>
         <version-maven-surefire-report-plugin>3.0.0-M2</version-maven-surefire-report-plugin>
         <version-maven-project-info-reports-plugin>3.0.0</version-maven-project-info-reports-plugin>
@@ -187,13 +183,11 @@
             <id>ossrh-snapshot-repo</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
-        <!--
         <site>
             <id>${project-site-id}</id>
             <name>${project-site-name}</name>
             <url>${project-site-deploy-url}</url>
         </site>
-         -->
     </distributionManagement>
 
     <issueManagement>
@@ -402,7 +396,7 @@
                         <execution>
                             <id>attach-sources</id>
                             <goals>
-                                <goal>jar</goal>
+                                <goal>jar-no-fork</goal>
                             </goals>
                             <phase>prepare-package</phase>
                         </execution>
@@ -511,6 +505,7 @@
                     <version>${version-maven-site-plugin}</version>
                     <configuration>
                         <stagingDirectory>${project-site-stage-dir}</stagingDirectory>
+                        <locales>en</locales>
                         <asciidoc>
                             <sourceDirectory>${project.basedir}/src/site/asciidoc</sourceDirectory>
                             <!-- <sourceDocumentName>refdoc.adoc</sourceDocumentName> -->
@@ -902,7 +897,7 @@
                             <goals>
                                 <goal>process-asciidoc</goal>
                             </goals>
-                            <phase>process-resources</phase>
+                            <phase>process-test-resources</phase>
                             <configuration>
                                 <backend>html</backend>
                                 <outputDirectory>${project.build.directory}/doc/html</outputDirectory>
@@ -917,7 +912,7 @@
                             <goals>
                                 <goal>process-asciidoc</goal>
                             </goals>
-                            <phase>process-resources</phase>
+                            <phase>process-test-resources</phase>
                             <configuration>
                                 <backend>pdf</backend>
                                 <outputDirectory>${project.build.directory}/doc/pdf</outputDirectory>
@@ -930,10 +925,10 @@
                         </execution>
                         <execution>
                             <id>generated-adoc-to-html</id>
-                            <phase>process-resources</phase>
                             <goals>
                                 <goal>process-asciidoc</goal>
                             </goals>
+                            <phase>process-test-resources</phase>
                             <configuration>
                                 <backend>html</backend>
                                 <sourceDirectory>${project.build.directory}/doc/adoc</sourceDirectory>
@@ -946,10 +941,10 @@
                         </execution>
                         <execution>
                             <id>generated-adoc-to-pdf</id>
-                            <phase>process-resources</phase>
                             <goals>
                                 <goal>process-asciidoc</goal>
                             </goals>
+                            <phase>process-test-resources</phase>
                             <configuration>
                                 <backend>pdf</backend>
                                 <sourceDirectory>${project.build.directory}/doc/adoc</sourceDirectory>
@@ -1058,26 +1053,11 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>${version-maven-surefire-report-plugin}</version>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${version-maven-checkstyle-plugin}</version>
                 <configuration>
-                    <alwaysGenerateSurefireReport>true</alwaysGenerateSurefireReport>
-                    <alwaysGenerateFailsafeReport>true</alwaysGenerateFailsafeReport>
+                    <configLocation>${conventions-checkstyle-config}</configLocation>
                 </configuration>
-                <reportSets>
-                    <reportSet>
-                        <id>unit-tests</id>
-                        <reports>
-                            <report>report-only</report>
-                        </reports>
-                    </reportSet>
-                    <reportSet>
-                        <id>integration-tests</id>
-                        <reports>
-                            <report>failsafe-report-only</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -1105,14 +1085,41 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
                 <version>${version-maven-jxr-plugin}</version>
+                <configuration>
+                    <javadocDir>${project.reporting.outputDirectory}/javadocs</javadocDir>
+                </configuration>
+                <reportSets>
+                    <reportSet>
+                        <id>default</id>
+                        <reports>
+                            <report>jxr</report>
+                            <report>test-jxr</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>${version-maven-checkstyle-plugin}</version>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>${version-maven-surefire-report-plugin}</version>
                 <configuration>
-                    <configLocation>${conventions-checkstyle-config}</configLocation>
+                    <alwaysGenerateSurefireReport>true</alwaysGenerateSurefireReport>
+                    <alwaysGenerateFailsafeReport>true</alwaysGenerateFailsafeReport>
                 </configuration>
+                <reportSets>
+                    <reportSet>
+                        <id>unit-tests</id>
+                        <reports>
+                            <report>report-only</report>
+                        </reports>
+                    </reportSet>
+                    <reportSet>
+                        <id>integration-tests</id>
+                        <reports>
+                            <report>failsafe-report-only</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -1120,18 +1127,6 @@
                 <version>${version-taglist-maven-plugin}</version>
                 <configuration>
                     <aggregate>true</aggregate>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>com.webcohesion.enunciate</groupId>
-                <artifactId>enunciate-maven-plugin</artifactId>
-                <version>${version-enunciate-maven-plugin}</version>
-                <configuration>
-                    <!-- The subdirectory of the site where the documentation
-                        will be put. -->
-                    <!-- Note that if this isn't set, the documentation will
-                        overwrite apidocs location on the site which is used by the javadoc plugin. -->
-                    <docsSubdir>enunciatedocs</docsSubdir>
                 </configuration>
             </plugin>
             <plugin>
@@ -1143,6 +1138,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-changes-plugin</artifactId>
                 <version>${version-maven-changes-plugin}</version>
+                <inherited>false</inherited>
                 <configuration>
                     <useJql>true</useJql>
                     <webUser>foo</webUser>
@@ -1157,44 +1153,23 @@
                     <!-- <filter>project = MSE AND issuetype in (Bug, Improvement,
                         "New Feature") AND resolution = Fixed AND status = Closed</filter> -->
                 </configuration>
-                <inherited>false</inherited>
+            </plugin>
+            <plugin>
+                <groupId>com.webcohesion.enunciate</groupId>
+                <artifactId>enunciate-maven-plugin</artifactId>
+                <version>${version-enunciate-maven-plugin}</version>
+                <configuration>
+                    <!-- The subdirectory of the site where the documentation
+                        will be put. -->
+                    <!-- Note that if this isn't set, the documentation will
+                        overwrite apidocs location on the site which is used by the javadoc plugin. -->
+                    <docsSubdir>enunciatedocs</docsSubdir>
+                </configuration>
             </plugin>
         </plugins>
     </reporting>
 
     <profiles>
-
-        <profile>
-            <activation>
-                <file>
-                    <exists>.aggregator</exists>
-                </file>
-            </activation>
-            <reporting>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <reportSets>
-                            <reportSet>
-                                <id>default</id>
-                                <reports>
-                                    <report>aggregate</report>
-                                    <report>test-aggregate</report>
-                                </reports>
-                            </reportSet>
-                        </reportSets>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-report-plugin</artifactId>
-                        <configuration>
-                            <aggregate>true</aggregate>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </reporting>
-        </profile>
 
         <profile>
             <id>releaseTasks</id>
@@ -1224,10 +1199,6 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.sonatype.plugins</groupId>
-                        <artifactId>nexus-staging-maven-plugin</artifactId>
                     </plugin>
                 </plugins>
             </build>
@@ -1379,9 +1350,11 @@
                 </property>
             </activation>
             <properties>
-                <project-site-host />
+                <project-site-protocol>file</project-site-protocol>
                 <project-site-deploy-protocol>file</project-site-deploy-protocol>
-                <project-site-deploy-basepath>${project-home}/site</project-site-deploy-basepath>
+                <project-site-host />
+                <project-site-basepath>${user.home}/maven-site</project-site-basepath>
+                <project-site-deploy-basepath>${user.home}/maven-site</project-site-deploy-basepath>
             </properties>
             <build>
                 <filters>
