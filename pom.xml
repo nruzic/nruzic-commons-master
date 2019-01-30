@@ -29,7 +29,7 @@
     <packaging>pom</packaging>
     <name>nruzic commons master</name>
     <description>Common POM definitions for java projects</description>
-    <url>${project-site-url}</url>
+    <url>http://localhost/project/master/nruzic-commons-master/${project.version}/</url>
 
     <licenses>
         <license>
@@ -55,9 +55,9 @@
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
         <site>
-            <id>${project-site-id}</id>
-            <name>${project-site-name}</name>
-            <url>${project-site-deploy-url}</url>
+            <id>local-site</id>
+            <name>Projects Internal Site</name>
+            <url>scp://localhost/var/www/html/project/master/nruzic-commons-master/${project.version}/</url>
         </site>
     </distributionManagement>
 
