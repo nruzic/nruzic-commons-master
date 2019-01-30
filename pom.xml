@@ -25,7 +25,7 @@
 
     <groupId>com.github.nruzic.commons.master</groupId>
     <artifactId>nruzic-commons-master</artifactId>
-    <version>3.0.0-RC14</version>
+    <version>3.0.0-RC15-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>nruzic commons master</name>
     <description>Common POM definitions for java projects</description>
@@ -46,7 +46,7 @@
         <url>http://github.com/nruzic/nruzic-commons-master</url>
         <connection>scm:git:http://github.com/nruzic/nruzic-commons-master</connection>
         <developerConnection>scm:git:git@github.com:nruzic/nruzic-commons-master</developerConnection>
-        <tag>nruzic-commons-master-3.0.0-RC14</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
