@@ -157,6 +157,15 @@
                             <artifactId>wagon-webdav-jackrabbit</artifactId>
                             <version>3.2.0</version>
                         </dependency>
+                        <!-- fix for https://www.mail-archive.com/users@maven.apache.org/msg141237.html using commit
+                        https://github.com/nruzic/maven-doxia-sitetools/commit/93933ced43a39ac3728bb409954d212fb0b78754
+                        -->
+                        <dependency>
+                            <groupId>org.apache.maven.doxia</groupId>
+                            <artifactId>doxia-decoration-model</artifactId>
+                            <version>1.8.1</version>
+                            <classifier>interpolation-hotfix</classifier>
+                        </dependency>
                     </dependencies>
                 </plugin>
                 <plugin>
