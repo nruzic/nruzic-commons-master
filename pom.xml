@@ -31,6 +31,10 @@
     <description>Common POM definitions for java projects</description>
     <url>http://localhost/project/master/nruzic-commons-master/${project.version}/</url>
 
+    <properties>
+        <foo>foo-from-parent-using-this</foo>
+    </properties>
+
     <licenses>
         <license>
             <name>MIT License</name>
