@@ -6,7 +6,7 @@
 
     <body>
         <breadcrumbs>
-            <item name="Project Site" href="${this.foo}/${foo}/${FOO}/"/>
+            <item name="Project Site" href="${this.foo}/${foo}/${FOO}/${project.name}"/>
         </breadcrumbs>
         <menu ref="parent" inherit="bottom"/>
         <menu ref="modules" inherit="bottom"/>
