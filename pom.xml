@@ -25,7 +25,7 @@
 
     <groupId>com.github.nruzic.commons.master</groupId>
     <artifactId>nruzic-commons-master</artifactId>
-    <version>3.0.0-RC10-SNAPSHOT</version>
+    <version>3.0.0-RC17-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>nruzic commons master</name>
     <description>Common POM definitions for java projects</description>
@@ -46,7 +46,7 @@
         <java>1.8</java>
 
         <!-- fot testing site descriptor -->
-        <foo>foo-from-nruzic-commons-master</foo>
+        <foo>foo-from-parent-using-this</foo>
 
         <!-- build defaults -->
         <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
@@ -570,6 +570,15 @@
                             <groupId>org.apache.maven.doxia</groupId>
                             <artifactId>doxia-core</artifactId>
                             <version>1.8</version>
+                        </dependency>
+                        <!-- fix for https://www.mail-archive.com/users@maven.apache.org/msg141237.html using commit
+                        https://github.com/nruzic/maven-doxia-sitetools/commit/93933ced43a39ac3728bb409954d212fb0b78754
+                        -->
+                        <dependency>
+                            <groupId>org.apache.maven.doxia</groupId>
+                            <artifactId>doxia-decoration-model</artifactId>
+                            <version>1.8.1</version>
+                            <classifier>interpolation-hotfix</classifier>
                         </dependency>
                     </dependencies>
                 </plugin>
