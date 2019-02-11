@@ -29,12 +29,12 @@
     <packaging>pom</packaging>
     <name>nruzic commons master</name>
     <description>Common POM definitions for java projects</description>
-    <url>${project-site-url}</url>
+    <url>${distribution-site-read-url}</url>
 
     <licenses>
         <license>
-            <name>MIT License</name>
-            <url>http://www.opensource.org/licenses/mit-license.php</url>
+            <name>${project-licence-name}</name>
+            <url>${project-licence-url}</url>
         </license>
     </licenses>
 
@@ -45,8 +45,8 @@
         <encoding>UTF-8</encoding>
         <java>1.8</java>
 
-        <!-- fot testing site descriptor -->
-        <foo>foo-from-parent-using-this</foo>
+        <!-- parent overrides -->
+        <foo>foo-from-parent-using-this</foo><!-- for testing site descriptor -->
 
         <!-- build defaults -->
         <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
@@ -55,18 +55,16 @@
         <java-compiler-compliance-level>${java-compiler-source-level}</java-compiler-compliance-level>
         <assemblies-bin-distribution-base-directory>${project-name}</assemblies-bin-distribution-base-directory>
         <assembly.id>bin</assembly.id> <!-- Default assembly id -->
-        <conventions-checkstyle-config>
-            hr/nruzic/commons/conventions/checkstyle/allman-ansi-checks.xml
-        </conventions-checkstyle-config>
-        <conventions-checkstyle-suppressions>
-            hr/nruzic/commons/conventions/checkstyle/checkstyle-suppressions.xml
-        </conventions-checkstyle-suppressions>
-        <conventions-eclipse-formatter>
-            hr/nruzic/commons/conventions/eclipse/formatter/allman-ansi-eclipse-formatter.xml
-        </conventions-eclipse-formatter>
+        <conventions-checkstyle-config>hr/nruzic/commons/conventions/checkstyle/allman-ansi-checks.xml</conventions-checkstyle-config>
+        <conventions-checkstyle-suppressions>hr/nruzic/commons/conventions/checkstyle/checkstyle-suppressions.xml</conventions-checkstyle-suppressions>
+        <conventions-eclipse-formatter>hr/nruzic/commons/conventions/eclipse/formatter/allman-ansi-eclipse-formatter.xml</conventions-eclipse-formatter>
         <checkstyle.failOnViolation>true</checkstyle.failOnViolation>
         <settings-security>${user.home}/.m2/settings-security.xml</settings-security>
         <adoc-show-hints>false</adoc-show-hints>
+        <javadoc-doclint>all</javadoc-doclint>
+
+        <!-- aggregator defaults -->
+        <version-aggregator-foo>1.0.0-SNAPSHOT</version-aggregator-foo>
 
         <!-- project generalities -->
         <project-name>${project.artifactId}</project-name>
@@ -75,59 +73,36 @@
         <project-branch>${branch}</project-branch>
         <project-buildtime>${maven-build-timestamp}</project-buildtime>
         <project-builddate>${maven-build-timestamp-date}</project-builddate>
+        <project-licence-name>MIT License</project-licence-name>
+        <project-licence-url>http://www.opensource.org/licenses/mit-license.php</project-licence-url>
 
-        <!-- repository locations -->
-        <internal-maven-repository-schema>http</internal-maven-repository-schema>
-        <internal-maven-repository-host>localhost</internal-maven-repository-host>
-        <internal-maven-repository-port>80</internal-maven-repository-port>
-        <internal-maven-repository-server>
-            ${internal-maven-repository-schema}://${internal-maven-repository-host}:${internal-maven-repository-port}
-        </internal-maven-repository-server>
-        <internal-maven-repository-web>${internal-maven-repository-server}/</internal-maven-repository-web>
-        <internal-maven-repository-basepath>repositories</internal-maven-repository-basepath>
-        <internal-maven-repository-name>libs-release</internal-maven-repository-name>
-        <internal-maven-repository-releases-name>libs-release-local</internal-maven-repository-releases-name>
-        <internal-maven-repository-snapshots-name>libs-snapshot-local</internal-maven-repository-snapshots-name>
-        <internal-maven-repository-url>
-            ${internal-maven-repository-server}/${internal-maven-repository-basepath}/${internal-maven-repository-name}
-        </internal-maven-repository-url>
-        <!-- CHECKSTYLE:OFF -->
-        <internal-releases-maven-repository-url>
-            ${internal-maven-repository-server}/${internal-maven-repository-basepath}/${internal-maven-repository-releases-name}
-        </internal-releases-maven-repository-url>
-        <internal-snapshots-maven-repository-url>
-            ${internal-maven-repository-server}/${internal-maven-repository-basepath}/${internal-maven-repository-snapshots-name}
-        </internal-snapshots-maven-repository-url>
-        <!-- CHECKSTYLE:ON -->
+        <!-- distribution releases repository definition -->
+        <distribution-repository-releases-name>distribution-repository-releases</distribution-repository-releases-name>
+        <distribution-repository-releases-id>distribution-repository-releases-ossrh</distribution-repository-releases-id>
+        <distribution-repository-releases-url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</distribution-repository-releases-url>
 
-        <!-- site locations -->
-        <project-site-id>local-site</project-site-id>
-        <project-site-name>Projects Internal Site</project-site-name>
-        <project-site-protocol>http</project-site-protocol>
-        <project-site-deploy-protocol>scp</project-site-deploy-protocol>
-        <project-site-host>localhost</project-site-host>
-        <project-site-basepath>project</project-site-basepath>
-        <project-site-deploy-basepath>var/www/html/project</project-site-deploy-basepath>
-        <!-- CHECKSTYLE:OFF -->
-        <project-site-url>${project-site-protocol}://${project-site-host}/${project-site-basepath}/${project-branch}/${project-name}/${project-version}</project-site-url>
-        <project-site-deploy-url>${project-site-deploy-protocol}://${project-site-host}/${project-site-deploy-basepath}/${project-branch}/${project-name}/${project-version}</project-site-deploy-url>
-        <!-- CHECKSTYLE:ON -->
-        <project-site-stage-dir>
-            ${user.home}/maven-stage/${project-branch}/${project-name}/${project-version}
-        </project-site-stage-dir>
+        <!-- distribution snapshots repository definition -->
+        <distribution-repository-snapshots-name>distribution-repository-snapshots</distribution-repository-snapshots-name>
+        <distribution-repository-snapshots-id>distribution-repository-snapshots-ossrh</distribution-repository-snapshots-id>
+        <distribution-repository-snapshots-url>https://oss.sonatype.org/content/repositories/snapshots</distribution-repository-snapshots-url>
+
+        <!-- distribution site definition -->
+        <distribution-site-name>distribution-site</distribution-site-name>
+        <distribution-site-id>distribution-site-localhost</distribution-site-id>
+        <distribution-site-read-url>http://localhost/project/${project-branch}/${project-name}/${project-version}</distribution-site-read-url>
+        <distribution-site-write-url>scp://localhost/var/www/html/project/${project-branch}/${project-name}/${project-version}</distribution-site-write-url>
+        <distribution-site-stage-dir>${user.home}/maven-stage/${project-branch}/${project-name}/${project-version}</distribution-site-stage-dir>
 
         <!-- continuous integration software locations -->
         <ci-managament-system>Jenkins</ci-managament-system>
-        <ci-managament-url>
-            https://localhost/job/foo/job/${project-name}/job/${project-branch}
-        </ci-managament-url>
+        <ci-managament-url>https://jenkins.foo.com/job/bar/job/${project-name}/job/${project-branch}</ci-managament-url>
 
         <!-- issue management -->
         <issue-management-system-name>JIRA</issue-management-system-name>
-        <issue-management-url>https://localhost/browse/${project-name}</issue-management-url>
+        <issue-management-url>https://jira.foo.com/browse/${project-name}</issue-management-url>
 
         <!-- dependencies -->
-        <version-nruzic-commons-conventions>2.0.12</version-nruzic-commons-conventions>
+        <version-nruzic-commons-conventions>2.1.0</version-nruzic-commons-conventions>
         <version-nruzic-commons-assemblies>1.0.0</version-nruzic-commons-assemblies>
         <version-maven-wagon>3.2.0</version-maven-wagon>
         <version-maven-filtering>3.1.2</version-maven-filtering>
@@ -137,7 +112,7 @@
         <version-maven-source-plugin>3.0.1</version-maven-source-plugin>
         <version-maven-assembly-plugin>3.1.0</version-maven-assembly-plugin>
         <version-maven-failsafe-plugin>3.0.0-M2</version-maven-failsafe-plugin>
-        <version-maven-dependency-plugin>2.10</version-maven-dependency-plugin>
+        <version-maven-dependency-plugin>3.1.1</version-maven-dependency-plugin>
         <version-maven-release-plugin>2.5.3</version-maven-release-plugin>
         <version-maven-site-plugin>3.7.1</version-maven-site-plugin>
         <version-maven-javadoc-plugin>3.0.1</version-maven-javadoc-plugin>
@@ -157,41 +132,40 @@
         <version-maven-changes-plugin>2.12.1</version-maven-changes-plugin>
         <version-formatter-maven-plugin>2.8.1</version-formatter-maven-plugin>
         <version-impsort-maven-plugin>1.2.0</version-impsort-maven-plugin>
+        <version-maven-deploy-plugin>3.0.0-M1</version-maven-deploy-plugin>
+        <version-doxia>1.8</version-doxia>
+        <version-doxia-site-tools>1.8.1</version-doxia-site-tools>
     </properties>
 
     <scm>
-        <url>http://github.com/nruzic/nruzic-commons-master</url>
+        <url>http://github.com/nruzic/nruzic-commons-master/tree/${project.scm.tag}</url>
         <connection>scm:git:http://github.com/nruzic/nruzic-commons-master</connection>
         <developerConnection>scm:git:git@github.com:nruzic/nruzic-commons-master</developerConnection>
-        <tag>HEAD</tag>
+        <tag>master</tag>
     </scm>
 
-    <repositories>
-    </repositories>
-
-    <pluginRepositories>
-    </pluginRepositories>
+    <distributionManagement>
+        <repository>
+            <name>${distribution-repository-releases-name}</name>
+            <id>${distribution-repository-releases-id}</id>
+            <url>${distribution-repository-releases-url}</url>
+        </repository>
+        <snapshotRepository>
+            <name>${distribution-repository-snapshots-name}</name>
+            <id>${distribution-repository-snapshots-id}</id>
+            <url>${distribution-repository-snapshots-url}</url>
+        </snapshotRepository>
+        <site>
+            <name>${distribution-site-name}</name>
+            <id>${distribution-site-id}</id>
+            <url>${distribution-site-write-url}</url>
+        </site>
+    </distributionManagement>
 
     <ciManagement>
         <system>${ci-managament-system}</system>
         <url>${ci-managament-url}</url>
     </ciManagement>
-
-    <distributionManagement>
-        <repository>
-            <id>ossrh-staging-repo</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-        <snapshotRepository>
-            <id>ossrh-snapshot-repo</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <site>
-            <id>${project-site-id}</id>
-            <name>${project-site-name}</name>
-            <url>${project-site-deploy-url}</url>
-        </site>
-    </distributionManagement>
 
     <issueManagement>
         <system>${issue-management-system-name}</system>
@@ -211,7 +185,9 @@
     </developers>
 
     <build>
-
+        <!-- ==================== -->
+        <!-- Additional resources -->
+        <!-- ==================== -->
         <testResources>
             <testResource>
                 <directory>src/test/resources</directory>
@@ -226,7 +202,9 @@
                 <directory>src/main/scripts</directory>
             </testResource>
         </testResources>
-
+        <!-- ================= -->
+        <!-- Plugin management -->
+        <!-- ================= -->
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -311,17 +289,40 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-dependency-plugin</artifactId>
                     <version>${version-maven-dependency-plugin}</version>
-                    <configuration>
-                        <reResolve>false</reResolve>
-                        <resolutionFuzziness>version</resolutionFuzziness>
-                    </configuration>
                     <executions>
                         <execution>
-                            <id>purge-local-repository</id>
-                            <phase>clean</phase>
+                            <id>patch-library-doxia-decoration-model</id>
                             <goals>
-                                <goal>purge-local-repository</goal>
+                                <goal>copy</goal>
                             </goals>
+                            <phase>initialize</phase>
+                            <configuration>
+                                <artifactItems>
+                                    <artifactItem>
+                                        <groupId>com.github.nruzic.org.apache.maven.doxia</groupId>
+                                        <artifactId>doxia-decoration-model</artifactId>
+                                        <version>${version-doxia-site-tools}-patch1</version>
+                                    </artifactItem>
+                                </artifactItems>
+                                <outputDirectory>${settings.localRepository}/org/apache/maven/doxia/doxia-decoration-model/${version-doxia-site-tools}/</outputDirectory>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>patch-library-maven-filtering</id>
+                            <goals>
+                                <goal>copy</goal>
+                            </goals>
+                            <phase>initialize</phase>
+                            <configuration>
+                                <artifactItems>
+                                    <artifactItem>
+                                        <groupId>com.github.nruzic.org.apache.maven.shared</groupId>
+                                        <artifactId>maven-filtering</artifactId>
+                                        <version>${version-maven-filtering}-patch1</version>
+                                    </artifactItem>
+                                </artifactItems>
+                                <outputDirectory>${settings.localRepository}/org/apache/maven/shared/maven-filtering/${version-maven-filtering}/</outputDirectory>
+                            </configuration>
                         </execution>
                     </executions>
                 </plugin>
@@ -333,22 +334,12 @@
                         <encoding>${project.build.sourceEncoding}</encoding>
                     </configuration>
                     <dependencies>
-                        <!-- ignoring missing filter file === BEGINING === -->
                         <dependency>
                             <groupId>org.apache.maven.shared</groupId>
                             <artifactId>maven-filtering</artifactId>
-                            <version>1000</version>
-                            <classifier>OVERRIDED</classifier>
-                            <type>jar</type>
-                            <optional>true</optional>
-                            <scope>compile</scope>
-                        </dependency>
-                        <dependency>
-                            <groupId>com.github.nruzic.org.apache.maven.shared</groupId>
-                            <artifactId>maven-filtering</artifactId>
                             <version>${version-maven-filtering}</version>
+                            <classifier>patch1</classifier>
                         </dependency>
-                        <!-- ignoring missing filter file === END === -->
                     </dependencies>
                 </plugin>
                 <plugin>
@@ -413,7 +404,7 @@
                         <outputDirectory>${project.build.directory}/javadocs</outputDirectory>
                         <reportOutputDirectory>${project.reporting.outputDirectory}/javadocs</reportOutputDirectory>
                         <!-- Workaround for http://stackoverflow.com/questions/15886209 -->
-                        <additionalparam>${javadoc.opts}</additionalparam>
+                        <doclint>${javadoc-doclint}</doclint>
                     </configuration>
                     <executions>
                         <execution>
@@ -451,7 +442,7 @@
                                 <!-- <finalName>${project.build.finalName}-bin</finalName>
                                     <appendAssemblyId>false</appendAssemblyId> -->
                                 <tarLongFileMode>gnu</tarLongFileMode>
-                                <siteDirectory>${project-site-stage-dir}</siteDirectory>
+                                <siteDirectory>${distribution-site-stage-dir}</siteDirectory>
                             </configuration>
                         </execution>
                     </executions>
@@ -461,23 +452,18 @@
                             <artifactId>nruzic-commons-assemblies</artifactId>
                             <version>${version-nruzic-commons-assemblies}</version>
                         </dependency>
-                        <!-- ignoring missing filter file === BEGINING === -->
                         <dependency>
                             <groupId>org.apache.maven.shared</groupId>
                             <artifactId>maven-filtering</artifactId>
-                            <version>1000</version>
-                            <classifier>OVERRIDED</classifier>
-                            <type>jar</type>
-                            <optional>true</optional>
-                            <scope>compile</scope>
-                        </dependency>
-                        <dependency>
-                            <groupId>com.github.nruzic.org.apache.maven.shared</groupId>
-                            <artifactId>maven-filtering</artifactId>
                             <version>${version-maven-filtering}</version>
+                            <classifier>patch1</classifier>
                         </dependency>
-                        <!-- ignoring missing filter file === END === -->
                     </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>${version-maven-deploy-plugin}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -505,7 +491,7 @@
                     <artifactId>maven-site-plugin</artifactId>
                     <version>${version-maven-site-plugin}</version>
                     <configuration>
-                        <stagingDirectory>${project-site-stage-dir}</stagingDirectory>
+                        <stagingDirectory>${distribution-site-stage-dir}</stagingDirectory>
                         <locales>en</locales>
                         <asciidoc>
                             <sourceDirectory>${project.basedir}/src/site/asciidoc</sourceDirectory>
@@ -560,7 +546,7 @@
                         <dependency>
                             <groupId>org.apache.maven.doxia</groupId>
                             <artifactId>doxia-module-markdown</artifactId>
-                            <version>1.8</version>
+                            <version>${version-doxia}</version>
                         </dependency>
                         <!-- Fixing java.lang.NoClassDefFoundError: org/apache/maven/doxia/sink/impl/XhtmlBaseSink
                         error due to the introduction of asciidoctor maven plugin. For more info take a look at
@@ -569,7 +555,7 @@
                         <dependency>
                             <groupId>org.apache.maven.doxia</groupId>
                             <artifactId>doxia-core</artifactId>
-                            <version>1.8</version>
+                            <version>${version-doxia}</version>
                         </dependency>
                         <!-- fix for https://www.mail-archive.com/users@maven.apache.org/msg141237.html using commit
                         https://github.com/nruzic/maven-doxia-sitetools/commit/93933ced43a39ac3728bb409954d212fb0b78754
@@ -577,7 +563,7 @@
                         <dependency>
                             <groupId>org.apache.maven.doxia</groupId>
                             <artifactId>doxia-decoration-model</artifactId>
-                            <version>1.8.1</version>
+                            <version>${version-doxia-site-tools}</version>
                             <classifier>interpolation-hotfix</classifier>
                         </dependency>
                     </dependencies>
@@ -750,11 +736,13 @@
                     <artifactId>impsort-maven-plugin</artifactId>
                     <version>${version-impsort-maven-plugin}</version>
                     <configuration>
-                        <groups>java,javax,com,hr,io,net,org</groups>
-                        <staticGroups>java,javax,com,hr,io,net,org</staticGroups>
-                        <staticAfter>true</staticAfter>
-                        <joinStaticWithNonStatic>false</joinStaticWithNonStatic>
                         <removeUnused>true</removeUnused>
+                        <!-- Non static groups -->
+                        <groups>java,javax,com,hr,io,net,org</groups>
+                        <!-- Static groups -->
+                        <staticGroups>java,javax,com,hr,io,net,org</staticGroups>
+                        <joinStaticWithNonStatic>false</joinStaticWithNonStatic>
+                        <staticAfter>true</staticAfter>
                     </configuration>
                     <executions>
                         <execution>
@@ -802,22 +790,12 @@
                             <artifactId>plexus-utils</artifactId>
                             <version>${version-plexus-utils}</version>
                         </dependency>
-                        <!-- ignoring missing filter file === BEGINING === -->
                         <dependency>
                             <groupId>org.apache.maven.shared</groupId>
                             <artifactId>maven-filtering</artifactId>
-                            <version>1000</version>
-                            <classifier>OVERRIDED</classifier>
-                            <type>jar</type>
-                            <optional>true</optional>
-                            <scope>compile</scope>
-                        </dependency>
-                        <dependency>
-                            <groupId>com.github.nruzic.org.apache.maven.shared</groupId>
-                            <artifactId>maven-filtering</artifactId>
                             <version>${version-maven-filtering}</version>
+                            <classifier>patch1</classifier>
                         </dependency>
-                        <!-- ignoring missing filter file === END === -->
                     </dependencies>
                 </plugin>
                 <plugin>
@@ -1013,7 +991,7 @@
                     <version>${version-nexus-staging-maven-plugin}</version>
                     <extensions>true</extensions>
                     <configuration>
-                        <serverId>ossrh-staging-repo</serverId>
+                        <serverId>${distribution-repository-releases-id}</serverId>
                         <nexusUrl>https://oss.sonatype.org/</nexusUrl>
                         <autoReleaseAfterClose>true</autoReleaseAfterClose>
                     </configuration>
@@ -1036,6 +1014,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -1179,7 +1161,99 @@
     </reporting>
 
     <profiles>
-
+        <!-- ============================================ -->
+        <!--    Custom repositories profile definition    -->
+        <!-- ============================================ -->
+        <profile>
+            <id>custom-repositories</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <repositories>
+                <repository>
+                    <name>repository-releases</name>
+                    <id>repository-releases-foo</id>
+                    <url>https://repo.foo.com/artifactory/libs-release-local</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <name>repository-snapshots</name>
+                    <id>repository-snapshots-foo</id>
+                    <url>https://repo.foo.com/artifactory/libs-snapshot-local</url>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <name>repository-proxy</name>
+                    <id>repository-proxy-foo</id>
+                    <url>https://repo.foo.com/artifactory/all</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <name>repository-archetype</name>
+                    <id>archetype</id>
+                    <url>https://repo.foo.com/artifactory/archetype-local</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+            <pluginRepositories>
+                <pluginRepository>
+                    <name>plugin-repository-releases</name>
+                    <id>plugin-repository-releases-infobip</id>
+                    <url>https://artifactory.ib-ci.com/artifactory/plugins-release</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </pluginRepository>
+                <pluginRepository>
+                    <name>plugin-repository-snapshots</name>
+                    <id>plugin-repository-snapshots-infobip</id>
+                    <url>https://artifactory.ib-ci.com/artifactory/plugins-snapshot</url>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </pluginRepository>
+                <pluginRepository>
+                    <name>plugin-repository-proxy</name>
+                    <id>plugin-repository-proxy-infobip</id>
+                    <url>https://artifactory.ib-ci.com/artifactory/all</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
+        <!-- =============================== -->
+        <!-- Mandatory release tasks profile -->
+        <!-- =============================== -->
         <profile>
             <id>releaseTasks</id>
             <activation>
@@ -1219,14 +1293,14 @@
 
         <profile>
             <!-- https://openjdk.java.net/jeps/172 -->
-            <id>java8-doclint-disabled</id>
+            <id>javadoc-doclint-disabled</id>
             <activation>
                 <property>
                     <name>noJavadocChecks</name>
                 </property>
             </activation>
             <properties>
-                <javadoc.opts>-Xdoclint:none</javadoc.opts>
+                <javadoc-doclint>none</javadoc-doclint>
             </properties>
         </profile>
 
@@ -1363,11 +1437,9 @@
                 </property>
             </activation>
             <properties>
-                <project-site-protocol>file</project-site-protocol>
-                <project-site-deploy-protocol>file</project-site-deploy-protocol>
-                <project-site-host />
-                <project-site-basepath>${user.home}/maven-site</project-site-basepath>
-                <project-site-deploy-basepath>${user.home}/maven-site</project-site-deploy-basepath>
+                <!-- distribution site definition -->
+                <distribution-site-read-url>file://${user.home}/maven-site/${project-branch}/${project-name}/${project-version}</distribution-site-read-url>
+                <distribution-site-write-url>file://${user.home}/maven-site/${project-branch}/${project-name}/${project-version}</distribution-site-write-url>
             </properties>
             <build>
                 <filters>
@@ -2132,6 +2204,105 @@
                         <artifactId>impsort-maven-plugin</artifactId>
                     </plugin>
                 </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>alternative-deployment</id>
+            <activation>
+                <property>
+                    <name>alternativeDeployment</name>
+                </property>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-deploy-plugin</artifactId>
+                            <configuration>
+                                <altSnapshotDeploymentRepository>local-repository::file://${settings.localRepository}</altSnapshotDeploymentRepository>
+                                <altReleaseDeploymentRepository>local-repository::file://${settings.localRepository}</altReleaseDeploymentRepository>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+
+        <profile>
+            <id>alternative-deployment-aggregators</id>
+            <activation>
+                <property>
+                    <name>alternativeDeploymentAggregators</name>
+                </property>
+                <file>
+                    <exists>.aggregator</exists>
+                </file>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-deploy-plugin</artifactId>
+                            <configuration>
+                                <altSnapshotDeploymentRepository>local-repository::file://${settings.localRepository}</altSnapshotDeploymentRepository>
+                                <altReleaseDeploymentRepository>local-repository::file://${settings.localRepository}</altReleaseDeploymentRepository>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+
+        <profile>
+            <id>alternative-deployment-non-aggregators</id>
+            <activation>
+                <property>
+                    <name>alternativeDeploymentNonAggregators</name>
+                </property>
+                <file>
+                    <missing>.aggregator</missing>
+                </file>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-deploy-plugin</artifactId>
+                            <configuration>
+                                <altSnapshotDeploymentRepository>local-repository::file://${settings.localRepository}</altSnapshotDeploymentRepository>
+                                <altReleaseDeploymentRepository>local-repository::file://${settings.localRepository}</altReleaseDeploymentRepository>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+
+        <profile>
+            <id>aggregator</id>
+            <activation>
+                <file>
+                    <exists>.aggregator</exists>
+                </file>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-release-plugin</artifactId>
+                            <configuration>
+                                <!-- Adding -N switch so that submodules are not processed during release process -->
+                                <arguments>-DreleaseTasks -Dbranch=${project-branch}
+                                    -Dsettings.security=${settings-security} -N</arguments>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
             </build>
         </profile>
 
