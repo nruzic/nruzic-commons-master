@@ -1165,10 +1165,7 @@
         <!--    Custom repositories profile definition    -->
         <!-- ============================================ -->
         <profile>
-            <id>custom-repositories</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
+            <id>custom-repositories-foo</id>
             <repositories>
                 <repository>
                     <name>repository-releases</name>
@@ -1218,8 +1215,8 @@
             <pluginRepositories>
                 <pluginRepository>
                     <name>plugin-repository-releases</name>
-                    <id>plugin-repository-releases-infobip</id>
-                    <url>https://artifactory.ib-ci.com/artifactory/plugins-release</url>
+                    <id>plugin-repository-releases-foo</id>
+                    <url>https://repo.foo.com/artifactory/plugins-release</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
@@ -1229,8 +1226,8 @@
                 </pluginRepository>
                 <pluginRepository>
                     <name>plugin-repository-snapshots</name>
-                    <id>plugin-repository-snapshots-infobip</id>
-                    <url>https://artifactory.ib-ci.com/artifactory/plugins-snapshot</url>
+                    <id>plugin-repository-snapshots-foo</id>
+                    <url>https://repo.foo.com/artifactory/plugins-snapshot</url>
                     <releases>
                         <enabled>false</enabled>
                     </releases>
@@ -1240,8 +1237,8 @@
                 </pluginRepository>
                 <pluginRepository>
                     <name>plugin-repository-proxy</name>
-                    <id>plugin-repository-proxy-infobip</id>
-                    <url>https://artifactory.ib-ci.com/artifactory/all</url>
+                    <id>plugin-repository-proxy-foo</id>
+                    <url>https://repo.foo.com/artifactory/all</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
